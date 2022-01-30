@@ -1,6 +1,8 @@
-about
-usage
-render-book
-preview-book
 el-modelo-de-regresión-lineal-y-el-estimador-mco
-url-your-book-url-like-httpsbookdown.orgyihuibookdown
+tab:unnamed-chunk-1
+tab:unnamed-chunk-8
+la-mecánica-del-estimador-mco
+estimador
+propiedades-del-estimador-mco
+simulación
+tab:unnamed-chunk-9
