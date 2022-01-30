@@ -1,2 +1,2 @@
-# econometria2
+# Econometria2
 Notas de clase del curso Econometría 2
