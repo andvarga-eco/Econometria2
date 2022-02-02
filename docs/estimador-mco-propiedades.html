@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Econometría 2</title>
+  <title>Capítulo2 Estimador MCO: Propiedades | Econometría 2</title>
   <meta name="description" content="Notas de clase de Econometría 2" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Econometría 2" />
+  <meta property="og:title" content="Capítulo2 Estimador MCO: Propiedades | Econometría 2" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Econometría 2" />
+  <meta name="twitter:title" content="Capítulo2 Estimador MCO: Propiedades | Econometría 2" />
   
   <meta name="twitter:description" content="Notas de clase de Econometría 2" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"/>
 
-<link rel="next" href="sobre-el-autor.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -169,23 +169,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Econometría 2</h1>
-<p class="author"><em>Andrés Vargas</em></p>
-<p class="date"><em>2022-02-02</em></p>
+<div id="estimador-mco-propiedades" class="section level1" number="2">
+<h1><span class="header-section-number">Capítulo2</span> Estimador MCO: Propiedades</h1>
+<p>Recuerde que el estimador MCO consiste en obtener los parámetros que minimizan la diferencia al cuadrado entre el valor observado y el valor predicho. Con una muestra particular de datos esto quiere decir que son aquellos para que minimizan la expresión</p>
+<p><span class="math display">\[\begin{equation}
+\tag{1}
+\sum_i^n(y_i-\hat{\beta_1}-\hat{\beta_2}x_{i2}-...-\hat{\beta_k}x_{ik})^2
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(i=1,...,n\)</span> identifica cada observación en la muestra. Al tomar las condiciones del primer orden obtenemos</p>
+<p><span class="math display">\[\begin{align}
+\tag{2}
+\sum_i^n(y_i-\hat{\beta_1}-\hat{\beta_2}x_{i2}-...-\hat{\beta_k}x_{ik})&amp;=0\\
+\sum_i^nx_{i2}(y_i-\hat{\beta_1}-\hat{\beta_2}x_{i2}-...-\hat{\beta_k}x_{ik})&amp;=0\\
+.&amp;\\
+.&amp;\\
+.&amp;\\
+\sum_i^nx_{ik}(y_i-\hat{\beta_1}-\hat{\beta_2}x_{i2}-...-\hat{\beta_k}x_{ik})&amp;=0
+\end{align}\]</span></p>
+
 </div>
-<div id="prefacio" class="section level1 unnumbered">
-<h1>Prefacio</h1>
-<hr />
-<p>Notas de clase de la asignatura Econometría 2, del programa de Economía de la Universidad del Norte. Están bajo permanente revisión y actualización. Comentarios o sugerencias a <a href="mailto:andresmv@uninorte.edu.co" class="email">andresmv@uninorte.edu.co</a></p>
-</div>
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
+<a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="sobre-el-autor.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

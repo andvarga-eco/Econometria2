@@ -75,7 +75,7 @@ La distancia entre cada punto y la línea de regresión es
 \hat{e}_i=y_i-\hat{y}_i=y_i-\hat{\alpha}-\hat{\beta}x_i
 \end{equation}
 
-Los parámetros que producen la mejor línea son aquellos que minimizan la suma de los errores al cuadrado
+Los parámetros que producen la mejor línea son aquellos que minimizan la suma de los residuales al cuadrado
 
 \begin{equation}
 SSE=\sum_i\hat{e}_i^2
@@ -167,7 +167,7 @@ Así, podemos decir que nuestro procedimiento para estimar el promedio de PGA a 
 
 <br>
 
-## Propiedades del estimador MCO
+## Estimador MCO
 
 <br>
 

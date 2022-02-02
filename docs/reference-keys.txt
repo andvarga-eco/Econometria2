@@ -1,8 +1,9 @@
-el-modelo-de-regresión-lineal-y-el-estimador-mco
 tab:unnamed-chunk-1
-tab:unnamed-chunk-8
+tab:unnamed-chunk-9
+el-modelo-de-regresión-lineal-y-el-estimador-mco
 la-mecánica-del-estimador-mco
 estimador
 propiedades-del-estimador-mco
 simulación
-tab:unnamed-chunk-9
+estimador-mco-propiedades
+estimador-mco
