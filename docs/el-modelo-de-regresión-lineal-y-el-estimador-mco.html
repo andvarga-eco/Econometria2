@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo1 El modelo de regresión lineal y el estimador MCO | Econometría 2</title>
   <meta name="description" content="Notas de clase de Econometría 2" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo1 El modelo de regresión lineal y el estimador MCO | Econometría 2" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Andrés Vargas" />
 
 
-<meta name="date" content="2022-02-02" />
+<meta name="date" content="2022-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,9 +33,8 @@
   
 <link rel="prev" href="introducción.html"/>
 <link rel="next" href="estimador-mco-propiedades.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -43,6 +42,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -151,7 +151,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.1" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html#simulación"><i class="fa fa-check"></i><b>1.3.1</b> Simulación</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html"><i class="fa fa-check"></i><b>2</b> Estimador MCO: Propiedades</a></li>
+<li class="chapter" data-level="2" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html"><i class="fa fa-check"></i><b>2</b> Estimador MCO: Propiedades</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#el-valor-esperado-del-estimador-mco"><i class="fa fa-check"></i><b>2.1</b> El valor esperado del estimador MCO</a></li>
+<li class="chapter" data-level="2.2" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#la-varianza-del-estimador-en-datos-de-corte-transversal"><i class="fa fa-check"></i><b>2.2</b> La varianza del estimador en datos de corte transversal</a></li>
+<li class="chapter" data-level="2.3" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#error-estándar-e-inferencia"><i class="fa fa-check"></i><b>2.3</b> Error estándar e inferencia</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#demostración"><i class="fa fa-check"></i>Demostración</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -410,6 +418,7 @@ Y=5+2.5X_1+3X_2+e
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -450,7 +459,7 @@ gitbook.start({
 },
 "download": ["Econometria2.pdf", "Econometria2.epub"],
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

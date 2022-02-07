@@ -3,7 +3,9 @@ tab:unnamed-chunk-9
 el-modelo-de-regresión-lineal-y-el-estimador-mco
 la-mecánica-del-estimador-mco
 estimador
-propiedades-del-estimador-mco
+estimador-mco
 simulación
 estimador-mco-propiedades
-estimador-mco
+el-valor-esperado-del-estimador-mco
+la-varianza-del-estimador-en-datos-de-corte-transversal
+error-estándar-e-inferencia

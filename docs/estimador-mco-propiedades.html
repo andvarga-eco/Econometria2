@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo2 Estimador MCO: Propiedades | Econometría 2</title>
   <meta name="description" content="Notas de clase de Econometría 2" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo2 Estimador MCO: Propiedades | Econometría 2" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Andrés Vargas" />
 
 
-<meta name="date" content="2022-02-02" />
+<meta name="date" content="2022-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,9 +33,8 @@
   
 <link rel="prev" href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"/>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -43,6 +42,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -146,12 +146,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="1.1" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html#la-mecánica-del-estimador-mco"><i class="fa fa-check"></i><b>1.1</b> La mecánica del estimador MCO</a></li>
 <li class="chapter" data-level="1.2" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html#estimador"><i class="fa fa-check"></i><b>1.2</b> Estimador</a></li>
-<li class="chapter" data-level="1.3" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html#propiedades-del-estimador-mco"><i class="fa fa-check"></i><b>1.3</b> Propiedades del estimador MCO</a>
+<li class="chapter" data-level="1.3" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html#estimador-mco"><i class="fa fa-check"></i><b>1.3</b> Estimador MCO</a>
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html#simulación"><i class="fa fa-check"></i><b>1.3.1</b> Simulación</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html"><i class="fa fa-check"></i><b>2</b> Estimador MCO: Propiedades</a></li>
+<li class="chapter" data-level="2" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html"><i class="fa fa-check"></i><b>2</b> Estimador MCO: Propiedades</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#el-valor-esperado-del-estimador-mco"><i class="fa fa-check"></i><b>2.1</b> El valor esperado del estimador MCO</a></li>
+<li class="chapter" data-level="2.2" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#la-varianza-del-estimador-en-datos-de-corte-transversal"><i class="fa fa-check"></i><b>2.2</b> La varianza del estimador en datos de corte transversal</a></li>
+<li class="chapter" data-level="2.3" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#error-estándar-e-inferencia"><i class="fa fa-check"></i><b>2.3</b> Error estándar e inferencia</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#demostración"><i class="fa fa-check"></i>Demostración</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -171,14 +179,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="estimador-mco-propiedades" class="section level1" number="2">
 <h1><span class="header-section-number">Capítulo2</span> Estimador MCO: Propiedades</h1>
-<p>Recuerde que el estimador MCO consiste en obtener los parámetros que minimizan la diferencia al cuadrado entre el valor observado y el valor predicho. Con una muestra particular de datos esto quiere decir que son aquellos para que minimizan la expresión</p>
+<p>Nuestro punto de partida es el modelo poblacional</p>
 <p><span class="math display">\[\begin{equation}
 \tag{1}
+y=\beta_1+\beta_2x_2+\beta_3x_3+...+\beta_kx_k+u
+\end{equation}\]</span></p>
+<p>Donde donde las variables <span class="math inline">\(y,x_2,...,x_k\)</span> son aleatorias y observables, y <span class="math inline">\(u\)</span> es un error no observable. Los parámetros <span class="math inline">\(\beta_1,\beta_2,...,\beta_k\)</span> son los que queremos estimar. El error <span class="math inline">\(u\)</span> recoge perturbaciones aleatorias, y también todo aquello que es importante para explicar <span class="math inline">\(y\)</span> pero que no hemos incluido explícitamente en el modelo, es decir <em>variables omitidas</em>.</p>
+<p>La idea de población no hace referencia, necesariamente, a una población física en el mundo real. Significa que si tenemos una observación para el individuo i, <span class="math inline">\((y_i,x_i)\)</span>, esta la consideramos como la realización de una función de probabilidad conjunta <span class="math inline">\(F(y,x)\)</span>. Nosotros no conocemos <span class="math inline">\(F\)</span>, y el propósito de la inferencia es aprender sus características a partir de una muestra, es decir del conjunto particular de datos que tenemos.</p>
+<p>Lo anterior significa que a partir de nuestros datos estimamos los valores de <span class="math inline">\(\boldsymbol{\beta}\)</span>, y a estos los llamamos <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> El estimador MCO consiste en estimar dichos parámetros a partir de encontrar el valor de ellos tales que se minimiza la diferencia al cuadrado entre el valor observado y el valor predicho, con una muestra particular de datos. Esto quiere decir que son aquellos que minimizan la expresión</p>
+<p><span class="math display">\[\begin{equation}
+\tag{2}
 \sum_i^n(y_i-\hat{\beta_1}-\hat{\beta_2}x_{i2}-...-\hat{\beta_k}x_{ik})^2
 \end{equation}\]</span></p>
 <p>Donde <span class="math inline">\(i=1,...,n\)</span> identifica cada observación en la muestra. Al tomar las condiciones del primer orden obtenemos</p>
 <p><span class="math display">\[\begin{align}
-\tag{2}
+\tag{3}
 \sum_i^n(y_i-\hat{\beta_1}-\hat{\beta_2}x_{i2}-...-\hat{\beta_k}x_{ik})&amp;=0\\
 \sum_i^nx_{i2}(y_i-\hat{\beta_1}-\hat{\beta_2}x_{i2}-...-\hat{\beta_k}x_{ik})&amp;=0\\
 .&amp;\\
@@ -186,7 +201,182 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 .&amp;\\
 \sum_i^nx_{ik}(y_i-\hat{\beta_1}-\hat{\beta_2}x_{i2}-...-\hat{\beta_k}x_{ik})&amp;=0
 \end{align}\]</span></p>
+<p>Fíjese que tenemos un sistema de <span class="math inline">\(k\)</span> ecuaciones con <span class="math inline">\(k\)</span> incognitas. En términos matriciales esto lo podemos escribir como</p>
+<p><span class="math display">\[\begin{equation}
+\tag{4}
+\mathbf{X&#39;}(\mathbf{y}-\mathbf{X}\boldsymbol{\hat{\beta}})=0
+\end{equation}\]</span>.</p>
+<p>Donde <span class="math inline">\(\mathbf{X}\)</span> es <span class="math inline">\(n\times k\)</span> y recoje los datos de las variables independientes, mientras que <span class="math inline">\(\mathbf{y}\)</span> es <span class="math inline">\(n\times 1\)</span> y contiene los valores de la variable dependiente, y  es la matriz de parámetros estimados, de dimensión <span class="math inline">\(k\times 1\)</span>.</p>
+<p>La expresión anterior es equivalente a</p>
+<p><span class="math display">\[\begin{equation}
+\tag{5}
+\mathbf{(X&#39;X)}\hat{\boldsymbol{\beta}}=\mathbf{X&#39;y}
+\end{equation}\]</span></p>
+<p>Si la matriz <span class="math inline">\(\mathbf{(X&#39;X)}\)</span> es invertible entonces podemos premultiplicar a ambos lados por <span class="math inline">\(\mathbf{(X&#39;X)}^{-1}\)</span> y obtenemos</p>
+<p><span class="math display">\[\begin{equation}
+\tag{6}
+\hat{\boldsymbol{\beta}}=\mathbf{(X&#39;X)}^{-1}\mathbf{X&#39;y}
+\end{equation}\]</span></p>
+<p>La matriz <span class="math inline">\(\mathbf{(X&#39;X)}\)</span> es invertible si no hay colinealidad perfecta entre las variables.</p>
+<p>Como el valor estimado de los parámetros se obtuvo de una muestra particular de datos entonces debemos tener en cuenta que pudimos haber observado una muestra diferente, con la cual el valor puntual estimado habría sido diferente. Nuestro objetivo es obtener las propiedades estadísticas del estimador</p>
+<div id="el-valor-esperado-del-estimador-mco" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> El valor esperado del estimador MCO</h2>
+<ul>
+<li><strong>S1</strong> Modelo poblacional</li>
+</ul>
+<p><span class="math display">\[\begin{equation}
+y=\beta_1+\beta_2x_2+\beta_3x_3+...+\beta_kx_k+u
+\end{equation}\]</span></p>
+<ul>
+<li><p><strong>S2</strong> Tenemos una muestra aleatoria de tamaño <span class="math inline">\(n\)</span>, <span class="math inline">\(\{(x_{i1},x_{i2},...,x_{ik}):i=1,2,...,n\}\)</span>, es decir que las observaciones son independientes e identicamente distribuidas. Por ejemplo, el ingreso y nivel educativo del individuo <span class="math inline">\(i\)</span> es independiente del individuo <span class="math inline">\(j\)</span>.</p></li>
+<li><p><strong>S3</strong> No hay colinealidad perfecta, y por lo tanto <span class="math inline">\(\mathbf{(X&#39;X)}\)</span> es invertible</p></li>
+<li><p><strong>S4</strong> <span class="math inline">\(E(u|x_1,x_2,...,x_k)=0\)</span> El valor esperado condicional del error es cero. Es decir que el error no está relacionado con las variables independientes.</p></li>
+</ul>
+<p>Bajo estos supuestos, podemos mostrar que</p>
+<p><span class="math display">\[\begin{equation}
+\tag{7}
+E(\hat{\boldsymbol{\beta}}|\mathbf{X})=0
+\end{equation}\]</span></p>
+<p>Veamos. Primero tomemos el valor esperado condicional en la ecuación <span class="math inline">\((6)\)</span></p>
+<p><span class="math display">\[\begin{equation}
+\tag{8}
+E(\hat{\boldsymbol{\beta}}|\mathbf{X})=\mathbf{(X&#39;X)}^{-1}E(\mathbf{X&#39;y}|\mathbf{X})
+\end{equation}\]</span></p>
+<p>Como <span class="math inline">\(\mathbf{y}=\mathbf{X}\boldsymbol{\beta}+u\)</span>, entonces</p>
+<p><span class="math display">\[\begin{equation}
+\tag{9}
+E(\hat{\boldsymbol{\beta}}|\mathbf{X})=\mathbf{(X&#39;X)}^{-1}\mathbf{X&#39;X}\boldsymbol{\beta}+\mathbf{(X&#39;X)}^{-1}\mathbf{X&#39;}E(u|\mathbf{X})
+\end{equation}\]</span></p>
+<p>Luego, si se cumple <strong>S4</strong></p>
+<p><span class="math display">\[\begin{equation}
+\tag{10}
+E(\hat{\boldsymbol{\beta}}|\mathbf{X})=\boldsymbol{\beta}
+\end{equation}\]</span></p>
+<p>Es decir que el estimador es insesgado.</p>
+</div>
+<div id="la-varianza-del-estimador-en-datos-de-corte-transversal" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> La varianza del estimador en datos de corte transversal</h2>
+<p><strong>S5</strong> Homocedasticidad, <span class="math inline">\(Var(u|\mathbf{X})=\sigma^2\)</span>. Es decir que la varianza condicional del error es la misma para todos los valores de las variables explicativas.</p>
+<p>Con <em>S5</em> entonces podemos mostrar que</p>
+<p><span class="math display">\[\begin{equation}
+\tag{11}
+Var(\hat{\boldsymbol{\beta}}|\mathbf{X})=\sigma^2\mathbf{(X&#39;X)}^{-1}
+\end{equation}\]</span></p>
+<p>Para entenderlo mejor, la varianza para un <span class="math inline">\(\beta_j\)</span> particular sería</p>
+<p><span class="math display">\[\begin{equation}
+Var(\hat{\beta_j}|\mathbf{X})=\dfrac{\sigma^2}{\sum_{i=1}^n(x_{ij}-\bar{x}_j)^2(1-R_j^2)}
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(R_j^2\)</span> es el <span class="math inline">\(R\)</span>-cuadrado de una regresión de <span class="math inline">\(x_j\)</span> contra las demás independiente. Entre más correlacionada esté <span class="math inline">\(x_j\)</span> con las demás variables, mayor será el <span class="math inline">\(R\)</span>-cuadrado</p>
+<p>La varianza depende de tres cosas</p>
+<ul>
+<li><p>La varianza del error <span class="math inline">\(\sigma^2\)</span>. Esto es una característica de la población. Si se agregan más variables esta podría reducirse. Sin embargo, si el modelo ya incluye las variables relevantes, entonces ya no habría nada que agregar</p></li>
+<li><p>La variabilidad muestral de <span class="math inline">\(x_j\)</span>: <span class="math inline">\(\sum_{i=1}^n(x_{ij}-\bar{x}_j)^2\)</span> Entre mayor sea la variabilidad menor es la varianza. Al aumentar el tamaño de muestra la variabilidad se incrementa y disminuye la varianza del estimador</p></li>
+<li><p>El grado de relación lineal entre las variables independientes: <span class="math inline">\(R_j^2\)</span>. Entre mayor sea la correlación la varianza es más grande. Una alta correlación siginifica que a pesar de tener muchos datos tengo poca información</p></li>
+</ul>
+</div>
+<div id="error-estándar-e-inferencia" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Error estándar e inferencia</h2>
+<p>Como <span class="math inline">\(\sigma^2\)</span> no es observable <span class="math inline">\(Var(\hat{\beta_j}|\mathbf{X})\)</span> no es computable. Para ello debo tener un estimador insesgado de <span class="math inline">\(\sigma^2\)</span>, esto es un <span class="math inline">\(\hat{\sigma}^2\)</span> tal que <span class="math inline">\(E(\hat{\sigma}^2)=\sigma^2\)</span>, y por lo tanto que tengamos un estimador insesgado de la varianza del estimador</p>
+<p>Como <span class="math inline">\(\sigma^2=E(u^2)\)</span>, entonces un estimador es la media muestral, promedio, de los residuales</p>
+<p><span class="math display">\[\begin{equation}
+\hat{\sigma}^2=\dfrac{\sum_{i=1}^n\hat{u}_i^2}{n-k}
+\end{equation}\]</span></p>
+<p>Luego el error estándar es</p>
+<p><span class="math display">\[\begin{equation}
+\tag{12}
+se(\hat{\beta})=\dfrac{\hat{\sigma}}{\sum_{i=1}^n(x_{ij}-\bar{x}_j)^2(1-R_j^2)}
+\end{equation}\]</span></p>
+<p>Importante. La formula anterior es válida bajo el supuesto de homocedasticidad</p>
+<p>El próximo paso es hacer inferencia estadística, es decir la realización de pruebas de hipótesis. Para ello necesitamos la distribución muestral de <span class="math inline">\(\hat{\beta_j}\)</span>. De la ecuación <span class="math inline">\((9)\)</span> es claro que la distribución muestral, condicionada en las independientes, depende del error.</p>
+<ul>
+<li><strong>S5</strong> El error se distribuye normal con media cero y varianza <span class="math inline">\(\sigma^2\)</span>: <span class="math inline">\(u\sim N(0,\sigma^2)\)</span></li>
+</ul>
+<p>Bajo los supuestos anteriores y <strong>S5</strong>, tenemos entonces que</p>
+<p><span class="math display">\[\begin{equation}
+\tag{13}
+\hat{\beta}_j\sim N(\beta,Var(\hat{\beta}))
+\end{equation}\]</span></p>
+<p>Luego</p>
+<p><span class="math display">\[\begin{equation}
+\tag{14}
+\dfrac{\hat{\beta}_j-\beta_j}{sd(\hat{\beta}_j)}\sim N(0,1)
+\end{equation}\]</span></p>
+<p>Para hacer pruebas de hipótesis sobre un solo parámetro usamos <span class="math inline">\((14)\)</span> pero teniendo en cuenta que <span class="math inline">\(sd(\hat{\beta})\)</span> no es observable, pero su estimación es el error estándar, de donde tenemos que</p>
+<p><span class="math display">\[\begin{equation}
+\tag{15}
+\dfrac{\hat{\beta}_j-\beta_j}{se(\hat{\beta}_j)}\sim t_{n-k}
+\end{equation}\]</span></p>
+<p>Ahora, para probar <span class="math inline">\(H_0:\beta_j=0\)</span> usamos la estadística <span class="math inline">\(t\equiv(\hat{\beta_j}-\beta_{j,H_0})/se(\hat{\beta}_j)\)</span>. Esta me dice que tanto se desvia el valor estimado del valor bajo la hipótesis nula en relación a la desviación estándar. Por ejemplo, si <span class="math inline">\(t=1\)</span> decimos que el valor estimado es mayor a cero en una desviación estándar del estimador. Dado que se obtiene un valor puntual de <span class="math inline">\(\hat{\beta_j}\)</span>, pero sabemos que pudimos haber obtenido un valor diferente con otra muestra, entonce debemos examinar la distribución de <span class="math inline">\(\hat{\beta}_j\)</span> para saber que tan probable es que hubiésemos obtenido un valor estimado de cero. La prueba <span class="math inline">\(t\)</span> me permite responder esa pregunta</p>
+<div id="demostración" class="section level3 unnumbered">
+<h3>Demostración</h3>
+<p>Vamos a simular unos datos <span class="math inline">\(Y=\alpha+\beta_{X1}X_1+\beta_{X2}X_2+u\)</span>. Empezaremos simulando un proceso con <span class="math inline">\(\alpha=5\)</span>, <span class="math inline">\(\beta_{X1}=0.5\)</span>, <span class="math inline">\(\beta_{X2}=3\)</span>. Tomamos inicialmente una muestra <span class="math inline">\(n\approx 100\)</span>, y estimamos los coeficientes vía MCO</p>
+<p><br/></p>
+<ol style="list-style-type: decimal">
+<li>Simulamos los datos y tomamos una muestra</li>
+</ol>
+<p><br/></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="estimador-mco-propiedades.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
+<span id="cb10-2"><a href="estimador-mco-propiedades.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-3"><a href="estimador-mco-propiedades.html#cb10-3" aria-hidden="true" tabindex="-1"></a>N<span class="ot">&lt;-</span><span class="dv">10000</span></span>
+<span id="cb10-4"><a href="estimador-mco-propiedades.html#cb10-4" aria-hidden="true" tabindex="-1"></a>coefs<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="st">&quot;hat_beta_1&quot;</span> <span class="ot">=</span> <span class="fu">numeric</span>(<span class="dv">1000</span>), <span class="st">&quot;hat_beta_2&quot;</span> <span class="ot">=</span> <span class="fu">numeric</span>(<span class="dv">1000</span>)) <span class="co">#Vector que guardará los coeficientes</span></span>
+<span id="cb10-5"><a href="estimador-mco-propiedades.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>) <span class="co"># permite reproducir los resultados</span></span>
+<span id="cb10-6"><a href="estimador-mco-propiedades.html#cb10-6" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(N, <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">100</span>), <span class="at">sigma =</span> <span class="fu">cbind</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="fl">2.5</span>), <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="dv">10</span>))) <span class="co"># generamos X1 y X2</span></span>
+<span id="cb10-7"><a href="estimador-mco-propiedades.html#cb10-7" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, <span class="at">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb10-8"><a href="estimador-mco-propiedades.html#cb10-8" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> X[, <span class="dv">1</span>] <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> X[, <span class="dv">2</span>] <span class="sc">+</span> u</span>
+<span id="cb10-9"><a href="estimador-mco-propiedades.html#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="estimador-mco-propiedades.html#cb10-10" aria-hidden="true" tabindex="-1"></a>xdf<span class="ot">&lt;-</span><span class="fu">data.frame</span>(X,Y)</span>
+<span id="cb10-11"><a href="estimador-mco-propiedades.html#cb10-11" aria-hidden="true" tabindex="-1"></a>dfs<span class="ot">&lt;-</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">FALSE</span>),<span class="fu">nrow</span>(xdf),<span class="at">replace=</span><span class="cn">TRUE</span>,<span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.01</span>,<span class="fl">0.99</span>)) <span class="co">#muestra aleatoria, n aprox 100</span></span>
+<span id="cb10-12"><a href="estimador-mco-propiedades.html#cb10-12" aria-hidden="true" tabindex="-1"></a>dfs<span class="ot">&lt;-</span>xdf[dfs,]</span></code></pre></div>
+<p><br/></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Estimamos por MCO</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="estimador-mco-propiedades.html#cb11-1" aria-hidden="true" tabindex="-1"></a>model1<span class="ot">&lt;-</span><span class="fu">lm</span>(Y<span class="sc">~</span>X1<span class="sc">+</span>X2,<span class="at">data=</span>dfs)</span>
+<span id="cb11-2"><a href="estimador-mco-propiedades.html#cb11-2" aria-hidden="true" tabindex="-1"></a>model1</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = Y ~ X1 + X2, data = dfs)
 
+Coefficients:
+(Intercept)           X1           X2  
+   -12.4896       0.9628       2.9362  </code></pre>
+<p><br/></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Calculamos el error estándar y el estadístico <span class="math inline">\(t\)</span>. Tenga en cuenta que para estimar la varianza del estimador necesitamos <span class="math display">\[\hat{\sigma}^2=\dfrac{\sum_{i}^{n}\hat{u}_i}{n-k}\]</span></li>
+</ol>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="estimador-mco-propiedades.html#cb13-1" aria-hidden="true" tabindex="-1"></a>X1bar<span class="ot">&lt;-</span><span class="fu">mean</span>(dfs<span class="sc">$</span>X1)</span>
+<span id="cb13-2"><a href="estimador-mco-propiedades.html#cb13-2" aria-hidden="true" tabindex="-1"></a>sumX1sqr<span class="ot">&lt;-</span><span class="fu">sum</span>((dfs<span class="sc">$</span>X1<span class="sc">-</span>X1bar)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb13-3"><a href="estimador-mco-propiedades.html#cb13-3" aria-hidden="true" tabindex="-1"></a>Rsqrx1<span class="ot">&lt;-</span><span class="fu">summary</span>(<span class="fu">lm</span>(X1<span class="sc">~</span>X2,<span class="at">data=</span>dfs))<span class="sc">$</span>r.squared</span>
+<span id="cb13-4"><a href="estimador-mco-propiedades.html#cb13-4" aria-hidden="true" tabindex="-1"></a>uhat<span class="ot">&lt;-</span>model1<span class="sc">$</span>residuals</span>
+<span id="cb13-5"><a href="estimador-mco-propiedades.html#cb13-5" aria-hidden="true" tabindex="-1"></a>sigmahat<span class="ot">&lt;-</span>(<span class="fu">sum</span>(uhat<span class="sc">^</span><span class="dv">2</span>))<span class="sc">/</span>(model1<span class="sc">$</span>df.residual)<span class="co">#Varianza estimada del error</span></span>
+<span id="cb13-6"><a href="estimador-mco-propiedades.html#cb13-6" aria-hidden="true" tabindex="-1"></a>varhatb1hat<span class="ot">&lt;-</span>sigmahat<span class="sc">/</span>(sumX1sqr<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>Rsqrx1))<span class="co">#Varianza estimada del estimador</span></span>
+<span id="cb13-7"><a href="estimador-mco-propiedades.html#cb13-7" aria-hidden="true" tabindex="-1"></a>se<span class="ot">&lt;-</span><span class="fu">sqrt</span>(varhatb1hat)</span>
+<span id="cb13-8"><a href="estimador-mco-propiedades.html#cb13-8" aria-hidden="true" tabindex="-1"></a>se</span></code></pre></div>
+<pre><code>[1] 0.1990679</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="estimador-mco-propiedades.html#cb15-1" aria-hidden="true" tabindex="-1"></a>t<span class="ot">&lt;-</span><span class="fu">coef</span>(model1)[<span class="dv">2</span>]<span class="sc">/</span>se</span>
+<span id="cb15-2"><a href="estimador-mco-propiedades.html#cb15-2" aria-hidden="true" tabindex="-1"></a>t</span></code></pre></div>
+<pre><code>      X1 
+4.836502 </code></pre>
+<p><br/></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Hacemos la prueba de hipótesis <span class="math inline">\(Ho:\beta_{X1}=0\)</span> contra la alternativa <span class="math inline">\(Ha:\beta_{X1}\neq0\)</span>. Grafiquemos la distribución <span class="math inline">\(t_{df}\)</span> con los grados de libertar correspondientes y veamos donde se ubica nuestro estadístico <span class="math inline">\(t\)</span></li>
+</ol>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="estimador-mco-propiedades.html#cb17-1" aria-hidden="true" tabindex="-1"></a>funcShaded <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb17-2"><a href="estimador-mco-propiedades.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">dt</span>(x,<span class="at">df=</span><span class="dv">87</span>)</span>
+<span id="cb17-3"><a href="estimador-mco-propiedades.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  y[x <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">&amp;</span>x<span class="sc">&lt;</span><span class="dv">2</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb17-4"><a href="estimador-mco-propiedades.html#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(y)</span>
+<span id="cb17-5"><a href="estimador-mco-propiedades.html#cb17-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-6"><a href="estimador-mco-propiedades.html#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="estimador-mco-propiedades.html#cb17-7" aria-hidden="true" tabindex="-1"></a>tdst<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)), <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
+<span id="cb17-8"><a href="estimador-mco-propiedades.html#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dt, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> model1<span class="sc">$</span>df.residual))</span>
+<span id="cb17-9"><a href="estimador-mco-propiedades.html#cb17-9" aria-hidden="true" tabindex="-1"></a>tdst<span class="sc">+</span><span class="fu">theme_classic</span>()<span class="sc">+</span><span class="fu">stat_function</span>(<span class="at">fun=</span>funcShaded,<span class="at">geom=</span><span class="st">&quot;area&quot;</span>, <span class="at">fill=</span><span class="st">&quot;blue&quot;</span>,<span class="at">alpha=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
+<span id="cb17-10"><a href="estimador-mco-propiedades.html#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span><span class="sc">-</span><span class="dv">3</span> , <span class="at">y =</span> <span class="fl">0.1</span>,<span class="at">label=</span><span class="st">&quot;Area=0.25&quot;</span>)<span class="sc">+</span><span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span><span class="dv">3</span> , <span class="at">y =</span> <span class="fl">0.1</span>,<span class="at">label=</span><span class="st">&quot;Area=0.25&quot;</span>)<span class="sc">+</span></span>
+<span id="cb17-11"><a href="estimador-mco-propiedades.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Zonas de rechazo al 5%, df=60&quot;</span>,<span class="at">y=</span><span class="st">&quot;&quot;</span>,<span class="at">x=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="02-mco_endogeneidad_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><br/></p>
+
+</div>
+</div>
 </div>
 
 
@@ -204,6 +394,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -244,7 +435,7 @@ gitbook.start({
 },
 "download": ["Econometria2.pdf", "Econometria2.epub"],
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {
