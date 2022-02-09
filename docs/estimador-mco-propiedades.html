@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo2 Estimador MCO: Propiedades | Econometría 2</title>
   <meta name="description" content="Notas de clase de Econometría 2" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo2 Estimador MCO: Propiedades | Econometría 2" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Andrés Vargas" />
 
 
-<meta name="date" content="2022-02-07" />
+<meta name="date" content="2022-02-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"/>
 
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,7 +43,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -158,6 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#error-estándar-e-inferencia"><i class="fa fa-check"></i><b>2.3</b> Error estándar e inferencia</a>
 <ul>
 <li class="chapter" data-level="" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#demostración"><i class="fa fa-check"></i>Demostración</a></li>
+<li class="chapter" data-level="" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#ejercicio-1"><i class="fa fa-check"></i>Ejercicio</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -374,6 +375,40 @@ Coefficients:
 <span id="cb17-11"><a href="estimador-mco-propiedades.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Zonas de rechazo al 5%, df=60&quot;</span>,<span class="at">y=</span><span class="st">&quot;&quot;</span>,<span class="at">x=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="02-mco_endogeneidad_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p><br/></p>
+</div>
+<div id="ejercicio-1" class="section level3 unnumbered">
+<h3>Ejercicio</h3>
+<p>Ingrese a la carpeta Data en el repositorio y descargue la base de datos <em>wagew.rda</em>. Esta base contiene los datos de la GEIH 2019. La base tiene información para personas ocupadas cuya posición ocupacional es empleado de empresa particular o empleado del gobierno. Contiene las siguientes variables</p>
+<ul>
+<li>p6020: 1 hombre, 2 mujer</li>
+<li>p6040: edad en años</li>
+<li>p6210: nivel educativo más alto alcanzado. 1 ninguno, 3 primaria, 4 básica (6-9), 5 media (10-13), 6 superior o universitaria</li>
+<li>p6210s1: último grado aprobado</li>
+<li>impa: ingreso monetario mensual</li>
+<li>sy: años de escolaridad</li>
+</ul>
+<p>Su propósito es estimar el retorno a la educación, en otras palabras, en cuánto aumenta el ingreso por cada año adicional de educación. Para ello plantea una ecuación de Mincer de la forma</p>
+<p><span class="math display">\[
+ln(w_i)=\alpha+\beta_1S_i+\beta_2Exp_i+\beta_3Exp^2+\gamma Mujer_i+e_i
+\]</span>
+Donde</p>
+<ul>
+<li><span class="math inline">\(ln(w_i)\)</span>: logaritmo del ingreso laboral mensual</li>
+<li><span class="math inline">\(S_i\)</span>: años de escolaridad</li>
+<li><span class="math inline">\(Exp\)</span>: es la experiencia potencial en el mercado laboral, la cual se calcula como <span class="math inline">\(edad-S_i-6\)</span></li>
+<li><span class="math inline">\(Mujer\)</span>: dummy que identifica a las mujeres</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>Antes de realizar la estimación, lleve a cabo el siguiente análisis gráfico</li>
+</ol>
+<ul>
+<li><p>Haga un gráfico de dispersión (<em>scatter</em>) donde tenga los años de escolaridad en el eje X y <span class="math inline">\(ln(w)\)</span> en el eje Y (use ggplot con geom_point). Interprete</p></li>
+<li><p>En una gráfica superponga la distribución empírica, densidad, de <span class="math inline">\(ln(w)\)</span> para hombres y para <span class="math inline">\(mujeres\)</span>. Interprete los resultados</p></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Realice la estimación del modelo y reporte los resultados en una tabla bien ordenada. Interprete los coeficientes en términos de dirección, magnitud y significancia<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p></li>
+<li><p>¿El coeficiente estimado <span class="math inline">\(\hat{\beta_1}\)</span> tiene interpretación causal? Explique.</p></li>
+</ol>
 
 </div>
 </div>
@@ -384,6 +419,13 @@ Coefficients:
 
 
 
+
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>Se sugiere revisar <a href="https://documents1.worldbank.org/curated/en/830831468147839247/pdf/WPS7020.pdf" class="uri">https://documents1.worldbank.org/curated/en/830831468147839247/pdf/WPS7020.pdf</a><a href="estimador-mco-propiedades.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
@@ -394,7 +436,6 @@ Coefficients:
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -435,7 +476,7 @@ gitbook.start({
 },
 "download": ["Econometria2.pdf", "Econometria2.epub"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

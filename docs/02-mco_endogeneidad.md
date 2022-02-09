@@ -281,4 +281,38 @@ labs(title="Zonas de rechazo al 5%, df=60",y="",x="")
 
 
 
+### Ejercicio {-}
+
+Ingrese a la carpeta Data en el repositorio y descargue la base de datos *wagew.rda*. Esta base contiene los datos de la GEIH 2019. La base tiene información para personas ocupadas cuya posición ocupacional es empleado de empresa particular o empleado del gobierno.  Contiene las siguientes variables
+
+- p6020: 1 hombre, 2 mujer
+- p6040: edad en años
+- p6210: nivel educativo más alto alcanzado. 1 ninguno, 3 primaria, 4 básica (6-9), 5 media (10-13), 6 superior o universitaria
+- p6210s1: último grado aprobado
+- impa: ingreso monetario mensual
+- sy: años de escolaridad
+
+
+Su propósito es estimar el retorno a la educación, en otras palabras, en cuánto aumenta el ingreso por cada año adicional de educación. Para ello plantea una ecuación de Mincer de la forma
+
+$$
+ln(w_i)=\alpha+\beta_1S_i+\beta_2Exp_i+\beta_3Exp^2+\gamma Mujer_i+e_i
+$$
+Donde 
+
+- $ln(w_i)$: logaritmo del ingreso laboral mensual
+- $S_i$: años de escolaridad
+- $Exp$: es la experiencia potencial en el mercado laboral, la cual se calcula como $edad-S_i-6$
+- $Mujer$: dummy que identifica a las mujeres
+
+1. Antes de realizar la estimación, lleve a cabo el siguiente análisis gráfico
+
+- Haga un gráfico de dispersión (*scatter*) donde tenga los años de escolaridad en el eje X y $ln(w)$ en el eje Y (use ggplot con geom_point). Interprete
+
+- En una gráfica superponga la distribución empírica, densidad, de $ln(w)$ para hombres y para $mujeres$. Interprete los resultados
+
+2. Realice la estimación del modelo y reporte los resultados en una tabla bien ordenada. Interprete los coeficientes en términos de dirección, magnitud y significancia^[Se sugiere revisar https://documents1.worldbank.org/curated/en/830831468147839247/pdf/WPS7020.pdf]
+
+3. ¿El coeficiente estimado $\hat{\beta_1}$ tiene interpretación causal? Explique. 
+
 
