@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo4 Introducción | Econometría 2</title>
+  <meta name="description" content="Notas de clase de Econometría 2" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo4 Introducción | Econometría 2" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Notas de clase de Econometría 2" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo4 Introducción | Econometría 2" />
+  
+  <meta name="twitter:description" content="Notas de clase de Econometría 2" />
+  
+
+<meta name="author" content="Andrés Vargas" />
+
+
+<meta name="date" content="2022-02-09" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="endogeneidad-y-el-estimador-de-variables-instrumentales.html"/>
+
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Econometría 2</a></li>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="" data-path="sobre-el-autor.html"><a href="sobre-el-autor.html"><i class="fa fa-check"></i>Sobre el autor</a>
+<ul>
+<li class="chapter" data-level="" data-path="sobre-el-autor.html"><a href="sobre-el-autor.html#andrés-vargas"><i class="fa fa-check"></i>Andrés Vargas</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i>Introducción</a></li>
+<li class="chapter" data-level="1" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><i class="fa fa-check"></i><b>1</b> El modelo de regresión lineal y el estimador MCO</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html#la-mecánica-del-estimador-mco"><i class="fa fa-check"></i><b>1.1</b> La mecánica del estimador MCO</a></li>
+<li class="chapter" data-level="1.2" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html#estimador"><i class="fa fa-check"></i><b>1.2</b> Estimador</a></li>
+<li class="chapter" data-level="1.3" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html#estimador-mco"><i class="fa fa-check"></i><b>1.3</b> Estimador MCO</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="el-modelo-de-regresión-lineal-y-el-estimador-mco.html"><a href="el-modelo-de-regresión-lineal-y-el-estimador-mco.html#simulación"><i class="fa fa-check"></i><b>1.3.1</b> Simulación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html"><i class="fa fa-check"></i><b>2</b> Estimador MCO: Propiedades</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#el-valor-esperado-del-estimador-mco"><i class="fa fa-check"></i><b>2.1</b> El valor esperado del estimador MCO</a></li>
+<li class="chapter" data-level="2.2" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#la-varianza-del-estimador-en-datos-de-corte-transversal"><i class="fa fa-check"></i><b>2.2</b> La varianza del estimador en datos de corte transversal</a></li>
+<li class="chapter" data-level="2.3" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#error-estándar-e-inferencia"><i class="fa fa-check"></i><b>2.3</b> Error estándar e inferencia</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#demostración"><i class="fa fa-check"></i>Demostración</a></li>
+<li class="chapter" data-level="" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#ejercicio-1"><i class="fa fa-check"></i>Ejercicio</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="endogeneidad-y-el-estimador-de-variables-instrumentales.html"><a href="endogeneidad-y-el-estimador-de-variables-instrumentales.html"><i class="fa fa-check"></i><b>3</b> Endogeneidad y el estimador de variables instrumentales</a></li>
+<li class="chapter" data-level="4" data-path="introducción-1.html"><a href="introducción-1.html"><i class="fa fa-check"></i><b>4</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="introducción-1.html"><a href="introducción-1.html#variable-omitida"><i class="fa fa-check"></i><b>4.1</b> Variable omitida</a></li>
+<li class="chapter" data-level="4.2" data-path="introducción-1.html"><a href="introducción-1.html#simultaneidad"><i class="fa fa-check"></i><b>4.2</b> Simultaneidad</a></li>
+<li class="chapter" data-level="4.3" data-path="introducción-1.html"><a href="introducción-1.html#error-de-medcición"><i class="fa fa-check"></i><b>4.3</b> Error de Medcición</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Econometría 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introducción-1" class="section level1" number="4">
+<h1><span class="header-section-number">Capítulo4</span> Introducción</h1>
+<p>El estimador MCO se dice insesgado si</p>
+<p><span class="math display">\[\begin{equation}
+\tag{1}
+E(\hat{\boldsymbol{\beta}}|\mathbf{X})=\boldsymbol{\beta}
+\end{equation}\]</span></p>
+<p>Sabemos que este resultado requiere que <span class="math inline">\(E(\mathbf{u|X})=\mathbf{0}\)</span>. Sin embargo, hay situaciones en las que esto no es así, en tre ellas tenemos</p>
+<p><svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M440.5 88.5l-52 52L415 167c9.4 9.4 9.4 24.6 0 33.9l-17.4 17.4c11.8 26.1 18.4 55.1 18.4 85.6 0 114.9-93.1 208-208 208S0 418.9 0 304 93.1 96 208 96c30.5 0 59.5 6.6 85.6 18.4L311 97c9.4-9.4 24.6-9.4 33.9 0l26.5 26.5 52-52 17.1 17zM500 60h-24c-6.6 0-12 5.4-12 12s5.4 12 12 12h24c6.6 0 12-5.4 12-12s-5.4-12-12-12zM440 0c-6.6 0-12 5.4-12 12v24c0 6.6 5.4 12 12 12s12-5.4 12-12V12c0-6.6-5.4-12-12-12zm33.9 55l17-17c4.7-4.7 4.7-12.3 0-17-4.7-4.7-12.3-4.7-17 0l-17 17c-4.7 4.7-4.7 12.3 0 17 4.8 4.7 12.4 4.7 17 0zm-67.8 0c4.7 4.7 12.3 4.7 17 0 4.7-4.7 4.7-12.3 0-17l-17-17c-4.7-4.7-12.3-4.7-17 0-4.7 4.7-4.7 12.3 0 17l17 17zm67.8 34c-4.7-4.7-12.3-4.7-17 0-4.7 4.7-4.7 12.3 0 17l17 17c4.7 4.7 12.3 4.7 17 0 4.7-4.7 4.7-12.3 0-17l-17-17zM112 272c0-35.3 28.7-64 64-64 8.8 0 16-7.2 16-16s-7.2-16-16-16c-52.9 0-96 43.1-96 96 0 8.8 7.2 16 16 16s16-7.2 16-16z"/></svg> Variable omitida
+<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M440.5 88.5l-52 52L415 167c9.4 9.4 9.4 24.6 0 33.9l-17.4 17.4c11.8 26.1 18.4 55.1 18.4 85.6 0 114.9-93.1 208-208 208S0 418.9 0 304 93.1 96 208 96c30.5 0 59.5 6.6 85.6 18.4L311 97c9.4-9.4 24.6-9.4 33.9 0l26.5 26.5 52-52 17.1 17zM500 60h-24c-6.6 0-12 5.4-12 12s5.4 12 12 12h24c6.6 0 12-5.4 12-12s-5.4-12-12-12zM440 0c-6.6 0-12 5.4-12 12v24c0 6.6 5.4 12 12 12s12-5.4 12-12V12c0-6.6-5.4-12-12-12zm33.9 55l17-17c4.7-4.7 4.7-12.3 0-17-4.7-4.7-12.3-4.7-17 0l-17 17c-4.7 4.7-4.7 12.3 0 17 4.8 4.7 12.4 4.7 17 0zm-67.8 0c4.7 4.7 12.3 4.7 17 0 4.7-4.7 4.7-12.3 0-17l-17-17c-4.7-4.7-12.3-4.7-17 0-4.7 4.7-4.7 12.3 0 17l17 17zm67.8 34c-4.7-4.7-12.3-4.7-17 0-4.7 4.7-4.7 12.3 0 17l17 17c4.7 4.7 12.3 4.7 17 0 4.7-4.7 4.7-12.3 0-17l-17-17zM112 272c0-35.3 28.7-64 64-64 8.8 0 16-7.2 16-16s-7.2-16-16-16c-52.9 0-96 43.1-96 96 0 8.8 7.2 16 16 16s16-7.2 16-16z"/></svg> Error de medición
+<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M440.5 88.5l-52 52L415 167c9.4 9.4 9.4 24.6 0 33.9l-17.4 17.4c11.8 26.1 18.4 55.1 18.4 85.6 0 114.9-93.1 208-208 208S0 418.9 0 304 93.1 96 208 96c30.5 0 59.5 6.6 85.6 18.4L311 97c9.4-9.4 24.6-9.4 33.9 0l26.5 26.5 52-52 17.1 17zM500 60h-24c-6.6 0-12 5.4-12 12s5.4 12 12 12h24c6.6 0 12-5.4 12-12s-5.4-12-12-12zM440 0c-6.6 0-12 5.4-12 12v24c0 6.6 5.4 12 12 12s12-5.4 12-12V12c0-6.6-5.4-12-12-12zm33.9 55l17-17c4.7-4.7 4.7-12.3 0-17-4.7-4.7-12.3-4.7-17 0l-17 17c-4.7 4.7-4.7 12.3 0 17 4.8 4.7 12.4 4.7 17 0zm-67.8 0c4.7 4.7 12.3 4.7 17 0 4.7-4.7 4.7-12.3 0-17l-17-17c-4.7-4.7-12.3-4.7-17 0-4.7 4.7-4.7 12.3 0 17l17 17zm67.8 34c-4.7-4.7-12.3-4.7-17 0-4.7 4.7-4.7 12.3 0 17l17 17c4.7 4.7 12.3 4.7 17 0 4.7-4.7 4.7-12.3 0-17l-17-17zM112 272c0-35.3 28.7-64 64-64 8.8 0 16-7.2 16-16s-7.2-16-16-16c-52.9 0-96 43.1-96 96 0 8.8 7.2 16 16 16s16-7.2 16-16z"/></svg> Simultaneidad</p>
+<div id="variable-omitida" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Variable omitida</h2>
+<p>En Colombia, las zonas de deforestación han coincidido con áreas de presencia de grupos armados ¿La violencia causa la deforestación? <a href="https://ageconsearch.umn.edu/record/209328/">Ferguson, Romero, y Vargas (2014)</a> intentar estimar el efecto de la expansión paramilitar sobre la deforestación.</p>
+<ul>
+<li>Considere la siguiente especificación</li>
+</ul>
+<p><span class="math display">\[\begin{equation}
+forest_{m,t}=\beta_0+\beta_1Para_{mt}+\epsilon_{m,t}
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(forest_{m,t}\)</span> es la proporción de la municipalidad <span class="math inline">\(m\)</span> cubierta de bosque en el año <span class="math inline">\(t\)</span>, mientras que <span class="math inline">\(Para_{m,t}\)</span> son los ataques paramilitares hasta el año <span class="math inline">\(t\)</span></p>
+<ul>
+<li><p>Al estimar por MCO encuentran que <span class="math inline">\(\hat{\beta_1}=0.045\)</span> con <span class="math inline">\(s.e=0.0117\)</span></p></li>
+<li><p>¿Podría decir que el estimador es insesgado?</p></li>
+<li><p>¿Qué pasa si la deforestación y la presencia del conflicto dependen de las características ecológicas y geológicas del terreno?</p></li>
+</ul>
+</div>
+<div id="simultaneidad" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Simultaneidad</h2>
+<p>Usted quiere estimar el efecto de los aranceles sobre el volumen de comercio. Plantéa el siguiente modelo</p>
+<p><span class="math display">\[\begin{equation}
+comercio=\beta_0+\beta_1arancel+\upsilon
+\end{equation}\]</span></p>
+<p>Sin embargo, si los grupos de presión logran hacer que el gobierno suba los aranceles como respuesta a la creciente competencia con importaciones, entonces</p>
+<p><span class="math display">\[\begin{equation}
+arancel=\gamma_0+\gamma_1comercio+\omega
+\end{equation}\]</span></p>
+<p>En consecuencia</p>
+<p><span class="math display">\[\begin{equation}
+comercio=\beta_0+\beta_1(\gamma_0+\gamma_1comercio+\omega)+\upsilon
+\end{equation}\]</span></p>
+<ul>
+<li>Un choque al comercio, <span class="math inline">\(\upsilon\)</span>, afecta también a los aranceles, luego <span class="math inline">\(Cov(arancel,\upsilon)\neq0\)</span></li>
+</ul>
+</div>
+<div id="error-de-medcición" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Error de Medcición</h2>
+<p>Quiere estimar el efecto del ingreso familiar sobre el desempeño académico. Tiene el modelo</p>
+<p><span class="math display">\[\begin{equation}
+nota=\beta_0+\beta_1ing^*+u
+\end{equation}\]</span></p>
+<p>Acá, <span class="math inline">\(ing^*\)</span> es la medida ideal del ingreso. Sin embargo, lo que tiene es lo que reporta el estudiante es <span class="math inline">\(ing\)</span></p>
+<p><span class="math display">\[
+ing=ing^*+e
+\]</span></p>
+<p>luego</p>
+<p><span class="math display">\[\begin{align}
+nota&amp;=\beta_0+\beta_1(ing-e)+u\\
+&amp;=\beta_0+\beta_1ing+\upsilon
+\end{align}\]</span></p>
+<p>Con <span class="math inline">\(\upsilon=u-\beta_1e\)</span>.</p>
+<ul>
+<li>Note que <span class="math inline">\(Cov(ing,\upsilon)\neq0\)</span> porque <span class="math inline">\(ing\)</span> está correlacionado con <span class="math inline">\(e\)</span></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="endogeneidad-y-el-estimador-de-variables-instrumentales.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Econometria2.pdf", "Econometria2.epub"],
+"search": {
+"engine": "lunr",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

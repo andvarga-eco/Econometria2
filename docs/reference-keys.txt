@@ -9,3 +9,8 @@ estimador-mco-propiedades
 el-valor-esperado-del-estimador-mco
 la-varianza-del-estimador-en-datos-de-corte-transversal
 error-estándar-e-inferencia
+endogeneidad-y-el-estimador-de-variables-instrumentales
+introducción-1
+variable-omitida
+simultaneidad
+error-de-medcición

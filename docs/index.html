@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Econometría 2</title>
   <meta name="description" content="Notas de clase de Econometría 2" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Econometría 2" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Andrés Vargas" />
 
 
-<meta name="date" content="2022-02-09" />
+<meta name="date" content="2022-02-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,9 +33,8 @@
   
 
 <link rel="next" href="sobre-el-autor.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -43,6 +42,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -161,6 +161,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#ejercicio-1"><i class="fa fa-check"></i>Ejercicio</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="endogeneidad-y-el-estimador-de-variables-instrumentales.html"><a href="endogeneidad-y-el-estimador-de-variables-instrumentales.html"><i class="fa fa-check"></i><b>3</b> Endogeneidad y el estimador de variables instrumentales</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="endogeneidad-y-el-estimador-de-variables-instrumentales.html"><a href="endogeneidad-y-el-estimador-de-variables-instrumentales.html#introducción-1"><i class="fa fa-check"></i><b>3.1</b> Introducción</a></li>
+<li class="chapter" data-level="3.2" data-path="endogeneidad-y-el-estimador-de-variables-instrumentales.html"><a href="endogeneidad-y-el-estimador-de-variables-instrumentales.html#variable-omitida"><i class="fa fa-check"></i><b>3.2</b> Variable omitida</a></li>
+<li class="chapter" data-level="3.3" data-path="endogeneidad-y-el-estimador-de-variables-instrumentales.html"><a href="endogeneidad-y-el-estimador-de-variables-instrumentales.html#simultaneidad"><i class="fa fa-check"></i><b>3.3</b> Simultaneidad</a></li>
+<li class="chapter" data-level="3.4" data-path="endogeneidad-y-el-estimador-de-variables-instrumentales.html"><a href="endogeneidad-y-el-estimador-de-variables-instrumentales.html#error-de-medcición"><i class="fa fa-check"></i><b>3.4</b> Error de Medcición</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -181,7 +188,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Econometría 2</h1>
 <p class="author"><em>Andrés Vargas</em></p>
-<p class="date"><em>2022-02-09</em></p>
+<p class="date"><em>2022-02-13</em></p>
 </div>
 <div id="prefacio" class="section level1 unnumbered">
 <h1>Prefacio</h1>
@@ -198,6 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -238,7 +246,7 @@ gitbook.start({
 },
 "download": ["Econometria2.pdf", "Econometria2.epub"],
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

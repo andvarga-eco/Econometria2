@@ -1,0 +1,100 @@
+# Endogeneidad y el estimador de variables instrumentales
+
+```{r setup_prog, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(
+  comment = NA, 
+  warning = FALSE, 
+  message = FALSE
+    )
+library(fontawesome)
+here::i_am("Econometria2/03-endogeneidad_iv.Rmd")
+library(here)
+here()
+```
+
+## Introducción 
+
+El estimador MCO se dice insesgado si
+
+\begin{equation}
+\tag{1}
+E(\hat{\boldsymbol{\beta}}|\mathbf{X})=\boldsymbol{\beta}
+\end{equation}
+
+Sabemos que este resultado requiere que $E(\mathbf{u|X})=\mathbf{0}$. Sin embargo, hay situaciones en las que esto no es así, en tre ellas tenemos
+
+- `r fa('bomb')` Variable omitida
+
+- `r fa('bomb')` Error de medición
+
+- `r fa('bomb')` Simultaneidad
+
+
+## Variable omitida
+
+En Colombia, las zonas de deforestación han coincidido con áreas de presencia de grupos armados ¿La violencia causa la deforestación? [Ferguson, Romero, y Vargas (2014)](https://ageconsearch.umn.edu/record/209328/) intentar estimar el efecto de la expansión paramilitar sobre la deforestación. 
+
+- Considere la siguiente especificación
+
+\begin{equation}
+forest_{m,t}=\beta_0+\beta_1Para_{mt}+\epsilon_{m,t}
+\end{equation}
+
+Donde $forest_{m,t}$ es la proporción de la municipalidad $m$ cubierta de bosque en el año $t$, mientras que $Para_{m,t}$ son los ataques paramilitares hasta el año $t$
+
+- Al estimar por MCO encuentran que $\hat{\beta_1}=0.045$ con $s.e=0.0117$
+
+- ¿Podría decir que el estimador es insesgado?
+
+- ¿Qué pasa si la deforestación y la presencia del conflicto dependen de las características ecológicas y geológicas del terreno? 
+
+
+## Simultaneidad
+
+Usted quiere estimar el efecto de los aranceles sobre el volumen de comercio. Plantéa el siguiente modelo
+
+\begin{equation}
+comercio=\beta_0+\beta_1arancel+\upsilon
+\end{equation}
+
+
+Sin embargo, si los grupos de presión logran hacer que el gobierno suba los aranceles como respuesta a la creciente competencia con importaciones, entonces 
+
+\begin{equation}
+arancel=\gamma_0+\gamma_1comercio+\omega
+\end{equation}
+
+En consecuencia
+
+\begin{equation}
+comercio=\beta_0+\beta_1(\gamma_0+\gamma_1comercio+\omega)+\upsilon
+\end{equation}
+
+- Un choque al comercio, $\upsilon$, afecta también a los aranceles, luego $Cov(arancel,\upsilon)\neq0$
+
+
+## Error de Medcición
+
+Quiere estimar el efecto del ingreso familiar sobre el desempeño académico. Tiene el modelo
+
+\begin{equation}
+nota=\beta_0+\beta_1ing^*+u
+\end{equation}
+
+Acá, $ing^*$ es la medida ideal del ingreso. Sin embargo, lo que tiene es lo que reporta el estudiante es $ing$
+
+$$
+ing=ing^*+e
+$$
+
+luego
+
+\begin{align}
+nota&=\beta_0+\beta_1(ing-e)+u\\
+&=\beta_0+\beta_1ing+\upsilon
+\end{align}
+
+Con $\upsilon=u-\beta_1e$. 
+
+- Note que $Cov(ing,\upsilon)\neq0$ porque $ing$ está correlacionado con $e$
+
