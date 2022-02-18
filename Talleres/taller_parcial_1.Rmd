@@ -1,0 +1,205 @@
+---
+title: "Repaso parcial 1"
+author: "Andrés Vargas"
+date: "17/02/2022"
+output:
+  html_document:
+    theme: flatly
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 2
+    number_sections: TRUE
+    
+
+---
+
+```{r setup_prog, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(
+  comment = NA, 
+  warning = FALSE, 
+  message = FALSE
+    )
+```
+
+
+## Objetivo
+
+<br/>
+
+Aplicar el concepto de endogeneidad para interpretar resultados de estimación
+
+<br/>
+
+## Aplicación: Instituciones oficiales y rendimiento académico
+
+<br/>
+
+Es un hecho reconocido que los estudiantes de colegios oficiales tienen, en promedio, un rendimiento inferior al de los colegios privados en pruebas estandarizadas. Usando datos de la prueba SABER11 de 2020 para el departamento del Atlántico, se examinará esta cuestión. En particular, se pretende responder la pregunta ¿Cuánto es el impacto de asistir a un colegio oficial sobre el puntaje en las pruebas SABER 11? En otras palabras, cuánto del diferencial de desempeño se puede atribuir a la naturaleza del colegio.
+
+<br/>
+
+## Procedimiento
+
+### Cargar y organizar los datos
+
+<br/>
+
+Ingrese al repositorio y descargue la base [saber11at.csv](https://github.com/andvarga-eco/Econometria_MsC/blob/main/Data/saber11at.csv). 
+
+
+```{r,echo=FALSE, results=FALSE}
+here::i_am("Talleres/taller_parcial_1.Rmd")
+library(here)
+here()
+library(readr)
+library(fst)
+saber11at <- read_csv("https://raw.githubusercontent.com/andvarga-eco/Econometria_MsC/main/Data/saber11at.csv")
+
+```
+
+```{r}
+# Escriba acá el código para cargar los datos
+
+```
+
+<br/>
+
+### Organización de los datos
+
+<br/>
+
+- Explore y familizaricese con la base de datos ¿Cuántas y cuáles variables tenemos? ¿De qué tipo son? ¿Cuáles son las que me interesan? ¿En que unidades están medidas mis variables de interés?
+
+```{r,results=FALSE}
+resumen_data <- function(df) {
+  data.frame(
+    col_name = colnames(df),
+    col_index = 1:ncol(df),
+    col_class = sapply(df, class),
+    row.names = NULL
+  )
+}
+resumen_data(saber11at)
+
+```
+
+<br/>
+
+- Nuestra variable dependiente es **punt_global** y la variable explicativa de interés **cole_naturaleza**. Seleccionamos variables de control 
+
+```{r}
+library(dplyr)
+saber11s<-saber11at%>%select(c(75,42,34,14,18,3))
+```
+
+<br/>
+
+- Las variables categóricas conviertalas en factor. Esto facilita el análisis estadístico
+
+```{r}
+saber11s<-saber11s%>%mutate_if(is.character,as.factor)%>%na.omit()
+```
+
+<br/>
+
+### Análisis descriptivo
+
+<br/>
+
+- Calcule la media y la desviación estándar del puntaje global para los colegios oficiales y no oficiales
+
+<br/>
+
+```{r}
+library(knitr)
+mpunt<-saber11s%>%group_by(cole_naturaleza)%>%summarise(mpunt=mean(punt_global,na.rm=TRUE),
+                          sdpun=sd(punt_global,na.rm=TRUE)
+                          )
+kable(mpunt,
+      caption="Puntaje global: oficial y no oficial", 
+col.names=c("Naturaleza","Media", "SD"),
+align="c", digits=2)
+```
+
+<br/>
+
+- Compare la distribución del puntaje para los colegios oficiales y no oficiales. Use *ggplot* con *geom_density*
+
+<br/>
+
+```{r}
+# Escriba acá el código para realizar el gráfico
+```
+
+
+```{r,echo=FALSE}
+library(ggplot2)
+baseplot<-ggplot(saber11s,aes(x=punt_global,fill=cole_naturaleza))+geom_density(alpha=0.4)
+baseplot+labs(title="Puntaje global: distribución oficial y no oficial",x="Puntaje Global",fill="")+theme(legend.position="bottom")
+```
+
+<br/>
+
+### Estimación
+
+<br/>
+
+Estime el modelo
+
+$$
+punt\_global=\beta_0+\beta_1cole\_naturaleza+e
+$$
+<br/>
+
+- Interprete los resultados, en términos de dirección, magnitud, y significancia
+
+```{r}
+# Escriba acá el código para estimar el modelo base
+
+```
+
+```{r,echo=FALSE}
+library(xtable)
+mod1 <- lm(punt_global~cole_naturaleza, data=saber11s)
+smod1 <- data.frame(xtable(summary(mod1)))
+smod1%>%select(c(1,2,3))%>%
+kable( 
+caption="Modelo base", 
+col.names=c("Coefficient", "Std. Error", "t-value"),
+align="c", digits=3)
+
+```
+
+<br/>
+
+- ¿Diría usted que el estimador de $\beta_1$ es insesgado? Explique detalladamente su respuesta
+
+- Añada a la estimación las variables adicionales que seleccionó ¿Cómo cambia el parámetro estimado de su variable de interés?
+
+<br/>
+
+```{r}
+# Escriba acá el código para estimar el modelo ampliado
+
+```
+
+```{r,echo=FALSE}
+
+saber11s$edumadre<-if_else(saber11s$fami_educacionmadre=="EducaciÃ³n profesional completa"|saber11s$fami_educacionmadre=="EducaciÃ³n profesional incompleta"|saber11s$fami_educacionmadre=="TÃ©cnica o tecnolÃ³gica completa",1,0)
+saber11s$hses<-if_else(saber11s$fami_estratovivienda=="Estrato 4"|saber11s$fami_estratovivienda=="Estrato 5"|saber11s$fami_estratovivienda=="Estrato 6",1,0)
+
+mod2 <- lm(punt_global~.-fami_educacionmadre -fami_estratovivienda, data=saber11s)
+smod2 <- data.frame(xtable(summary(mod2)))
+smod2%>%select(c(1,2,3))%>%
+kable( 
+caption="Modelo ampliado", 
+col.names=c("Coefficient", "Std. Error", "t-value"),
+align="c",digits=3)
+
+
+
+```
+
+<br/>
+
+- Interptrete los resultados. Apoyese en literatura relacionada para darle más solidez a su interpretación

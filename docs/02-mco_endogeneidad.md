@@ -281,7 +281,9 @@ labs(title="Zonas de rechazo al 5%, df=60",y="",x="")
 
 
 
-### Ejercicio {-}
+## Ejercicio
+
+### Retornos a la educación
 
 Ingrese a la carpeta Data en el repositorio y descargue la base de datos *wagew.rda*. Esta base contiene los datos de la GEIH 2019. La base tiene información para personas ocupadas cuya posición ocupacional es empleado de empresa particular o empleado del gobierno.  Contiene las siguientes variables
 
@@ -316,3 +318,22 @@ Donde
 3. ¿El coeficiente estimado $\hat{\beta_1}$ tiene interpretación causal? Explique. 
 
 
+### Rendimiento en pruebas Saber 11
+
+Es un hecho reconocido que los estudiantes de colegios oficiales tienen, en promedio, un rendimiento inferior al de los colegios privados en pruebas estandarizadas. Usando datos de la prueba SABER11 de 2020 para el departamento del Atlántico, se examinará esta cuestión. En particular, se pretende responder la pregunta ¿Cuánto es el impacto de asistir a un colegio oficial sobre el puntaje en las pruebas SABER 11? En otras palabras, cuánto del diferencial de desempeño se puede atribuir a la naturaleza del colegio.
+
+Estime el siguiente modelo
+
+$$
+Puntaje_i=\alpha+\beta O_i+\mathbf{x}\boldsymbol{\gamma}+u_i
+$$
+
+Donde la variable dependiente es **punt_global** y la variable explicativa de interés es una dummy que toma el valor de $1$ si el colegio es oficial y 0 si es no oficial. En la base la variable para construir la dummy es **cole_naturaleza**. $\mathbf{x}$ Corresponde a las variables de control. 
+
+- Ingrese al repositorio y descargue la base [saber11at.csv](https://github.com/andvarga-eco/Econometria_MsC/blob/main/Data/saber11at.csv). 
+
+- Elija el conjunto de variables de control que considere relevantes. No es cualquier variable, debe haber una razón para incluirla. La idea tampoco es incluir muchas variables. Elija 5 máximo
+
+1. Estime el modelo sin incluir las variables de control. Interprete $\hat{\beta}$ y analice si el estimador es insesgado. Explique detalladamente
+
+2. Estime el modelo con las variables de control. Interprete $\hat{\beta}$ y compárelo con lo obtenido en el punto anterior ¿Podría darle una interpretción causal? Explique

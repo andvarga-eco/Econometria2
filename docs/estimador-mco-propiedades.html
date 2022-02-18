@@ -24,7 +24,7 @@
 <meta name="author" content="Andrés Vargas" />
 
 
-<meta name="date" content="2022-02-13" />
+<meta name="date" content="2022-02-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -158,7 +158,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#error-estándar-e-inferencia"><i class="fa fa-check"></i><b>2.3</b> Error estándar e inferencia</a>
 <ul>
 <li class="chapter" data-level="" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#demostración"><i class="fa fa-check"></i>Demostración</a></li>
-<li class="chapter" data-level="" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#ejercicio-1"><i class="fa fa-check"></i>Ejercicio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#ejercicio-1"><i class="fa fa-check"></i><b>2.4</b> Ejercicio</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#retornos-a-la-educación"><i class="fa fa-check"></i><b>2.4.1</b> Retornos a la educación</a></li>
+<li class="chapter" data-level="2.4.2" data-path="estimador-mco-propiedades.html"><a href="estimador-mco-propiedades.html#rendimiento-en-pruebas-saber-11"><i class="fa fa-check"></i><b>2.4.2</b> Rendimiento en pruebas Saber 11</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="endogeneidad-y-el-estimador-de-variables-instrumentales.html"><a href="endogeneidad-y-el-estimador-de-variables-instrumentales.html"><i class="fa fa-check"></i><b>3</b> Endogeneidad y el estimador de variables instrumentales</a>
@@ -383,8 +387,11 @@ Coefficients:
 <p><img src="02-mco_endogeneidad_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p><br/></p>
 </div>
-<div id="ejercicio-1" class="section level3 unnumbered">
-<h3>Ejercicio</h3>
+</div>
+<div id="ejercicio-1" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Ejercicio</h2>
+<div id="retornos-a-la-educación" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Retornos a la educación</h3>
 <p>Ingrese a la carpeta Data en el repositorio y descargue la base de datos <em>wagew.rda</em>. Esta base contiene los datos de la GEIH 2019. La base tiene información para personas ocupadas cuya posición ocupacional es empleado de empresa particular o empleado del gobierno. Contiene las siguientes variables</p>
 <ul>
 <li>p6020: 1 hombre, 2 mujer</li>
@@ -415,6 +422,23 @@ Donde</p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Realice la estimación del modelo y reporte los resultados en una tabla bien ordenada. Interprete los coeficientes en términos de dirección, magnitud y significancia<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p></li>
 <li><p>¿El coeficiente estimado <span class="math inline">\(\hat{\beta_1}\)</span> tiene interpretación causal? Explique.</p></li>
+</ol>
+</div>
+<div id="rendimiento-en-pruebas-saber-11" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Rendimiento en pruebas Saber 11</h3>
+<p>Es un hecho reconocido que los estudiantes de colegios oficiales tienen, en promedio, un rendimiento inferior al de los colegios privados en pruebas estandarizadas. Usando datos de la prueba SABER11 de 2020 para el departamento del Atlántico, se examinará esta cuestión. En particular, se pretende responder la pregunta ¿Cuánto es el impacto de asistir a un colegio oficial sobre el puntaje en las pruebas SABER 11? En otras palabras, cuánto del diferencial de desempeño se puede atribuir a la naturaleza del colegio.</p>
+<p>Estime el siguiente modelo</p>
+<p><span class="math display">\[
+Puntaje_i=\alpha+\beta O_i+\mathbf{x}\boldsymbol{\gamma}+u_i
+\]</span></p>
+<p>Donde la variable dependiente es <strong>punt_global</strong> y la variable explicativa de interés es una dummy que toma el valor de <span class="math inline">\(1\)</span> si el colegio es oficial y 0 si es no oficial. En la base la variable para construir la dummy es <strong>cole_naturaleza</strong>. <span class="math inline">\(\mathbf{x}\)</span> Corresponde a las variables de control.</p>
+<ul>
+<li><p>Ingrese al repositorio y descargue la base <a href="https://github.com/andvarga-eco/Econometria_MsC/blob/main/Data/saber11at.csv">saber11at.csv</a>.</p></li>
+<li><p>Elija el conjunto de variables de control que considere relevantes. No es cualquier variable, debe haber una razón para incluirla. La idea tampoco es incluir muchas variables. Elija 5 máximo</p></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><p>Estime el modelo sin incluir las variables de control. Interprete <span class="math inline">\(\hat{\beta}\)</span> y analice si el estimador es insesgado. Explique detalladamente</p></li>
+<li><p>Estime el modelo con las variables de control. Interprete <span class="math inline">\(\hat{\beta}\)</span> y compárelo con lo obtenido en el punto anterior ¿Podría darle una interpretción causal? Explique</p></li>
 </ol>
 
 </div>
