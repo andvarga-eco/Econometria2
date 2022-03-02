@@ -17,3 +17,11 @@ introducción-1
 variable-omitida
 simultaneidad
 error-de-medcición
+el-estimador-de-variables-instrumentales
+el-estimador-iv
+inferencia-necesitamos-un-error-estándar
+tab:unnamed-chunk-2
+endogeneidad
+ejercicio-2
+motivación-los-origenes-coloniales-del-desarrollo
+procedimiento

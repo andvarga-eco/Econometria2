@@ -29,8 +29,9 @@ Sabemos que este resultado requiere que $E(\mathbf{u|X})=\mathbf{0}$. Sin embarg
 
 - `r fa('bomb')` Simultaneidad
 
+## Endogeneidad
 
-## Variable omitida
+### Variable omitida
 
 En Colombia, las zonas de deforestación han coincidido con áreas de presencia de grupos armados ¿La violencia causa la deforestación? [Ferguson, Romero, y Vargas (2014)](https://ageconsearch.umn.edu/record/209328/) intentar estimar el efecto de la expansión paramilitar sobre la deforestación. 
 
@@ -49,7 +50,7 @@ Donde $forest_{m,t}$ es la proporción de la municipalidad $m$ cubierta de bosqu
 - ¿Qué pasa si la deforestación y la presencia del conflicto dependen de las características ecológicas y geológicas del terreno? 
 
 
-## Simultaneidad
+### Simultaneidad
 
 Usted quiere estimar el efecto de los aranceles sobre el volumen de comercio. Plantéa el siguiente modelo
 
@@ -73,7 +74,7 @@ comercio=\beta_0+\beta_1(\gamma_0+\gamma_1comercio+\omega)+\upsilon
 - Un choque al comercio, $\upsilon$, afecta también a los aranceles, luego $Cov(arancel,\upsilon)\neq0$
 
 
-## Error de Medcición
+### Error de Medcición
 
 Quiere estimar el efecto del ingreso familiar sobre el desempeño académico. Tiene el modelo
 
@@ -97,4 +98,259 @@ nota&=\beta_0+\beta_1(ing-e)+u\\
 Con $\upsilon=u-\beta_1e$. 
 
 - Note que $Cov(ing,\upsilon)\neq0$ porque $ing$ está correlacionado con $e$
+
+
+## El estimador de variables instrumentales
+
+Para resolver el problema de endogeneidad necesitamos exogeneidad, obvio, pero ¿Cómo? 
+
+`r fa('wrench')` La idea básica es pensar que si $x_j$ tiene una parte que está correlacionada con el error, $e$, y otra que no lo está, entonces puede usarse la parte de $x_j$ que no está correlacionada con el error. Para ello necesitamos un instrumento
+
+`r fa('globe')` **Ejemplo**
+
+[Feyrer (2009)](https://voxeu.org/article/1967-75-suez-canal-closure-lessons-trade) quiere estimar el efecto del comercio sobre el crecimiento económico. Propone el siguiente modelo
+
+<br/>
+
+\begin{equation}
+lny_{it}=\alpha+\gamma_i+\gamma_t+\beta lntrade_{it}+\epsilon_{it}
+\end{equation}
+
+<br/>
+
+La estimación consistente de $\beta$ requiere que $corr(\epsilon_{it},lntrade_{it})=0$. Este supuesto no es plausible, al fin y al cabo entre mayor sea el ingreso per cápita de un país mayor tenderá a ser su volúmen de importaciones y por lo tanto de comercio. 
+
+Imagine que podemos descomponer la variabilidad de $lntrade$ en dos partes. Una correlacionada con $\epsilon$ y otra no correlacionada $\epsilon$. Acá es donde entra el *instrumento* `r fa('wrench')`, que no es más que otra variable, $z$ que debe cumplir con dos condiciones
+
+**C1** No estar correlacionada con el error. Es decir, que sea exógena
+
+**C2** Debe estar correlacionada con la variable endógena. Esto se conoce como condición de relevancia
+
+Feyrer (2009) propone usar el [cierre del canal del Suez entre 1967 y 1975](https://www.britannica.com/topic/Suez-Canal/History) como $z$. Si el cierre fue un evento motivado principalmente por razones políticas, pero que impactó los fluos comerciales, entonces podría funcionar.  En el estudo estimaron $\hat{\beta}_{OLS}=0.3(0.053)$ y $\hat{\beta}_{IV}=0.23(0.083)$
+
+Note que el error estándar del estimador de variables instrumentales es mayor. Si calculamos los intervalos de confianza al 95% para cada estimación obtenemos 
+
+- $0.3\pm 1.96(0.053)=[0.196,0.404]$
+
+
+- $0.23\pm 1.96(0.083)=[0.07,0.39]$
+
+No es evidente que la diferencia sea *estadísticamente* significativa. El intervalo de IV contiene la estimación por MCO
+
+
+### El Estimador IV
+
+
+Considere el siguiente modelo de regresión lineal
+
+<br/>
+
+\begin{equation}
+y=\beta_0+\beta_1x+e
+\end{equation}
+
+<br/>
+
+- Sospechamos que $Cov(x,e)\neq0$
+
+- Para obtener estimadores consistentes de $\beta_0$ y $\beta_1$ necesitamos información adicional. Esta la obtenemos de $z$
+
+- Z es una variable observable que debe cumplir las siguientes condiciones
+
+<br/>
+
+**C1**: Exogeneidad 
+
+$$
+Cov(z,e)=0
+$$
+
+**C2**: Relevancia
+
+$\pi_1\neq0$ en la regresión
+
+$$
+x=\pi_0+\pi_1z+\upsilon
+$$
+
+<br/>
+
+De donde podemos obtener
+
+$$
+\hat{x}=\hat{\pi}_0+\hat{\pi}_1z
+$$
+
+<br/>
+
+Es claro que $Cov(\hat{x},e)=0$. Luego lo usamos en
+
+$$
+y=\beta_0+\beta_1\hat{x}+e$
+$$
+
+<br/>
+
+`r fa('exclamation')` **C1** No se puede probar estadísticamente
+
+`r fa('exclamation')` **C2** Se puede probar estadísticamente
+
+Además
+
+<br/>
+
+`r fa('exclamation')` Perdemos precisión en la estimación
+
+<br/>
+
+`r fa('exclamation')` Si $z$ no cumple las condiciones, entonces puede ser peor que usar MCO
+
+Retomando
+
+\begin{equation}
+\tag{1}
+y=\beta_0+\beta_1x+e
+\end{equation}
+
+\begin{equation}
+\tag{C.1}
+Cov(z,e)=0
+\end{equation}
+
+\begin{equation}
+\tag{C.2}
+Cov(z,x)\neq0
+\end{equation}
+
+<br/>
+
+Usando la propiedad distributiva de la covarianza escribimos
+
+<br/>
+
+\begin{equation}
+\tag{2}
+Cov(z,y)=\beta_1Cov(z,x)+Cov(z,u)
+\end{equation}
+
+Note que bajo C.1 y C.2 podemos **identificar** $\beta_1$
+
+<br/>
+
+\begin{equation}
+\tag{3}
+\beta_1=\dfrac{Cov(z,y)}{Cov(z,x)}
+\end{equation}
+
+Usando el estimador de la covarianza, obtenemos el estimador IV
+
+<br/>
+
+\begin{equation}
+\tag{4}
+\hat{\beta}_1=\dfrac{n^{-1}\sum_i^n(z_i-\bar{z})(y_i-\bar{y})}{n^{-1}\sum_i^n(z_i-\bar{z})(x_i-\bar{x})}
+\end{equation}
+
+<br/>
+
+Usando la ley de grandes números podemos mostrar que el estimador es consistente: $plim(\hat{\beta_1})=\beta_1$
+
+### Inferencia: necesitamos un error estándar
+
+Si suponemos 
+
+<br/>
+
+\begin{equation}
+\tag{5}
+E(e^2|z)=\sigma^2=Var(e)
+\end{equation}
+
+
+Entonces, la varianza aintótica del estimador $\hat{\beta}_1$ es
+
+<br/>
+
+\begin{equation}
+\tag{6}
+\dfrac{\sigma^2}{n\sigma_x^2\rho_{x,z}}
+\end{equation}
+
+
+
+Y el estimador de la varianza del estimador es
+
+<br/>
+
+\begin{equation}
+\tag{7}
+\dfrac{\hat{\sigma}^2}{SST_xR^2_{x,z}}
+\end{equation}
+
+
+Note que entre menor sea la correlación de la endógena con el instrumento, mayor es la varianza del estimador. 
+
+
+### Ejercicio
+
+#### Motivación: Los origenes coloniales del desarrollo
+
+Acemoglu, Johnson y Robinson ^[Acemoglu, Johnosn y Robinson, 2001, The colonial origins of comparative development: an empirical investigation, *The American Economic Review*, Vol. 95, 5, http://economics.mit.edu/files/4123] se preguntan *¿Cuáles son las causas fundamentales de las grandes diferencias de ingreso per cápita entre paises?* Los autores argumentan que mejores instituciones dan lugar a países más ricos. Los autores parten de la idea histórica según la cual en tiempos coloniales las potencias europeas realizaron dos tipos diferentes de colonización. En la primera establecieron enclaves extractivos, por ejemplo para obtener oro, y en la segunda intentaron replicar las instituciones del país de origen. Mientras que el primer tipo de colonización produce malas instituciones, el segundo produce buenas instituciones. Como consecuencia de ello, hoy día son más ricos los paises donde se dio el segundo tipo de colonización. Para examinar el efecto de las instituciones sobre el desempeño económico los autores proponen estimar el siguiente modelo
+
+\begin{equation}
+log y_i=\mu+\alpha R_i+\mathbf{X}'_i\boldsymbol{\gamma}+\epsilon_i
+\end{equation}
+
+Donde $log y_i$ es el ingreso per cápita del país i en 1995, $R_i$ es una medida de riesgo de expropiación y $\mathbf{X}_i$ es un vector de variables de control. La variable $R_i$, avexpr, es un índice que mide la protección contra la expropiación, y por lo tanto captura las diferencias institucionales entre paises. En aquellos paises donde los derechos de propiedad privados se respetan el valor del índice es mayor, máximo 10, mientras que en un país donde los derechos de propiedad no son protegidos en absoluto el valor es 0. El coeficiente $\alpha$ es el interés de la investigación. 
+
+#### Procedimiento
+
+Cargue la base de datos "colonial.dta" en R. Restrinja la muestra solo para los paises que son excolonias y tienen los datos completos, baseco=1.
+
+
+1. Estime la ecuación (1) por MCO, donde la variable dependiente es logpgp95 y $R_i$ es avexpr. Como variables de control incluya
+
+  - lat_abst: distancia absoluta al ecuador, escalado entre 0 y 1
+  - asia: dummy para Asia
+  - africa: dummy para África
+  - other: dummy para otro continente. Toman el valor de 1 los siguientes países:  Australia (AUS), Malta      (MLT), y Nueva Zelanda (NZL). 
+  
+Las dummies de continente tienen como categoría base América
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(haven)
+library(knitr)
+library(xtable)
+library(broom)
+colonial <- read_dta(here("Econometria2","Data","colonial.dta"))
+
+colonial<-subset(colonial, baseco==1)
+
+colonial$other[colonial$shortnam=="AUS"|colonial$shortnam=="MLT"|colonial$shortnam=="NZL"]=1
+colonial$other<-ifelse(is.na(colonial$other),0, 1)
+
+eq1<-lm(logpgp95~avexpr+lat_abst+asia+africa+other,data=colonial)
+seq1<-data.frame(xtable(summary(eq1)))
+kable(seq1, caption="Regresión MCO", col.names=c("coefficient", "Std. Error", "t-value", "p-value"),
+      align="c", digits=3)
+```
+
+
+2. Los autores indican que si bien los resultados van en la dirección esperada, el parámetro de interés $\alpha$ no se estima consistentemente por MCO ¿Por qué?
+
+3. Los autores proponenen usar como instrumento la tasa de mortalidad de los colonizadores europeos, en logaritmo, logem4 ¿Cuál es la lógica de este instrumento?
+
+4. El instrumento debe cumplir dos condiciones para que permita identificar el parámetro de interés. Indique cuales son los dos supuestos y pruebe econométricamente el que se puede probar. 
+
+5. Estime el modelo usando el estimador de variables instrumentales. Compare los resultados del coeficiente de interés entre los modelos MCO y IV. Interprete los resultados
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(AER)
+eqiv<-ivreg(logpgp95~avexpr+lat_abst+asia+africa+other|lat_abst+asia+africa+other+logem4, data=colonial)
+kable(tidy(eqiv), digits=4, align='c',caption=
+  "Estimador IV", col.names=c("","coefficient", "Std. Error", "t-value", "p-value"))
+```
+
+6. Como siempre, las estimaciones por IV dependen de la calidad de los instrumentos. Lea el comentario de Albouy (2012)^[Albouy, D., 2012, The colonial origins of comparative development: an empirical investigation: comment, *The American Economic Review*, Vol 102(6) ] y explique de manera brece y clara porque las estimaciones podrían sufirir del problema de instrumentos débiles
 
