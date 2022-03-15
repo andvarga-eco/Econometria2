@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Econometría 2</title>
+  <title>Capítulo4 Modelos de elección discreta | Econometría 2</title>
   <meta name="description" content="Notas de clase de Econometría 2" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Econometría 2" />
+  <meta property="og:title" content="Capítulo4 Modelos de elección discreta | Econometría 2" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Econometría 2" />
+  <meta name="twitter:title" content="Capítulo4 Modelos de elección discreta | Econometría 2" />
   
   <meta name="twitter:description" content="Notas de clase de Econometría 2" />
   
@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
+<link rel="prev" href="endogeneidad-y-el-estimador-de-variables-instrumentales.html"/>
 
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -152,18 +152,222 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="modelos-de-elección-discreta" class="section level1" number="4">
+<h1><span class="header-section-number">Capítulo4</span> Modelos de elección discreta</h1>
+<div id="naturaleza-del-problema" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Naturaleza del problema</h2>
+<ul>
+<li><p>Muchos fenómenos económicos tienen que ver con decisiones que toman los agentes. Por ejemplo, si decide cursar estudios universitarios, <span class="math inline">\(y=1\)</span> o no, <span class="math inline">\(y=0\)</span>.</p></li>
+<li><p>Implica que para una muestra de datos podemos calcular la proporción de individuos que tomaron cada decisión. Esto sería el chance de que ocurra el evento</p></li>
+<li><p>A partir de los axiomas que definen la probabilidad, podemos deducir a partir de la probabilidad de un evento, <span class="math inline">\(P(A)\)</span>, la probablidad de otro evento, <span class="math inline">\(P(B)\)</span></p></li>
+<li><p>Nos interesa modelar la probabilidad de ocurrencia del evento, la decisión, dadas determinadas circunstancias</p></li>
+</ul>
+</div>
+<div id="el-modelo-de-probabilidad-lineal" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> El modelo de probabilidad lineal</h2>
+<p>La variable dependiente representa la elección entre dos alternativas, A y B, para cada individuo <span class="math inline">\(i\)</span> se representa como</p>
+<p><span class="math display">\[
+\tag{1}
+    y_i= 
+\begin{cases}
+    1,&amp; \text{Si la alternativa A se elige}\\
+    0,              &amp; \text{Si la alternativa B se elige}
+\end{cases}
+\]</span></p>
+<p>Escribimos el modelo como</p>
+<p><span class="math display">\[
+\tag{2}
+y=\beta_0+\beta_1x_1+\beta_2x_2+...+\beta_3x_3+u
+\]</span></p>
+<p>Tomamos el valor esperado condicional</p>
+<p><span class="math display">\[
+E(y|\mathbf{x})=\beta_0+\beta_1x_1+...+\beta_kx_k+E(u|\mathbf{x})
+\]</span></p>
+<ul>
+<li>Además, dada la naturaleza de <span class="math inline">\(y\)</span></li>
+</ul>
+<p><span class="math display">\[
+\tag{3}
+E(y|\mathbf{x})=P(y=1|\mathbf{x})1+(1-P(y=1|\mathbf{x}))0
+\]</span></p>
+<p>Si, además se cumple exogeneidad estricta <span class="math inline">\(E(u|\mathbf{x})\)</span>, entonces</p>
+<p><span class="math display">\[
+\tag{4}
+P(y=1|\mathbf{x})=\beta_0+\beta_1x_1+...+\beta_kx_k
+\]</span></p>
+<p>En este modelo</p>
+<p><span class="math display">\[
+\beta_j=\dfrac{\Delta P(y=1|\mathbf{x})}{\Delta x_j}
+\]</span></p>
+<p>Los parámetros los estimamos por MCO, y a partir de ello podemos obtener la probabilidad predicha</p>
+<p><span class="math display">\[
+\hat{y}=\hat{P}(y=1|\mathbf{x})=\hat{\beta_0}+\hat{\beta}_1x_1+...+\hat{\beta}_kx_k
+\]</span></p>
+<div id="ejemplo" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Ejemplo</h3>
+<p><span class="math display">\[
+    Auto_i= 
+\begin{cases}
+    1,&amp; \text{Va en automóvil}\\
+    0,              &amp; \text{Va en bus}
+\end{cases}
+\]</span></p>
+<p>Estima</p>
+<p><span class="math display">\[
+\hat{Auto}=0.48+0.0703T
+\]</span></p>
+<p>Donde <span class="math inline">\(T=(TBus-TAuto)/10\)</span> es el tiempo de desplazamiento en bus en relación al desplazamiento en automóvil</p>
+<ul>
+<li><p>Si <span class="math inline">\(T=0\)</span> entonces la probabilidad de ir en automóvil es 0.48</p></li>
+<li><p>Si <span class="math inline">\(T\)</span> pasa de <span class="math inline">\(0\)</span> a <span class="math inline">\(1\)</span>, entonces la probabilidad se incrementa de <span class="math inline">\(0.48\)</span> a <span class="math inline">\(0.55\)</span></p></li>
+</ul>
+<p><img src="04-discreta_files/figure-html/unnamed-chunk-1-1.png" width="100%" /></p>
+<p>Probablidades por fuera del rango 0-1</p>
+</div>
+<div id="heterocedasticidad-en-el-lpm" class="section level3" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Heterocedasticidad en el LPM</h3>
+<p>Si <span class="math inline">\(y_i=1\)</span> entonces <span class="math inline">\(\beta_0+\beta_{i1}x_1+...+\beta_kx_{ik}+u_i=1\)</span>, luego</p>
+<p><br/></p>
+<p><span class="math display">\[\begin{equation}
+u_i=1-(\beta_0+\beta_1x_{i1}+...+\beta_kx_{ik})
+\end{equation}\]</span></p>
+<p>Y si <span class="math inline">\(y_i=0\)</span></p>
+<p><span class="math display">\[\begin{equation}
+u_i=-(\beta_0+\beta_1x_{i1}+...+\beta_kx_{ik})
+\end{equation}\]</span></p>
+<p>Luego <span class="math inline">\(u_i\)</span> toma dos valores, por lo tanto su varianza es</p>
+<p><span class="math display">\[
+Var(u|\mathbf{x})=P(X=1|\mathbf{x})[1-P(X=1|\mathbf{x})]=\sigma_i^2
+\]</span></p>
+<p>Es heterocedástica pues depende de los valores de <span class="math inline">\(x\)</span>. Debemos usar errores estándar robustos</p>
+</div>
+</div>
+<div id="modelos-logit-y-probit" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Modelos Logit y Probit</h2>
+<div id="especificación" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Especificación</h3>
+<p>En el modelo de probabilidad lineal modelamos la probabilidad de ocurrencia</p>
+<p><span class="math display">\[
+P(y=1|\mathbf{x})=\beta_0+\beta_1x_1+...+\beta_kx_k
+\]</span></p>
+<ul>
+<li><p>Sin embargo, sabemos que podemos obtener predicciones por fuera del intervalo <span class="math inline">\((0,1)\)</span>.</p></li>
+<li><p>Para solucionarlo, usamos una función <span class="math inline">\(0&lt;G(z)&lt;1\)</span> para todos los números reales <span class="math inline">\(z\)</span></p></li>
+</ul>
+<p><span class="math display">\[
+\tag{5}
+P(y=1|\mathbf{x})=G(\beta_0+\beta_1x_1+...+\beta_kx_k)
+\]</span></p>
+<p>Se suelen usar dos funciones de dsitribución acumulada para <span class="math inline">\(G\)</span>: logística, normal. Recuerde que la CDF de la variable aleatoria <span class="math inline">\(\mathbf{x}\)</span> es <span class="math inline">\(F_x(x)=P(\mathbf{x}\leq x)\)</span></p>
+<ul>
+<li>Logística</li>
+</ul>
+<p><span class="math display">\[
+\tag{6}
+G(z)=\dfrac{e^z}{1+e^z}=\Lambda(z)
+\]</span></p>
+<ul>
+<li>Normal</li>
+</ul>
+<p><span class="math display">\[
+\tag{7}
+G(z)=\Phi(z)=\int_{\infty}^z \phi(v)dv
+\]</span></p>
+<p>Donde</p>
+<p><span class="math display">\[
+\phi(z)=(2\pi)^{-1/2}e^{(-z^2/2)}
+\]</span></p>
+</div>
+<div id="función-acumulada-de-distribución-cdf" class="section level3" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Función acumulada de distribución (CDF)</h3>
+<p><img src="04-discreta_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="función-acumulada-de-distribución-pdf" class="section level3" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Función acumulada de distribución (pdf)</h3>
+<p><img src="04-discreta_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><span class="math inline">\(f_x(x)=\dfrac{F_x(x)}{dx}\)</span></p>
+</div>
+<div id="probablilidad-predicha-lpm-vs-probit" class="section level3" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span> Probablilidad predicha: LPM vs Probit</h3>
+<p><img src="04-discreta_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><span class="math inline">\(\hat{Auto}=\Phi(-0.0064+0.3T)\)</span></p>
+</div>
+<div id="interpretación-efectos-marginales" class="section level3" number="4.3.5">
+<h3><span class="header-section-number">4.3.5</span> Interpretación: efectos marginales</h3>
+<p>Llamamos <span class="math inline">\(p(\mathbf{x})=P(y=1|\mathbf{x})\)</span>. Queremos calcular el cambio en la probabilidad de ocurrencia dado un cambio en <span class="math inline">\(x_j\)</span>.</p>
+<p><strong>Variable Continua</strong></p>
+<p><span class="math display">\[
+\tag{7}
+\dfrac{\partial p(\mathbf{x})}{\partial x_j}=\dfrac{\partial G(z)}{\partial z}\beta_j
+\]</span></p>
+<ul>
+<li>Para la logística es</li>
+</ul>
+<p><span class="math display">\[
+\dfrac{\partial G(z)}{\partial z}=\dfrac{e^z}{(1+e^z)^2}
+\]</span></p>
+<ul>
+<li>Para la normal</li>
+</ul>
+<p><span class="math display">\[
+\dfrac{\partial G(z)}{\partial z}=\phi(z)
+\]</span></p>
+<p><strong>Variable Discreta</strong></p>
+<p>Digamos que <span class="math inline">\(x_1\)</span> toma valores de <span class="math inline">\(0\)</span> y <span class="math inline">\(1\)</span></p>
+<p><span class="math display">\[
+\Delta p(\mathbf{x})=G(\beta_0+\beta_1+\beta_2x_2+...+\beta_kx_k)-G(\beta_0+\beta_2x_2+...+\beta_kx_k)
+\]</span></p>
+<p>En cualquier caso debemos decidir los valores de <span class="math inline">\(\mathbf{x}\)</span> en los que evaluamos la función <span class="math inline">\(G\)</span>. Tenemos 3 opciones</p>
+<p><strong>1.</strong> MEM: Efecto marginal en la media <span class="math inline">\(\bar{\mathbf{x}}=(\bar{x_1},...,\bar{x}_k)\)</span></p>
+<p><strong>2.</strong> MER: Valor marginal en el un valor representativo: escoge los valores de <span class="math inline">\(\mathbf{x}\)</span> que quiera</p>
+<p><strong>3.</strong> AME: Efecto marginal promedio. Promediamos los efectos marginales individuales en la muestra. Este valor es similar al que se obtiene por LPM</p>
+<div id="ame" class="section level4" number="4.3.5.1">
+<h4><span class="header-section-number">4.3.5.1</span> AME</h4>
+<p>En el caso de variable continua</p>
+<p><span class="math display">\[\begin{equation}
+AME(x_j)=n^{-1}\beta_j\sum_{i=1}^n g(\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+...+\beta_kx_{ik})
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(g(z)=\dfrac{\partial G(z)}{\partial z}\)</span></p>
+<p>En el caso de variable discreta, supongamos <span class="math inline">\(x_1\)</span> es una dummy</p>
+<p><span class="math display">\[\begin{equation}
+AME(x_1)=n^{-1}\sum_{i=1}^n\Big(G(\beta_0+\beta_1+...+\beta_kx_k)-G(\beta_0+...+\beta_kx_k) \Big)
+\end{equation}\]</span></p>
+<ul>
+<li>Es decir que para cada individuo se estima la probabilidad cuando <span class="math inline">\(x_1=1\)</span> y cuando <span class="math inline">\(x_1=0\)</span> y se toma la diferencia. En la terminología de contrafactuales esto sería el efecto de tratamiento promedio.</li>
+</ul>
+</div>
+</div>
+<div id="medidas-de-ajuste" class="section level3" number="4.3.6">
+<h3><span class="header-section-number">4.3.6</span> Medidas de ajuste</h3>
+<p><img src="confusion.png" width="70%" /></p>
+<ul>
+<li>Correctamente predicho</li>
+</ul>
+<p><span class="math display">\[
+ACC=\dfrac{TP+TN}{TP+TN+FP+FN}
+\]</span></p>
+<ul>
+<li>Sensibilidad (Tasa de verdadero positivo)</li>
+</ul>
+<p><span class="math display">\[
+S=\dfrac{TP}{TP+FN}=\dfrac{TP}{P}
+\]</span></p>
+<ul>
+<li>Especificidad (tasa de verdadero negativo)</li>
+</ul>
+<p><span class="math display">\[
+SP=\dfrac{TN}{TN+FP}=\dfrac{TN}{N}
+\]</span></p>
+
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
+<a href="endogeneidad-y-el-estimador-de-variables-instrumentales.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

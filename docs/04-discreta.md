@@ -1,0 +1,300 @@
+# Modelos de elección discreta
+
+
+
+
+## Naturaleza del problema
+
+- Muchos fenómenos económicos tienen que ver con decisiones que toman los agentes. Por ejemplo, si decide cursar estudios universitarios, $y=1$ o no, $y=0$. 
+
+- Implica que para una muestra de datos podemos calcular la proporción de individuos que tomaron cada decisión. Esto sería el chance de que ocurra el evento
+
+- A partir de los axiomas que definen la probabilidad, podemos deducir a partir de la probabilidad de un evento, $P(A)$, la probablidad de otro evento, $P(B)$
+
+- Nos interesa modelar la probabilidad de ocurrencia del evento, la decisión, dadas determinadas circunstancias
+
+## El modelo de probabilidad lineal
+
+La variable dependiente representa la elección entre dos alternativas, A y B, para cada individuo $i$ se representa como
+
+$$
+\tag{1}
+    y_i= 
+\begin{cases}
+    1,& \text{Si la alternativa A se elige}\\
+    0,              & \text{Si la alternativa B se elige}
+\end{cases}
+$$
+
+
+Escribimos el modelo como
+
+
+$$
+\tag{2}
+y=\beta_0+\beta_1x_1+\beta_2x_2+...+\beta_3x_3+u
+$$
+
+
+Tomamos el valor esperado condicional
+
+
+$$
+E(y|\mathbf{x})=\beta_0+\beta_1x_1+...+\beta_kx_k+E(u|\mathbf{x})
+$$
+
+
+
+- Además, dada la naturaleza de $y$
+
+$$
+\tag{3}
+E(y|\mathbf{x})=P(y=1|\mathbf{x})1+(1-P(y=1|\mathbf{x}))0
+$$
+
+
+Si, además se cumple exogeneidad estricta $E(u|\mathbf{x})$, entonces
+
+
+$$
+\tag{4}
+P(y=1|\mathbf{x})=\beta_0+\beta_1x_1+...+\beta_kx_k
+$$
+
+
+En este modelo 
+
+
+$$
+\beta_j=\dfrac{\Delta P(y=1|\mathbf{x})}{\Delta x_j}
+$$
+
+
+Los parámetros los estimamos por MCO, y a partir de ello podemos obtener la probabilidad predicha
+
+
+$$
+\hat{y}=\hat{P}(y=1|\mathbf{x})=\hat{\beta_0}+\hat{\beta}_1x_1+...+\hat{\beta}_kx_k
+$$
+
+
+### Ejemplo
+
+$$
+    Auto_i= 
+\begin{cases}
+    1,& \text{Va en automóvil}\\
+    0,              & \text{Va en bus}
+\end{cases}
+$$
+
+Estima
+
+$$
+\hat{Auto}=0.48+0.0703T
+$$
+
+
+Donde $T=(TBus-TAuto)/10$ es el tiempo de desplazamiento en bus en relación al desplazamiento en automóvil
+
+
+- Si $T=0$ entonces la probabilidad de ir en automóvil es 0.48
+
+
+- Si $T$ pasa de $0$ a $1$, entonces la probabilidad se incrementa de $0.48$ a $0.55$
+
+
+<img src="04-discreta_files/figure-html/unnamed-chunk-1-1.png" width="100%" />
+
+
+Probablidades por fuera del rango 0-1
+
+### Heterocedasticidad en el LPM
+
+Si $y_i=1$ entonces $\beta_0+\beta_{i1}x_1+...+\beta_kx_{ik}+u_i=1$, luego
+
+<br/>
+
+\begin{equation}
+u_i=1-(\beta_0+\beta_1x_{i1}+...+\beta_kx_{ik})
+\end{equation}
+
+
+Y si $y_i=0$
+
+\begin{equation}
+u_i=-(\beta_0+\beta_1x_{i1}+...+\beta_kx_{ik})
+\end{equation}
+
+
+Luego $u_i$ toma dos valores, por lo tanto su varianza es
+
+$$
+Var(u|\mathbf{x})=P(X=1|\mathbf{x})[1-P(X=1|\mathbf{x})]=\sigma_i^2
+$$
+
+
+Es heterocedástica pues depende de los valores de $x$. Debemos usar errores estándar robustos
+
+
+## Modelos Logit y Probit
+
+### Especificación
+
+En el modelo de probabilidad lineal modelamos la probabilidad de ocurrencia 
+
+
+$$
+P(y=1|\mathbf{x})=\beta_0+\beta_1x_1+...+\beta_kx_k
+$$
+
+- Sin embargo, sabemos que podemos obtener predicciones por fuera del intervalo $(0,1)$. 
+
+- Para solucionarlo, usamos una función $0<G(z)<1$ para todos los números reales $z$
+
+
+$$
+\tag{5}
+P(y=1|\mathbf{x})=G(\beta_0+\beta_1x_1+...+\beta_kx_k)
+$$
+
+
+Se suelen usar dos funciones de dsitribución acumulada para $G$: logística, normal. Recuerde que la CDF de la variable aleatoria $\mathbf{x}$ es $F_x(x)=P(\mathbf{x}\leq x)$
+
+- Logística
+
+$$
+\tag{6}
+G(z)=\dfrac{e^z}{1+e^z}=\Lambda(z)
+$$
+
+- Normal
+
+$$
+\tag{7}
+G(z)=\Phi(z)=\int_{\infty}^z \phi(v)dv
+$$
+
+
+Donde
+
+$$
+\phi(z)=(2\pi)^{-1/2}e^{(-z^2/2)}
+$$
+
+
+### Función acumulada de distribución (CDF)
+
+<img src="04-discreta_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
+
+### Función acumulada de distribución (pdf)
+
+<img src="04-discreta_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
+$f_x(x)=\dfrac{F_x(x)}{dx}$
+
+
+### Probablilidad predicha: LPM vs Probit
+
+<img src="04-discreta_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+
+$\hat{Auto}=\Phi(-0.0064+0.3T)$
+
+
+### Interpretación: efectos marginales
+
+Llamamos $p(\mathbf{x})=P(y=1|\mathbf{x})$. Queremos calcular el cambio en la probabilidad de ocurrencia dado un cambio en $x_j$. 
+
+
+ **Variable Continua**
+
+$$
+\tag{7}
+\dfrac{\partial p(\mathbf{x})}{\partial x_j}=\dfrac{\partial G(z)}{\partial z}\beta_j
+$$
+
+- Para la logística es
+
+$$
+\dfrac{\partial G(z)}{\partial z}=\dfrac{e^z}{(1+e^z)^2}
+$$
+
+- Para la normal
+
+$$
+\dfrac{\partial G(z)}{\partial z}=\phi(z)
+$$
+
+
+**Variable Discreta**
+
+Digamos que $x_1$ toma valores de $0$ y $1$
+
+$$
+\Delta p(\mathbf{x})=G(\beta_0+\beta_1+\beta_2x_2+...+\beta_kx_k)-G(\beta_0+\beta_2x_2+...+\beta_kx_k)
+$$
+
+
+En cualquier caso debemos decidir los valores de $\mathbf{x}$ en los que evaluamos la función $G$. Tenemos 3 opciones
+
+
+**1.** MEM: Efecto marginal en la media $\bar{\mathbf{x}}=(\bar{x_1},...,\bar{x}_k)$
+
+
+**2.** MER: Valor marginal en el un valor representativo: escoge los valores de $\mathbf{x}$ que quiera
+
+
+**3.** AME: Efecto marginal promedio. Promediamos los efectos marginales individuales en la muestra. Este valor es similar al que se obtiene por LPM
+
+
+#### AME
+
+En el caso de variable continua
+
+\begin{equation}
+AME(x_j)=n^{-1}\beta_j\sum_{i=1}^n g(\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+...+\beta_kx_{ik})
+\end{equation}
+
+Donde $g(z)=\dfrac{\partial G(z)}{\partial z}$
+
+
+En el caso de variable discreta, supongamos $x_1$ es una dummy
+
+\begin{equation}
+AME(x_1)=n^{-1}\sum_{i=1}^n\Big(G(\beta_0+\beta_1+...+\beta_kx_k)-G(\beta_0+...+\beta_kx_k) \Big)
+\end{equation}
+
+
+- Es decir que para cada individuo se estima la probabilidad cuando $x_1=1$ y cuando $x_1=0$ y se toma la diferencia. En la terminología de contrafactuales esto sería el efecto de tratamiento promedio.
+
+
+### Medidas de ajuste
+
+<img src="confusion.png" width="70%" />
+
+
+- Correctamente predicho
+
+$$
+ACC=\dfrac{TP+TN}{TP+TN+FP+FN}
+$$
+
+
+- Sensibilidad (Tasa de verdadero positivo)
+
+$$
+S=\dfrac{TP}{TP+FN}=\dfrac{TP}{P}
+$$
+
+
+- Especificidad (tasa de verdadero negativo)
+
+
+$$
+SP=\dfrac{TN}{TN+FP}=\dfrac{TN}{N}
+$$
+
+
+
+
