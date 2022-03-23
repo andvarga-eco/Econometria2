@@ -1,6 +1,8 @@
 tab:unnamed-chunk-1
 tab:unnamed-chunk-9
 tab:unnamed-chunk-2
+tab:unnamed-chunk-6
+tab:unnamed-chunk-8
 el-modelo-de-regresión-lineal-y-el-estimador-mco
 la-mecánica-del-estimador-mco
 estimador
@@ -26,7 +28,6 @@ ejercicio-2
 motivación-los-origenes-coloniales-del-desarrollo
 procedimiento
 modelos-de-elección-discreta
-introducción-2
 naturaleza-del-problema
 el-modelo-de-probabilidad-lineal
 ejemplo
@@ -39,3 +40,5 @@ probablilidad-predicha-lpm-vs-probit
 interpretación-efectos-marginales
 ame
 medidas-de-ajuste
+ejercicio-de-aplicación
+estimaciones

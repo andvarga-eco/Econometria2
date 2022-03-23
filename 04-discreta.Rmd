@@ -338,6 +338,127 @@ $$
 SP=\dfrac{TN}{TN+FP}=\dfrac{TN}{N}
 $$
 
+## Ejercicio de aplicación
+
+En la industria crediticia es muy importante identificar los factores que pueden dar lugar a que los deudores no honren a tiempo sus obligaciones, es decir que entren en *default*. Para ello usaremos los datos *vegas5.xlsx* que hacen parte del libro de texto *Principles of Econometrics*^[Carter, Griffiths, Lim, 2017, *Principles of econometrics*, 5th ed., Wiley & Sons]. Las variables son las siguientes
+
+
+`r fa('bomb')` default: 1 si el individuo se ha retrasado en más de 90 días, 0 si no se ha retrasado. Esta es la variable dependiente
+
+`r fa('bomb')` arm: dummy que indica si la tasa de interés es ajustable
+
+`r fa('bomb')` refinance: 1 si el crédito es para refinanciar o si es para compra de inmueble
+
+`r fa('bomb')` lien2: Si hay un segundo *lien* hipotecario toma el valor de 1, 0 si es el primer *lien*. Un *lien* hipotecario es el derecho que tiene el prestamista de tomar posesión del inmueble si el deudor entra en cesasión de pagos. 
+
+`r fa('bomb')` term30: 1 si el plazo es de 30 años, 0 si es de 15 años
+
+`r fa('bomb')` underwater: 1 si la deduda se estima en un valor mayor que el de la propiedad en el momento de originar el crédito
+
+`r fa('bomb')` LTV: loan to value de la propiedad, en porcentaje
+
+`r fa('bomb')` rate: tasa de interés sobre la deuda, porcentaje
+
+`r fa('bomb')` amount: valor del crédito en unidades de $\$10,000$
+
+`r fa('bomb')` fico: puntaje de crédito al momento de otorgamiento del crédito. 
+
+
+## Estimaciones
+
+
+**1.** Modelo de probabilidad lineal: estime la siguiente ecuación por MCO y con errores estándar robustos
+
+$$
+default=\beta_0+\beta_1arm+\beta_2refinance+\beta_3lien2+\beta_4term30+\beta_5underwater+\beta_6ltv+\beta_7rate+\beta_8amount+\beta_9fico+e
+$$
+
+```{r,message=FALSE, warning=FALSE, echo=FALSE}
+library(knitr)
+library(broom)
+library(lmtest)
+library(sandwich)
+library(dplyr)
+library(readxl)
+vegas5<-read_excel(here("Econometria2","Data","poe_vegas5.xlsx"))
+
+lpm1<-lm(default~arm+refinance+lien2+term30+underwater+ltv+rate+amount+fico,data=vegas5)
+kable(tidy(lpm1), digits=3, align='c',caption=
+  "LPM", col.names=c("","coefficient", "Std. Error", "t-value", "p-value"))
+```
+
+<br/>
+
+Verifiquemos el comportamiento de los residuales. Hagamos la prueba de Breush-Pagan
+
+```{r}
+bptest(lpm1)
+```
+
+<br/>
+
+Dado que tenemos evidencia de heterocedasticidad, procedemos a estimar el modelo con errores estándar robustos
+
+```{r}
+
+lpm1r<-coeftest(lpm1, vcov = vcovHC(lpm1, type="HC1"))
+kable(tidy(lpm1r), digits=4, align='c',caption=
+  "LPM", col.names=c("","coefficient", "Robust Std. Error", "t-value", "p-value"))
+
+
+```
+
+<br/>
+
+Interprete los coeficientes
+
+<br/>
+
+**2.** Estime el modelo logit
+
+```{r,echo=FALSE}
+mlogit<-glm(default~arm+refinance+lien2+term30+underwater+ltv+rate+amount+fico,data=vegas5,family="binomial")
+summary(mlogit)
+
+```
+
+<br/>
+
+**2.** Estime el modelo probit
+
+```{r,echo=FALSE}
+mprobit<-glm(default~arm+refinance+lien2+term30+underwater+ltv+rate+amount+fico,data=vegas5,family=binomial(link="probit"))
+summary(mprobit)
+
+```
+
+
+**4.** Calcule el efecto marginal promedio para los modelos logit y probit. Use el paquete *margins*
+
+```{r,message=FALSE, warning=FALSE}
+library(margins)
+marglogit<-margins(mlogit)
+marprobit<-margins(mprobit)
+summary(marglogit)
+```
+
+```{r}
+summary(marprobit)
+```
+
+
+
+**5.** Matriz de confusión
+
+
+```{r}
+vegas5<-vegas5%>%mutate(yhat=predict(mlogit,type="response"))
+vegas5<-vegas5%>%mutate(defpred=ifelse(yhat>0.5,1,0))
+table(vegas5$default,vegas5$defpred)
+```
+
+
+
 
 
 
