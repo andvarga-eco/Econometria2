@@ -42,3 +42,7 @@ ame
 medidas-de-ajuste
 ejercicio-de-aplicación
 estimaciones
+modelos-con-datos-temporales-introducción
+introducción-2
+ejemplos
+autocorrelaciones
