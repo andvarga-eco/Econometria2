@@ -132,3 +132,15 @@ ggarrange(acftrm,acfdep,ncol=2)
 
 <img src="05-ts_intro_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
+
+## Ejercicio {-}
+
+Para cada una de las series realice un análisis gráfico, lo que incluye la autocorrelación, de las variables en niveles y en diferencias. Trabaje con la serie en logaritmo cuando lo considere relevante
+
+- ISE: índice de Seguimiento de la Economía. Serie de frecuencia mensual publicada por el [DANE](https://www.dane.gov.co/index.php/estadisticas-por-tema/cuentas-nacionales/indicador-de-seguimiento-a-la-economia-ise) 
+
+- Tasa de desempleo total nacioanl. Serie de frecuencia mensual publidada por el [DANE](https://www.dane.gov.co/index.php/estadisticas-por-tema/mercado-laboral/empleo-y-desempleo)
+
+- Precio de cierre de Bitcoin. Serie de frecuencia diaria. Se sugiere descargar los datos de Yahoo Finance usando el paquete *quantmod*
+
+
