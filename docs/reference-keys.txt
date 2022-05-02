@@ -46,3 +46,5 @@ modelos-con-datos-temporales-introducción
 introducción-2
 ejemplos
 autocorrelaciones
+estacionariedad
+modelos-de-regresión-temporal

@@ -144,3 +144,103 @@ Para cada una de las series realice un análisis gráfico, lo que incluye la aut
 - Precio de cierre de Bitcoin. Serie de frecuencia diaria. Se sugiere descargar los datos de Yahoo Finance usando el paquete *quantmod*
 
 
+## Estacionariedad
+
+Una proceso de serie de tiempo es una secuencia de variables aleatorias indexadas en el tiempo. Nuestros datos, lo que observamos, es una realización de este proceso estocástico. En analogía a los datos de sección cruzada, debemos tener en cuenta que nuestros datos son una realización de muchas posibles. 
+
+Si tengo una colección de variables aleatorias ordenadas en una secuencia y muevo esa secuencia *h* periodos adelante y la distribución de probabilidad conjunta no cambia, entonces decimos que el proceso es estacionario.
+
+**Ejemplo**
+
+La variable aleatoria $Y_t$ toma el valor de la cara superior en el lanzamiento de un dato en $t$. Realiza 1000 lanzamientos sucesivos. Genera la siguiente realización
+
+<img src="05-ts_intro_files/figure-html/unnamed-chunk-10-1.png" width="70%" />
+
+
+Las primeras 100 observaciones lucen similares a las siguientes 100
+
+Considere ahora los siguientes procesos 
+
+- $Y_t=e_t$
+
+- $Y_t=0.3Y_{t-1}+e_t$
+
+- $Y_t=Y_{t-1}+e_t$
+
+- $Y_t=0.05t+e_t$
+
+Donde $e_t$ es ruido blanco. Decimos que una secuencia es ruido blanco si sus elementos tienen media cero, varianza constante, y las autocorrelaciones son cero
+
+- $E(e_t)=0$
+
+- $E(e_t^2)=\sigma^2$
+
+-$E(e_te_\tau)=0$ para todo $t\neq\tau$
+
+
+
+```r
+e=rnorm(1000)
+y=cumsum(e)
+b<-0.05
+yar1<-arima.sim(list(order=c(1,0,0),ar=0.3),n=1000)
+tsdf<-data.frame(y,e,yar1)
+tsdf<-tsdf%>%mutate(t=seq(1,1000,by=1),yt=b*t+e)
+w.plot<-ggplot(tsdf,aes(x=t,y=e))+geom_line()+theme_classic()
+y.plot<-ggplot(tsdf,aes(x=t,y=y))+geom_line()+theme_classic()
+yar1.plot<-ggplot(tsdf,aes(x=t,y=yar1))+geom_line()+theme_classic()
+yt.plot<-ggplot(tsdf,aes(x=t,y=yt))+geom_line()+theme_classic()
+ggarrange(w.plot,yar1.plot,y.plot,yt.plot,ncol=1)
+```
+
+<img src="05-ts_intro_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+
+Similar al ejemplo del dado, note que en las realizaciones de los dos primeros procesos las primeras 100 observaciones son similares a las siguientes. En los otros dos procesos, en cambio, no es así.
+
+
+**Estricta**
+
+Decimos que el proceso estocástico $\{Y_t:t=1,2,...\}$ es estacionario si para toda colección de índices de tiempo $1\leq t_1<t_2<...<t_m$ la distribución conjunta de $(Y_{t_1},Y_{t_2},...,Y_{t_m})$ es igual a la de $(Y_{t_{1+h}},Y_{t_{2+h}},...,Y_{t_{m+h}}$ para todos los enteros $h\geq 1$
+
+
+**En Covarianza: débil**
+
+$\{Y_t:t=1,2,...\}$ con $E[Y_t^2<\infty]$ es estacionario en covarianza si
+
+- $E(Y_t)=\mu$ para todo $t$
+
+- $Var(x_t)=\gamma_0$ para todo $t$
+
+- Para cualquier $t,j\geq1,Cov(Y_t,Y_{t+j})=\gamma_j$, es que depende solo de $j$ y no de $t$
+
+
+**Dependencia débil**
+
+
+- Decimos que un proceso estacionario (en covarianza) es debilmente depediente si la correlación entre $x_t$ y $x_{t+h}$ tiende a cero *rápidamente* en la medida que $h\to \infty$
+
+
+- Este supuesto es importante para poder aplicar la Ley de Grandes Números y el Teorema Central del Límite, de tal manera que nos permite decir que lo que calculamos en la muestra converge a los valores poblacionales (LLN), y nos facilita la inferencia (CLT)
+
+
+### Modelos de regresión temporal
+
+El modelo de regresión lineal toma la forma
+
+$$
+Y_t=\mathbf{X}_t\boldsymbol{\beta}+e_t
+$$
+ 
+ Donde $\mathbf{X}_t$ es el vector de regresores, que puede incluir rezagos de $Y_t$ $(Y_{t-1},...,Y_{t-p})$. 
+ 
+Decimos que si se cumplen los siguientes supuestos 
+
+- **TS1**: $(Y_t,X_t)$ es estacionario y débilmente dependiente
+
+- **TS2**: No hay colinealidad perfecta
+
+- **TS3**: $E(e_t|\mathbf{X}_t)=0$, es decir que las explicativas son contemporáneamente exógenas
+
+Entonces el estimador MCO es consistente, $plim \hat{\beta}\to \beta$
+
+
