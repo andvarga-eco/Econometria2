@@ -118,7 +118,7 @@ ggarrange(acftrm,acfdep,ncol=2)
 ```
 
 
-## Ejercicio {-}
+### Ejercicio {-}
 
 Para cada una de las series realice un análisis gráfico, lo que incluye la autocorrelación, de las variables en niveles y en diferencias. Trabaje con la serie en logaritmo cuando lo considere relevante
 
@@ -211,25 +211,104 @@ $\{Y_t:t=1,2,...\}$ con $E[Y_t^2<\infty]$ es estacionario en covarianza si
 
 - Este supuesto es importante para poder aplicar la Ley de Grandes Números y el Teorema Central del Límite, de tal manera que nos permite decir que lo que calculamos en la muestra converge a los valores poblacionales (LLN), y nos facilita la inferencia (CLT)
 
+- Con los datos lo podemos observar usando la ACF. Si esta decae rápidamente de cero entonces es indicativo de dependencia débil
 
-### Modelos de regresión temporal
 
-El modelo de regresión lineal toma la forma
+### Ejercicio {-}
 
-$$
-Y_t=\mathbf{X}_t\boldsymbol{\beta}+e_t
-$$
- 
- Donde $\mathbf{X}_t$ es el vector de regresores, que puede incluir rezagos de $Y_t$ $(Y_{t-1},...,Y_{t-p})$. 
- 
-Decimos que si se cumplen los siguientes supuestos 
+Para los procesos siguientes, simule los datos y haciendo uso del análisis gráfico y de la función de autocorrelación, ACF, evalue si estos son estacionarios y presentan dependencia débil. Tenga en cuenta que $e_t\sim N(0,1)$ es un ruido blanco gaussiano
 
-- **TS1**: $(Y_t,X_t)$ es estacionario y débilmente dependiente
+1. $Y_t=Z+e_t$ donde $Z$ es una variable aleatoria, $Z\sim N(0,4)$
 
-- **TS2**: No hay colinealidad perfecta
+2. $Y_t=(-1)^{t}Z$ donde $Z$ es una variable aleatoria, $Z\sim N(0,4)$
 
-- **TS3**: $E(e_t|\mathbf{X}_t)=0$, es decir que las explicativas son contemporáneamente exógenas
+3. $Y_t=Y_{t-1}+e_t$. Asuma como valor incicial $Y_0=0$
 
-Entonces el estimador MCO es consistente, $plim \hat{\beta}\to \beta$
+4. $Y_t=0.1+Y_{t-1}+e_t$. Asuma como valor incicial $Y_0=0$
 
+5. $Y_t=e_t-0.4e_{t-1}$ Asuma como valor incicial $e_0=0$
+
+6. $Y_t=0.7+0.9Y_{t-1}+e_t$
+
+7. $y_t=0.7-0.8Y_{t-1}+e_t$
+
+8. $Y_t=1.6Y_{t-1}-0.9Y_{t-2}+e_t$
+
+
+**Solución**
+
+Simulamos los 8 procesos
+
+```{r}
+e<-rnorm(1000)
+Z<-rnorm(1,0,2)
+t<-seq(1,1000)
+Y1<-Z+e
+Y2<-(-1)^t*Z
+
+Y3<-numeric(1000)
+Y3[1]<-e[1]
+for(t in 2:1000){
+  Y3[t]<-Y3[t-1]+e[t]
+}
+
+
+Y4<-numeric(1000)
+Y4[1]<-0.1+e[1]
+for(t in 2:1000){
+  Y4[t]<-Y4[t-1]+0.1+e[t]
+}
+
+
+Y5<-numeric(1000)
+Y5[1]<-e[1]
+for(t in 2:1000){
+  Y5[t]<-e[t]-0.4*e[t-1]
+}
+
+Y6<-numeric(1000)
+Y6[1]<-0.7+e[1]
+for(t in 2:1000){
+  Y6[t]<-0.7+0.9*Y6[t-1]+e[t]
+}
+
+Y7<-numeric(1000)
+Y7[1]<-0.7+e[1]
+for(t in 2:1000){
+  Y7[t]<-0.7-0.8*Y7[t-1]+e[t]
+}
+
+Y8<-numeric(1000)
+Y8[1]<-e[1]
+Y8[2]<-e[2]
+for(t in 3:1000){
+  Y8[t]<-1.6*Y8[t-1]-0.9*Y8[t-2]+e[t]
+}
+
+
+
+df<-data.frame(e,t,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
+df<-df%>%filter(t>10)%>%as_tsibble(index=t)
+
+```
+
+
+1. Veamos para el proceso $Y_t=Z+e_t$
+
+```{r}
+Y1.plot<-ggplot(df,aes(x=t,y=Y1))+geom_line()+geom_hline(yintercept=mean(df$Y1),color="red",linetype="dashed")
+Y1.ACF<-df%>%ACF(Y1)%>%autoplot()
+ggarrange(Y1.plot,Y1.ACF,ncol=1)
+```
+
+
+El proceso $Y_t=Z+e_t$ luce estacionario. De hecho, cumple las condiciones de estacionariedad. Veamos
+
+- $E(Y_t)=E(Z)+E(e_t)$=0+0=0
+
+- $\gamma_{0t}\equiv Var(Y_t)=Var(Z)+Var(e_t)=4+1=5$
+
+- $\gamma_{jt}\equiv Cov(Y_t,Y_{t-j})=E(Z+e_t)(Z+e_{t-j})=4$
+
+Sim embargo, si observa claramente vera que el promedio temporal calculado con sus datos converge a $Z$ pero no a $E(Y_t)=0$. Así mismo, la autocovarianza siempre es constante e igual a 4, pero la ACF le arroja 0 para todos los rezagos. Es decir, el proceso es estacionario, pero no es débilmente dependiente, y por lo tanto no es ergódico. Note que el promedio temporal no converge al valor esperado.  
 
