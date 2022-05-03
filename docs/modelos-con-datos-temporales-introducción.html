@@ -24,7 +24,7 @@
 <meta name="author" content="Andrés Vargas" />
 
 
-<meta name="date" content="2022-05-01" />
+<meta name="date" content="2022-05-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="modelos-de-elección-discreta.html"/>
-
+<link rel="next" href="modelos-con-series-de-tiempo-estacionarias.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -207,12 +207,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="5.1.1" data-path="modelos-con-datos-temporales-introducción.html"><a href="modelos-con-datos-temporales-introducción.html#ejemplos"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplos</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="modelos-con-datos-temporales-introducción.html"><a href="modelos-con-datos-temporales-introducción.html#autocorrelaciones"><i class="fa fa-check"></i><b>5.2</b> Autocorrelaciones</a></li>
+<li class="chapter" data-level="5.2" data-path="modelos-con-datos-temporales-introducción.html"><a href="modelos-con-datos-temporales-introducción.html#autocorrelaciones"><i class="fa fa-check"></i><b>5.2</b> Autocorrelaciones</a>
+<ul>
 <li class="chapter" data-level="" data-path="modelos-con-datos-temporales-introducción.html"><a href="modelos-con-datos-temporales-introducción.html#ejercicio-3"><i class="fa fa-check"></i>Ejercicio</a></li>
+</ul></li>
 <li class="chapter" data-level="5.3" data-path="modelos-con-datos-temporales-introducción.html"><a href="modelos-con-datos-temporales-introducción.html#estacionariedad"><i class="fa fa-check"></i><b>5.3</b> Estacionariedad</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modelos-con-datos-temporales-introducción.html"><a href="modelos-con-datos-temporales-introducción.html#modelos-de-regresión-temporal"><i class="fa fa-check"></i><b>5.3.1</b> Modelos de regresión temporal</a></li>
+<li class="chapter" data-level="" data-path="modelos-con-datos-temporales-introducción.html"><a href="modelos-con-datos-temporales-introducción.html#ejercicio-4"><i class="fa fa-check"></i>Ejercicio</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelos-con-series-de-tiempo-estacionarias.html"><a href="modelos-con-series-de-tiempo-estacionarias.html"><i class="fa fa-check"></i><b>6</b> Modelos con series de tiempo estacionarias</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="modelos-con-series-de-tiempo-estacionarias.html"><a href="modelos-con-series-de-tiempo-estacionarias.html#modelos-lineales"><i class="fa fa-check"></i><b>6.1</b> Modelos lineales</a></li>
 </ul></li>
 </ul>
 
@@ -310,15 +316,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb37-4"><a href="modelos-con-datos-temporales-introducción.html#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-5"><a href="modelos-con-datos-temporales-introducción.html#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(acftrm,acfdep,<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="05-ts_intro_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-</div>
-<div id="ejercicio-3" class="section level2 unnumbered">
-<h2>Ejercicio</h2>
+<div id="ejercicio-3" class="section level3 unnumbered">
+<h3>Ejercicio</h3>
 <p>Para cada una de las series realice un análisis gráfico, lo que incluye la autocorrelación, de las variables en niveles y en diferencias. Trabaje con la serie en logaritmo cuando lo considere relevante</p>
 <ul>
 <li><p>ISE: índice de Seguimiento de la Economía. Serie de frecuencia mensual publicada por el <a href="https://www.dane.gov.co/index.php/estadisticas-por-tema/cuentas-nacionales/indicador-de-seguimiento-a-la-economia-ise">DANE</a></p></li>
 <li><p>Tasa de desempleo total nacioanl. Serie de frecuencia mensual publidada por el <a href="https://www.dane.gov.co/index.php/estadisticas-por-tema/mercado-laboral/empleo-y-desempleo">DANE</a></p></li>
 <li><p>Precio de cierre de Bitcoin. Serie de frecuencia diaria. Se sugiere descargar los datos de Yahoo Finance usando el paquete <em>quantmod</em></p></li>
 </ul>
+</div>
 </div>
 <div id="estacionariedad" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Estacionariedad</h2>
@@ -367,42 +373,95 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p>Decimos que un proceso estacionario (en covarianza) es debilmente depediente si la correlación entre <span class="math inline">\(x_t\)</span> y <span class="math inline">\(x_{t+h}\)</span> tiende a cero <em>rápidamente</em> en la medida que <span class="math inline">\(h\to \infty\)</span></p></li>
 <li><p>Este supuesto es importante para poder aplicar la Ley de Grandes Números y el Teorema Central del Límite, de tal manera que nos permite decir que lo que calculamos en la muestra converge a los valores poblacionales (LLN), y nos facilita la inferencia (CLT)</p></li>
+<li><p>Con los datos lo podemos observar usando la ACF. Si esta decae rápidamente de cero entonces es indicativo de dependencia débil</p></li>
 </ul>
-<div id="modelos-de-regresión-temporal" class="section level3" number="5.3.1">
-<h3><span class="header-section-number">5.3.1</span> Modelos de regresión temporal</h3>
-<p>El modelo de regresión lineal toma la forma</p>
-<p><span class="math display">\[
-Y_t=\mathbf{X}_t\boldsymbol{\beta}+e_t
-\]</span></p>
-<p>Donde <span class="math inline">\(\mathbf{X}_t\)</span> es el vector de regresores, que puede incluir rezagos de <span class="math inline">\(Y_t\)</span> <span class="math inline">\((Y_{t-1},...,Y_{t-p})\)</span>.</p>
-<p>Decimos que si se cumplen los siguientes supuestos</p>
+<div id="ejercicio-4" class="section level3 unnumbered">
+<h3>Ejercicio</h3>
+<p>Para los procesos siguientes, simule los datos y haciendo uso del análisis gráfico y de la función de autocorrelación, ACF, evalue si estos son estacionarios y presentan dependencia débil. Tenga en cuenta que <span class="math inline">\(e_t\sim N(0,1)\)</span> es un ruido blanco gaussiano</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(Y_t=Z+e_t\)</span> donde <span class="math inline">\(Z\)</span> es una variable aleatoria, <span class="math inline">\(Z\sim N(0,4)\)</span></p></li>
+<li><p><span class="math inline">\(Y_t=(-1)^{t}Z\)</span> donde <span class="math inline">\(Z\)</span> es una variable aleatoria, <span class="math inline">\(Z\sim N(0,4)\)</span></p></li>
+<li><p><span class="math inline">\(Y_t=Y_{t-1}+e_t\)</span>. Asuma como valor incicial <span class="math inline">\(Y_0=0\)</span></p></li>
+<li><p><span class="math inline">\(Y_t=0.1+Y_{t-1}+e_t\)</span>. Asuma como valor incicial <span class="math inline">\(Y_0=0\)</span></p></li>
+<li><p><span class="math inline">\(Y_t=e_t-0.4e_{t-1}\)</span> Asuma como valor incicial <span class="math inline">\(e_0=0\)</span></p></li>
+<li><p><span class="math inline">\(Y_t=0.7+0.9Y_{t-1}+e_t\)</span></p></li>
+<li><p><span class="math inline">\(y_t=0.7-0.8Y_{t-1}+e_t\)</span></p></li>
+<li><p><span class="math inline">\(Y_t=1.6Y_{t-1}-0.9Y_{t-2}+e_t\)</span></p></li>
+</ol>
+<p><strong>Solución</strong></p>
+<p>Simulamos los 8 procesos</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="modelos-con-datos-temporales-introducción.html#cb39-1" aria-hidden="true" tabindex="-1"></a>e<span class="ot">&lt;-</span><span class="fu">rnorm</span>(<span class="dv">1000</span>)</span>
+<span id="cb39-2"><a href="modelos-con-datos-temporales-introducción.html#cb39-2" aria-hidden="true" tabindex="-1"></a>Z<span class="ot">&lt;-</span><span class="fu">rnorm</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>)</span>
+<span id="cb39-3"><a href="modelos-con-datos-temporales-introducción.html#cb39-3" aria-hidden="true" tabindex="-1"></a>time<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="modelos-con-datos-temporales-introducción.html#cb40-1" aria-hidden="true" tabindex="-1"></a>Y1<span class="ot">&lt;-</span>Z<span class="sc">+</span>e</span>
+<span id="cb40-2"><a href="modelos-con-datos-temporales-introducción.html#cb40-2" aria-hidden="true" tabindex="-1"></a>Y2<span class="ot">&lt;-</span>(<span class="sc">-</span><span class="dv">1</span>)<span class="sc">^</span>time<span class="sc">*</span>Z</span>
+<span id="cb40-3"><a href="modelos-con-datos-temporales-introducción.html#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="modelos-con-datos-temporales-introducción.html#cb40-4" aria-hidden="true" tabindex="-1"></a>Y3<span class="ot">&lt;-</span><span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb40-5"><a href="modelos-con-datos-temporales-introducción.html#cb40-5" aria-hidden="true" tabindex="-1"></a>Y3[<span class="dv">1</span>]<span class="ot">&lt;-</span>e[<span class="dv">1</span>]</span>
+<span id="cb40-6"><a href="modelos-con-datos-temporales-introducción.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb40-7"><a href="modelos-con-datos-temporales-introducción.html#cb40-7" aria-hidden="true" tabindex="-1"></a>  Y3[t]<span class="ot">&lt;-</span>Y3[t<span class="dv">-1</span>]<span class="sc">+</span>e[t]</span>
+<span id="cb40-8"><a href="modelos-con-datos-temporales-introducción.html#cb40-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-9"><a href="modelos-con-datos-temporales-introducción.html#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="modelos-con-datos-temporales-introducción.html#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-11"><a href="modelos-con-datos-temporales-introducción.html#cb40-11" aria-hidden="true" tabindex="-1"></a>Y4<span class="ot">&lt;-</span><span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb40-12"><a href="modelos-con-datos-temporales-introducción.html#cb40-12" aria-hidden="true" tabindex="-1"></a>Y4[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="fl">0.1</span><span class="sc">+</span>e[<span class="dv">1</span>]</span>
+<span id="cb40-13"><a href="modelos-con-datos-temporales-introducción.html#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb40-14"><a href="modelos-con-datos-temporales-introducción.html#cb40-14" aria-hidden="true" tabindex="-1"></a>  Y4[t]<span class="ot">&lt;-</span>Y4[t<span class="dv">-1</span>]<span class="sc">+</span><span class="fl">0.1</span><span class="sc">+</span>e[t]</span>
+<span id="cb40-15"><a href="modelos-con-datos-temporales-introducción.html#cb40-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-16"><a href="modelos-con-datos-temporales-introducción.html#cb40-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-17"><a href="modelos-con-datos-temporales-introducción.html#cb40-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-18"><a href="modelos-con-datos-temporales-introducción.html#cb40-18" aria-hidden="true" tabindex="-1"></a>Y5<span class="ot">&lt;-</span><span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb40-19"><a href="modelos-con-datos-temporales-introducción.html#cb40-19" aria-hidden="true" tabindex="-1"></a>Y5[<span class="dv">1</span>]<span class="ot">&lt;-</span>e[<span class="dv">1</span>]</span>
+<span id="cb40-20"><a href="modelos-con-datos-temporales-introducción.html#cb40-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb40-21"><a href="modelos-con-datos-temporales-introducción.html#cb40-21" aria-hidden="true" tabindex="-1"></a>  Y5[t]<span class="ot">&lt;-</span>e[t]<span class="sc">-</span><span class="fl">0.4</span><span class="sc">*</span>e[t<span class="dv">-1</span>]</span>
+<span id="cb40-22"><a href="modelos-con-datos-temporales-introducción.html#cb40-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-23"><a href="modelos-con-datos-temporales-introducción.html#cb40-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-24"><a href="modelos-con-datos-temporales-introducción.html#cb40-24" aria-hidden="true" tabindex="-1"></a>Y6<span class="ot">&lt;-</span><span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb40-25"><a href="modelos-con-datos-temporales-introducción.html#cb40-25" aria-hidden="true" tabindex="-1"></a>Y6[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="fl">0.7</span><span class="sc">+</span>e[<span class="dv">1</span>]</span>
+<span id="cb40-26"><a href="modelos-con-datos-temporales-introducción.html#cb40-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb40-27"><a href="modelos-con-datos-temporales-introducción.html#cb40-27" aria-hidden="true" tabindex="-1"></a>  Y6[t]<span class="ot">&lt;-</span><span class="fl">0.7+0.9</span><span class="sc">*</span>Y6[t<span class="dv">-1</span>]<span class="sc">+</span>e[t]</span>
+<span id="cb40-28"><a href="modelos-con-datos-temporales-introducción.html#cb40-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-29"><a href="modelos-con-datos-temporales-introducción.html#cb40-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-30"><a href="modelos-con-datos-temporales-introducción.html#cb40-30" aria-hidden="true" tabindex="-1"></a>Y7<span class="ot">&lt;-</span><span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb40-31"><a href="modelos-con-datos-temporales-introducción.html#cb40-31" aria-hidden="true" tabindex="-1"></a>Y7[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="fl">0.7</span><span class="sc">+</span>e[<span class="dv">1</span>]</span>
+<span id="cb40-32"><a href="modelos-con-datos-temporales-introducción.html#cb40-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb40-33"><a href="modelos-con-datos-temporales-introducción.html#cb40-33" aria-hidden="true" tabindex="-1"></a>  Y7[t]<span class="ot">&lt;-</span><span class="fl">0.7-0.8</span><span class="sc">*</span>Y7[t<span class="dv">-1</span>]<span class="sc">+</span>e[t]</span>
+<span id="cb40-34"><a href="modelos-con-datos-temporales-introducción.html#cb40-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-35"><a href="modelos-con-datos-temporales-introducción.html#cb40-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-36"><a href="modelos-con-datos-temporales-introducción.html#cb40-36" aria-hidden="true" tabindex="-1"></a>Y8<span class="ot">&lt;-</span><span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb40-37"><a href="modelos-con-datos-temporales-introducción.html#cb40-37" aria-hidden="true" tabindex="-1"></a>Y8[<span class="dv">1</span>]<span class="ot">&lt;-</span>e[<span class="dv">1</span>]</span>
+<span id="cb40-38"><a href="modelos-con-datos-temporales-introducción.html#cb40-38" aria-hidden="true" tabindex="-1"></a>Y8[<span class="dv">2</span>]<span class="ot">&lt;-</span>e[<span class="dv">2</span>]</span>
+<span id="cb40-39"><a href="modelos-con-datos-temporales-introducción.html#cb40-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb40-40"><a href="modelos-con-datos-temporales-introducción.html#cb40-40" aria-hidden="true" tabindex="-1"></a>  Y8[t]<span class="ot">&lt;-</span><span class="fl">1.6</span><span class="sc">*</span>Y8[t<span class="dv">-1</span>]<span class="sc">-</span><span class="fl">0.9</span><span class="sc">*</span>Y8[t<span class="dv">-2</span>]<span class="sc">+</span>e[t]</span>
+<span id="cb40-41"><a href="modelos-con-datos-temporales-introducción.html#cb40-41" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="modelos-con-datos-temporales-introducción.html#cb41-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(e,time,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)</span>
+<span id="cb41-2"><a href="modelos-con-datos-temporales-introducción.html#cb41-2" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span>df<span class="sc">%&gt;%</span><span class="fu">filter</span>(time<span class="sc">&gt;</span><span class="dv">10</span>)</span>
+<span id="cb41-3"><a href="modelos-con-datos-temporales-introducción.html#cb41-3" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span>df<span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">time=</span><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>,<span class="at">to=</span><span class="dv">990</span>,<span class="at">by=</span><span class="dv">1</span>))<span class="sc">%&gt;%</span><span class="fu">as_tsibble</span>(<span class="at">index=</span>time)</span></code></pre></div>
+<ol style="list-style-type: decimal">
+<li>Veamos para el proceso <span class="math inline">\(Y_t=Z+e_t\)</span></li>
+</ol>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="modelos-con-datos-temporales-introducción.html#cb42-1" aria-hidden="true" tabindex="-1"></a>Y1.plot<span class="ot">&lt;-</span><span class="fu">ggplot</span>(df,<span class="fu">aes</span>(<span class="at">x=</span>time,<span class="at">y=</span>Y1))<span class="sc">+</span><span class="fu">geom_line</span>()<span class="sc">+</span><span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="fu">mean</span>(df<span class="sc">$</span>Y1),<span class="at">color=</span><span class="st">&quot;red&quot;</span>,<span class="at">linetype=</span><span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb42-2"><a href="modelos-con-datos-temporales-introducción.html#cb42-2" aria-hidden="true" tabindex="-1"></a>Y1.ACF<span class="ot">&lt;-</span>df<span class="sc">%&gt;%</span><span class="fu">ACF</span>(Y1)<span class="sc">%&gt;%</span><span class="fu">autoplot</span>()</span>
+<span id="cb42-3"><a href="modelos-con-datos-temporales-introducción.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(Y1.plot,Y1.ACF,<span class="at">ncol=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="05-ts_intro_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>El proceso <span class="math inline">\(Y_t=Z+e_t\)</span> luce estacionario. De hecho, cumple las condiciones de estacionariedad. Veamos</p>
 <ul>
-<li><p><strong>TS1</strong>: <span class="math inline">\((Y_t,X_t)\)</span> es estacionario y débilmente dependiente</p></li>
-<li><p><strong>TS2</strong>: No hay colinealidad perfecta</p></li>
-<li><p><strong>TS3</strong>: <span class="math inline">\(E(e_t|\mathbf{X}_t)=0\)</span>, es decir que las explicativas son contemporáneamente exógenas</p></li>
+<li><p><span class="math inline">\(E(Y_t)=E(Z)+E(e_t)\)</span>=0+0=0</p></li>
+<li><p><span class="math inline">\(\gamma_{0t}\equiv Var(Y_t)=Var(Z)+Var(e_t)=4+1=5\)</span></p></li>
+<li><p><span class="math inline">\(\gamma_{jt}\equiv Cov(Y_t,Y_{t-j})=E(Z+e_t)(Z+e_{t-j})=4\)</span></p></li>
 </ul>
-<p>Entonces el estimador MCO es consistente, <span class="math inline">\(plim \hat{\beta}\to \beta\)</span></p>
+<p>Sim embargo, si observa claramente vera que el promedio temporal calculado con sus datos converge a <span class="math inline">\(Z\)</span> pero no a <span class="math inline">\(E(Y_t)=0\)</span>. Así mismo, la autocovarianza siempre es constante e igual a 4, pero la ACF le arroja 0 para todos los rezagos. Es decir, el proceso es estacionario, pero no es débilmente dependiente, y por lo tanto no es ergódico. Note que el promedio temporal no converge al valor esperado.</p>
 
 </div>
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="modelos-de-elección-discreta.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="modelos-de-elección-discreta.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="modelos-con-series-de-tiempo-estacionarias.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

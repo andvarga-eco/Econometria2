@@ -242,9 +242,13 @@ Simulamos los 8 procesos
 ```{r}
 e<-rnorm(1000)
 Z<-rnorm(1,0,2)
-t<-seq(1,1000)
+time<-seq(1,1000)
+```
+
+
+```{r}
 Y1<-Z+e
-Y2<-(-1)^t*Z
+Y2<-(-1)^time*Z
 
 Y3<-numeric(1000)
 Y3[1]<-e[1]
@@ -285,10 +289,12 @@ for(t in 3:1000){
   Y8[t]<-1.6*Y8[t-1]-0.9*Y8[t-2]+e[t]
 }
 
+```
 
-
-df<-data.frame(e,t,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
-df<-df%>%filter(t>10)%>%as_tsibble(index=t)
+```{r}
+df<-data.frame(e,time,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8)
+df<-df%>%filter(time>10)
+df<-df%>%mutate(time=seq(from=1,to=990,by=1))%>%as_tsibble(index=time)
 
 ```
 
@@ -296,7 +302,7 @@ df<-df%>%filter(t>10)%>%as_tsibble(index=t)
 1. Veamos para el proceso $Y_t=Z+e_t$
 
 ```{r}
-Y1.plot<-ggplot(df,aes(x=t,y=Y1))+geom_line()+geom_hline(yintercept=mean(df$Y1),color="red",linetype="dashed")
+Y1.plot<-ggplot(df,aes(x=time,y=Y1))+geom_line()+geom_hline(yintercept=mean(df$Y1),color="red",linetype="dashed")
 Y1.ACF<-df%>%ACF(Y1)%>%autoplot()
 ggarrange(Y1.plot,Y1.ACF,ncol=1)
 ```
