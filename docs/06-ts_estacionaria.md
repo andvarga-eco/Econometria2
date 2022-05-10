@@ -1,6 +1,218 @@
-# Modelos con series de tiempo estacionarias
+# Series de tiempo univariadas
 
 
+
+
+## Estacionariedad y dependencia débil 
+
+Retomando, decimos que un proceso de serie de tiempo es una secuencia de variables aleatorias indexadas en el tiempo. Nuestros datos, lo que observamos, es una realización de este proceso estocástico. En analogía a los datos de sección cruzada, debemos tener en cuenta que nuestros datos son una realización de muchas posibles. 
+
+Si tengo una colección de variables aleatorias ordenadas en una secuencia y muevo esa secuencia *h* periodos adelante y la distribución de probabilidad conjunta no cambia, entonces decimos que el proceso es estacionario. Tenemos una versión estricta y una débil o en covarianza
+
+**Estricta**
+
+Decimos que el proceso estocástico $\{Y_t:t=1,2,...\}$ es estacionario si para toda colección de índices de tiempo $1\leq t_1<t_2<...<t_m$ la distribución conjunta de $(Y_{t_1},Y_{t_2},...,Y_{t_m})$ es igual a la de $(Y_{t_{1+h}},Y_{t_{2+h}},...,Y_{t_{m+h}}$ para todos los enteros $h\geq 1$
+
+
+**En Covarianza: débil**
+
+$\{Y_t:t=1,2,...\}$ con $E[Y_t^2<\infty]$ es estacionario en covarianza si
+
+- $E(Y_t)=\mu$ para todo $t$
+
+- $Var(x_t)=\gamma_0$ para todo $t$
+
+- Para cualquier $t,j\geq1,Cov(Y_t,Y_{t+j})=\gamma_j$, es que depende solo de $j$ y no de $t$
+
+
+**Dependencia débil**
+
+
+- Decimos que un proceso estacionario (en covarianza) es debilmente depediente si la correlación entre $x_t$ y $x_{t+h}$ tiende a cero *rápidamente* en la medida que $h\to \infty$
+
+
+- Este supuesto es importante para poder aplicar la Ley de Grandes Números y el Teorema Central del Límite, de tal manera que nos permite decir que lo que calculamos en la muestra converge a los valores poblacionales (LLN), y nos facilita la inferencia (CLT)
+
+- Con los datos lo podemos observar usando la ACF. Si esta decae rápidamente de cero entonces es indicativo de dependencia débil
+
+
+### Procesos de media móvil y autoregresivos
+
+#### Media móvil
+
+El ejemplo más simple de un proceso estacionario y débilmente dependiente es un proceso de media móvil de orden 1, **MA(1)**
+
+\begin{equation}
+\tag{1}
+Y_t=\mu+e_t+\theta e_{t-1}
+\end{equation}
+
+Donde $e_t$ es ruido blanco. La ecuación (1) la llamamos de media móvil, **MA** porque $Y_t$ es un promedio ponderado de los choques aleatorios $e_t$ y $e_{t-1}$. Los momentos del proceso son
+
+\begin{align}
+\tag{2}
+E(Y_t)&=\mu\\
+Var(Y_t)&=(1+\theta^2)\sigma^2\\
+\gamma_1&=\theta\sigma^2
+\rho_1=\dfrac{\theta}{1+\theta^2}
+\rho_k=0 \quad \text{Para}\quad k\geq2
+\end{align}
+
+
+El proceso de media móvil puede ser de un orden superior a 1, un proceso **MA(q)** es de la forma
+
+$$
+Y_t=\mu+e_t+\theta_1e_{t-1}+\theta_2e_{t-2}+...+\theta_qe_{t-q}
+$$
+
+La gráfica siguiente ilustra los procesos MA(1) y MA(4)
+
+
+```r
+library(stats)
+ma1<-arima.sim(n=100,list(ma=c(0.8)))
+ma4<-arima.sim(n=100,list(ma=c(-0.6,0.3,-0.5,0.5)))
+par(mfrow=c(2,2))
+plot(ma1,ylab="Y",main="MA(1)")
+acf(ma1)
+plot(ma4,ylab="Y",main="MA(4)")
+acf(ma4)
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+
+#### Procesos autoregresivos, AR(p)
+
+Un proceso autoregresivo de orden 1 es de la forma
+
+$$
+Y_t=c+\phi Y_{t-1}+e_t
+$$
+
+Donde $e_t$ es ruido blanco. 
+
+Si resolvemos por sustitución
+
+\begin{align}
+t=0 \quad Y_0&=c+\phi Y_{-1}+e_0\\
+t=1 \quad Y_1&=c+\phi Y_{0}+e_1 \\
+\end{align}
+
+Al reemplazar $Y_0$ obtenemos
+
+\begin{equation}
+t=1 \quad Y_1=c+\phi c+\phi^{2}y_{-1}+\phi e_{0}+e_1
+\end{equation}
+
+En $t=2$ tenemos 
+
+\begin{equation}
+Y_2=c+\phi c +\phi^2 c+\phi^{3}Y_{-1}+\phi^2e_0+\phi e_1+e_2
+\end{equation}
+
+Generalizando, llegamos a
+
+\begin{equation}
+Y_t=c(1+\phi+\phi^2+\phi^3+...+\phi^t)+\phi^{t+1}Y_{-1}+e_t+\phi e_{t-1}+\phi^2e_{t-2}+...+\phi^te_0
+\end{equation}
+
+El comportamiento de la ecuación anterior depende del valor de $\phi$. Si $\phi\neq 1$, podemos mostrar que los primeros $t$ términos de la serie geométrica $1+\phi+\phi^2+\phi^3+...+\phi^t$ converge a 
+
+$$
+\dfrac{1-\phi^{t+1}}{1-\phi}
+$$
+
+Si además $|\phi|<1$, entonces cuando $t\to\infty$ converge a $\dfrac{1}{1-\phi}$, con lo cual
+
+$$
+Y_t=\dfrac{c}{1-\phi}+e_t+\phi e_{t-1}+\phi^2e_{t-2}+\phi^3e_{t-3}+...
+$$
+Note que $Y_t$ tiene dos partes, un valor de equilibrio, $\dfrac{c}{1-\phi}$ y la secuencia de choques aleatorios desde el pasado remoto hasta el presente. Podemos mostrar que $Y_t$ es estacionaria
+
+$$
+E(Y_t)=\mu=\dfrac{c}{1-\phi}
+$$
+
+La varianza
+
+\begin{align}
+\gamma_0&=E(Y_t-\mu)^2\\
+&=E(e_t+\phi e_{t-1}+\phi^2e_{t-2}+\phi^3e_{t-3}+...)^2\\
+&=E(e_t^2)+E(\phi e_te_{t-1})+\phi^2E(e_te_{t-2})+...+\phi^2E(e_{t-1^2})+...+\phi^4E(e_{t-2}^2)+...\\
+&=(1+\phi+\phi^2+\phi^4+\phi^6...)\sigma^2\\
+&=\dfrac{\sigma^2}{1-\phi^2}
+\end{align}
+
+Luego la varianza no es función del tiempo
+
+La covarianza de orden 1
+
+\begin{align}
+\gamma_1&=E(Y_t-\mu)(Y_{t-1}-\mu)\\
+&=E(e_t+\phi e_{t-1}+\phi^2e_{t-2}+...)(e_{t-1}+\phi e_{t-2}+\phi^2e_{t-3}+...)\\
+&=(\phi+\phi^3+\phi^5+...)\sigma^2\\
+&=\phi(1+\phi^2+\phi^4+...)\sigma^2\\
+&=\dfrac{\phi\sigma^2}{1-\phi^2}
+\end{align}
+
+Siguiendo el mismo procedimiento, la de orden 2 estaría dada por
+
+$$
+\gamma_2=\dfrac{\phi^2\sigma^2}{1-\phi^2}
+$$
+Y de manera general, para cualquier $j$
+
+$$
+\gamma_j=\dfrac{\phi^j\sigma^2}{1-\phi^2}
+$$
+
+
+Usando las covarianzas y la varianza podemos obtener las autocorrelaciones
+
+$$
+\rho_j=\dfrac{\gamma_j}{\gamma_0}=\phi^j
+$$
+**Ejercicio**
+
+Para los siguientes procesos, calcule el valor esperado, la varianza y las autocorrelaciones hasta $j=5$. Grafique las autocorrelaciones
+
+1. $Y_t=0.8Y_{t-1}+e_t$
+
+2. $Y_t=1-0.6Y_{t-1}+e_t$
+
+
+
+De forma general, un proceso AR(p) se escribe
+
+$$
+Y_t=c+\phi_1Y_{t-1}+\phi_2Y_{t-2}+...+\phi_pY_{t-p}+e_t
+$$
+
+La graífca siguiente ilustra los procesos AR(1) y AR(2)
+
+
+```r
+ar1<-arima.sim(n=100,list(ar=c(0.8)))
+ar2<-arima.sim(n=100,list(ar=c(1.6,-0.9)))
+par(mfrow=c(2,2))
+plot(ar1,ylab="Y",main="ar(1)")
+acf(ar1)
+plot(ar2,ylab="Y",main="ar(2)")
+acf(ar2)
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
+
+#### Procesos no estacionarios
+
+Vimos que el comportamiento del proceso AR(1) depende del valor de $\phi$. A partir de lo desarrollado anteriormente, calcule la media, la varianza y las autocorrelaciones para los siguientes procesos
+
+1. Caminata aleatoria $Y_t=Y_{t-1}+e_t$
+
+2. Caminata aleatoria con deriva $Y_t=c+Y_{t-1}+e_t$
+
+3. Estacionario alrededor de tendencia determinista $Y=at+\phi Y_{t-1}+e_t$, con $|\phi|<1$
 
 
 ## Modelos lineales

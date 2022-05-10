@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Econometría 2</title>
+  <title>Capítulo6 Series de tiempo univariadas | Econometría 2</title>
   <meta name="description" content="Notas de clase de Econometría 2" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Econometría 2" />
+  <meta property="og:title" content="Capítulo6 Series de tiempo univariadas | Econometría 2" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Econometría 2" />
+  <meta name="twitter:title" content="Capítulo6 Series de tiempo univariadas | Econometría 2" />
   
   <meta name="twitter:description" content="Notas de clase de Econometría 2" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="modelos-con-datos-temporales-introducción.html"/>
 
-<link rel="next" href="sobre-el-autor.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -241,23 +241,180 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Econometría 2</h1>
-<p class="author"><em>Andrés Vargas</em></p>
-<p class="date"><em>2022-05-09</em></p>
+<div id="series-de-tiempo-univariadas" class="section level1" number="6">
+<h1><span class="header-section-number">Capítulo6</span> Series de tiempo univariadas</h1>
+<div id="estacionariedad-y-dependencia-débil" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Estacionariedad y dependencia débil</h2>
+<p>Retomando, decimos que un proceso de serie de tiempo es una secuencia de variables aleatorias indexadas en el tiempo. Nuestros datos, lo que observamos, es una realización de este proceso estocástico. En analogía a los datos de sección cruzada, debemos tener en cuenta que nuestros datos son una realización de muchas posibles.</p>
+<p>Si tengo una colección de variables aleatorias ordenadas en una secuencia y muevo esa secuencia <em>h</em> periodos adelante y la distribución de probabilidad conjunta no cambia, entonces decimos que el proceso es estacionario. Tenemos una versión estricta y una débil o en covarianza</p>
+<p><strong>Estricta</strong></p>
+<p>Decimos que el proceso estocástico <span class="math inline">\(\{Y_t:t=1,2,...\}\)</span> es estacionario si para toda colección de índices de tiempo <span class="math inline">\(1\leq t_1&lt;t_2&lt;...&lt;t_m\)</span> la distribución conjunta de <span class="math inline">\((Y_{t_1},Y_{t_2},...,Y_{t_m})\)</span> es igual a la de <span class="math inline">\((Y_{t_{1+h}},Y_{t_{2+h}},...,Y_{t_{m+h}}\)</span> para todos los enteros <span class="math inline">\(h\geq 1\)</span></p>
+<p><strong>En Covarianza: débil</strong></p>
+<p><span class="math inline">\(\{Y_t:t=1,2,...\}\)</span> con <span class="math inline">\(E[Y_t^2&lt;\infty]\)</span> es estacionario en covarianza si</p>
+<ul>
+<li><p><span class="math inline">\(E(Y_t)=\mu\)</span> para todo <span class="math inline">\(t\)</span></p></li>
+<li><p><span class="math inline">\(Var(x_t)=\gamma_0\)</span> para todo <span class="math inline">\(t\)</span></p></li>
+<li><p>Para cualquier <span class="math inline">\(t,j\geq1,Cov(Y_t,Y_{t+j})=\gamma_j\)</span>, es que depende solo de <span class="math inline">\(j\)</span> y no de <span class="math inline">\(t\)</span></p></li>
+</ul>
+<p><strong>Dependencia débil</strong></p>
+<ul>
+<li><p>Decimos que un proceso estacionario (en covarianza) es debilmente depediente si la correlación entre <span class="math inline">\(x_t\)</span> y <span class="math inline">\(x_{t+h}\)</span> tiende a cero <em>rápidamente</em> en la medida que <span class="math inline">\(h\to \infty\)</span></p></li>
+<li><p>Este supuesto es importante para poder aplicar la Ley de Grandes Números y el Teorema Central del Límite, de tal manera que nos permite decir que lo que calculamos en la muestra converge a los valores poblacionales (LLN), y nos facilita la inferencia (CLT)</p></li>
+<li><p>Con los datos lo podemos observar usando la ACF. Si esta decae rápidamente de cero entonces es indicativo de dependencia débil</p></li>
+</ul>
+<div id="procesos-de-media-móvil-y-autoregresivos" class="section level3" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Procesos de media móvil y autoregresivos</h3>
+<div id="media-móvil" class="section level4" number="6.1.1.1">
+<h4><span class="header-section-number">6.1.1.1</span> Media móvil</h4>
+<p>El ejemplo más simple de un proceso estacionario y débilmente dependiente es un proceso de media móvil de orden 1, <strong>MA(1)</strong></p>
+<p><span class="math display">\[\begin{equation}
+\tag{1}
+Y_t=\mu+e_t+\theta e_{t-1}
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(e_t\)</span> es ruido blanco. La ecuación (1) la llamamos de media móvil, <strong>MA</strong> porque <span class="math inline">\(Y_t\)</span> es un promedio ponderado de los choques aleatorios <span class="math inline">\(e_t\)</span> y <span class="math inline">\(e_{t-1}\)</span>. Los momentos del proceso son</p>
+<p><span class="math display">\[\begin{align}
+\tag{2}
+E(Y_t)&amp;=\mu\\
+Var(Y_t)&amp;=(1+\theta^2)\sigma^2\\
+\gamma_1&amp;=\theta\sigma^2
+\rho_1=\dfrac{\theta}{1+\theta^2}
+\rho_k=0 \quad \text{Para}\quad k\geq2
+\end{align}\]</span></p>
+<p>El proceso de media móvil puede ser de un orden superior a 1, un proceso <strong>MA(q)</strong> es de la forma</p>
+<p><span class="math display">\[
+Y_t=\mu+e_t+\theta_1e_{t-1}+\theta_2e_{t-2}+...+\theta_qe_{t-q}
+\]</span></p>
+<p>La gráfica siguiente ilustra los procesos MA(1) y MA(4)</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="series-de-tiempo-univariadas.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
+<span id="cb1-2"><a href="series-de-tiempo-univariadas.html#cb1-2" aria-hidden="true" tabindex="-1"></a>ma1<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="fl">0.8</span>)))</span>
+<span id="cb1-3"><a href="series-de-tiempo-univariadas.html#cb1-3" aria-hidden="true" tabindex="-1"></a>ma4<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.6</span>,<span class="fl">0.3</span>,<span class="sc">-</span><span class="fl">0.5</span>,<span class="fl">0.5</span>)))</span>
+<span id="cb1-4"><a href="series-de-tiempo-univariadas.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb1-5"><a href="series-de-tiempo-univariadas.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ma1,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;MA(1)&quot;</span>)</span>
+<span id="cb1-6"><a href="series-de-tiempo-univariadas.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ma1)</span>
+<span id="cb1-7"><a href="series-de-tiempo-univariadas.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ma4,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;MA(4)&quot;</span>)</span>
+<span id="cb1-8"><a href="series-de-tiempo-univariadas.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ma4)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 </div>
-<div id="prefacio" class="section level1 unnumbered">
-<h1>Prefacio</h1>
-<hr />
-<p>Notas de clase de la asignatura Econometría 2, del programa de Economía de la Universidad del Norte. Están bajo permanente revisión y actualización. Comentarios o sugerencias a <a href="mailto:andresmv@uninorte.edu.co" class="email">andresmv@uninorte.edu.co</a></p>
+<div id="procesos-autoregresivos-arp" class="section level4" number="6.1.1.2">
+<h4><span class="header-section-number">6.1.1.2</span> Procesos autoregresivos, AR(p)</h4>
+<p>Un proceso autoregresivo de orden 1 es de la forma</p>
+<p><span class="math display">\[
+Y_t=c+\phi Y_{t-1}+e_t
+\]</span></p>
+<p>Donde <span class="math inline">\(e_t\)</span> es ruido blanco.</p>
+<p>Si resolvemos por sustitución</p>
+<p><span class="math display">\[\begin{align}
+t=0 \quad Y_0&amp;=c+\phi Y_{-1}+e_0\\
+t=1 \quad Y_1&amp;=c+\phi Y_{0}+e_1 \\
+\end{align}\]</span></p>
+<p>Al reemplazar <span class="math inline">\(Y_0\)</span> obtenemos</p>
+<p><span class="math display">\[\begin{equation}
+t=1 \quad Y_1=c+\phi c+\phi^{2}y_{-1}+\phi e_{0}+e_1
+\end{equation}\]</span></p>
+<p>En <span class="math inline">\(t=2\)</span> tenemos</p>
+<p><span class="math display">\[\begin{equation}
+Y_2=c+\phi c +\phi^2 c+\phi^{3}Y_{-1}+\phi^2e_0+\phi e_1+e_2
+\end{equation}\]</span></p>
+<p>Generalizando, llegamos a</p>
+<p><span class="math display">\[\begin{equation}
+Y_t=c(1+\phi+\phi^2+\phi^3+...+\phi^t)+\phi^{t+1}Y_{-1}+e_t+\phi e_{t-1}+\phi^2e_{t-2}+...+\phi^te_0
+\end{equation}\]</span></p>
+<p>El comportamiento de la ecuación anterior depende del valor de <span class="math inline">\(\phi\)</span>. Si <span class="math inline">\(\phi\neq 1\)</span>, podemos mostrar que los primeros <span class="math inline">\(t\)</span> términos de la serie geométrica <span class="math inline">\(1+\phi+\phi^2+\phi^3+...+\phi^t\)</span> converge a</p>
+<p><span class="math display">\[
+\dfrac{1-\phi^{t+1}}{1-\phi}
+\]</span></p>
+<p>Si además <span class="math inline">\(|\phi|&lt;1\)</span>, entonces cuando <span class="math inline">\(t\to\infty\)</span> converge a <span class="math inline">\(\dfrac{1}{1-\phi}\)</span>, con lo cual</p>
+<p><span class="math display">\[
+Y_t=\dfrac{c}{1-\phi}+e_t+\phi e_{t-1}+\phi^2e_{t-2}+\phi^3e_{t-3}+...
+\]</span>
+Note que <span class="math inline">\(Y_t\)</span> tiene dos partes, un valor de equilibrio, <span class="math inline">\(\dfrac{c}{1-\phi}\)</span> y la secuencia de choques aleatorios desde el pasado remoto hasta el presente. Podemos mostrar que <span class="math inline">\(Y_t\)</span> es estacionaria</p>
+<p><span class="math display">\[
+E(Y_t)=\mu=\dfrac{c}{1-\phi}
+\]</span></p>
+<p>La varianza</p>
+<p><span class="math display">\[\begin{align}
+\gamma_0&amp;=E(Y_t-\mu)^2\\
+&amp;=E(e_t+\phi e_{t-1}+\phi^2e_{t-2}+\phi^3e_{t-3}+...)^2\\
+&amp;=E(e_t^2)+E(\phi e_te_{t-1})+\phi^2E(e_te_{t-2})+...+\phi^2E(e_{t-1^2})+...+\phi^4E(e_{t-2}^2)+...\\
+&amp;=(1+\phi+\phi^2+\phi^4+\phi^6...)\sigma^2\\
+&amp;=\dfrac{\sigma^2}{1-\phi^2}
+\end{align}\]</span></p>
+<p>Luego la varianza no es función del tiempo</p>
+<p>La covarianza de orden 1</p>
+<p><span class="math display">\[\begin{align}
+\gamma_1&amp;=E(Y_t-\mu)(Y_{t-1}-\mu)\\
+&amp;=E(e_t+\phi e_{t-1}+\phi^2e_{t-2}+...)(e_{t-1}+\phi e_{t-2}+\phi^2e_{t-3}+...)\\
+&amp;=(\phi+\phi^3+\phi^5+...)\sigma^2\\
+&amp;=\phi(1+\phi^2+\phi^4+...)\sigma^2\\
+&amp;=\dfrac{\phi\sigma^2}{1-\phi^2}
+\end{align}\]</span></p>
+<p>Siguiendo el mismo procedimiento, la de orden 2 estaría dada por</p>
+<p><span class="math display">\[
+\gamma_2=\dfrac{\phi^2\sigma^2}{1-\phi^2}
+\]</span>
+Y de manera general, para cualquier <span class="math inline">\(j\)</span></p>
+<p><span class="math display">\[
+\gamma_j=\dfrac{\phi^j\sigma^2}{1-\phi^2}
+\]</span></p>
+<p>Usando las covarianzas y la varianza podemos obtener las autocorrelaciones</p>
+<p><span class="math display">\[
+\rho_j=\dfrac{\gamma_j}{\gamma_0}=\phi^j
+\]</span>
+<strong>Ejercicio</strong></p>
+<p>Para los siguientes procesos, calcule el valor esperado, la varianza y las autocorrelaciones hasta <span class="math inline">\(j=5\)</span>. Grafique las autocorrelaciones</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(Y_t=0.8Y_{t-1}+e_t\)</span></p></li>
+<li><p><span class="math inline">\(Y_t=1-0.6Y_{t-1}+e_t\)</span></p></li>
+</ol>
+<p>De forma general, un proceso AR(p) se escribe</p>
+<p><span class="math display">\[
+Y_t=c+\phi_1Y_{t-1}+\phi_2Y_{t-2}+...+\phi_pY_{t-p}+e_t
+\]</span></p>
+<p>La graífca siguiente ilustra los procesos AR(1) y AR(2)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="series-de-tiempo-univariadas.html#cb2-1" aria-hidden="true" tabindex="-1"></a>ar1<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="fl">0.8</span>)))</span>
+<span id="cb2-2"><a href="series-de-tiempo-univariadas.html#cb2-2" aria-hidden="true" tabindex="-1"></a>ar2<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="fl">1.6</span>,<span class="sc">-</span><span class="fl">0.9</span>)))</span>
+<span id="cb2-3"><a href="series-de-tiempo-univariadas.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb2-4"><a href="series-de-tiempo-univariadas.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ar1,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;ar(1)&quot;</span>)</span>
+<span id="cb2-5"><a href="series-de-tiempo-univariadas.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ar1)</span>
+<span id="cb2-6"><a href="series-de-tiempo-univariadas.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ar2,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;ar(2)&quot;</span>)</span>
+<span id="cb2-7"><a href="series-de-tiempo-univariadas.html#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ar2)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="procesos-no-estacionarios" class="section level4" number="6.1.1.3">
+<h4><span class="header-section-number">6.1.1.3</span> Procesos no estacionarios</h4>
+<p>Vimos que el comportamiento del proceso AR(1) depende del valor de <span class="math inline">\(\phi\)</span>. A partir de lo desarrollado anteriormente, calcule la media, la varianza y las autocorrelaciones para los siguientes procesos</p>
+<ol style="list-style-type: decimal">
+<li><p>Caminata aleatoria <span class="math inline">\(Y_t=Y_{t-1}+e_t\)</span></p></li>
+<li><p>Caminata aleatoria con deriva <span class="math inline">\(Y_t=c+Y_{t-1}+e_t\)</span></p></li>
+<li><p>Estacionario alrededor de tendencia determinista <span class="math inline">\(Y=at+\phi Y_{t-1}+e_t\)</span>, con <span class="math inline">\(|\phi|&lt;1\)</span></p></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="modelos-lineales" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Modelos lineales</h2>
+<p>El modelo de regresión lineal toma la forma</p>
+<p><span class="math display">\[
+Y_t=\mathbf{X}_t\boldsymbol{\beta}+e_t
+\]</span></p>
+<p>Donde <span class="math inline">\(\mathbf{X}_t\)</span> es el vector de regresores, que puede incluir rezagos de <span class="math inline">\(Y_t\)</span> <span class="math inline">\((Y_{t-1},...,Y_{t-p})\)</span>.</p>
+<p>Decimos que si se cumplen los siguientes supuestos</p>
+<ul>
+<li><p><strong>TS1</strong>: <span class="math inline">\((Y_t,X_t)\)</span> es estacionario y débilmente dependiente</p></li>
+<li><p><strong>TS2</strong>: No hay colinealidad perfecta</p></li>
+<li><p><strong>TS3</strong>: <span class="math inline">\(E(e_t|\mathbf{X}_t)=0\)</span>, es decir que las explicativas son contemporáneamente exógenas</p></li>
+</ul>
+<p>Entonces el estimador MCO es consistente, <span class="math inline">\(plim \hat{\beta}\to \beta\)</span></p>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="modelos-con-datos-temporales-introducción.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="sobre-el-autor.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
