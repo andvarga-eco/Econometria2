@@ -24,7 +24,7 @@
 <meta name="author" content="Andrés Vargas" />
 
 
-<meta name="date" content="2022-05-09" />
+<meta name="date" content="2022-05-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -222,7 +222,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.1.1" data-path="series-de-tiempo-univariadas.html"><a href="series-de-tiempo-univariadas.html#procesos-de-media-móvil-y-autoregresivos"><i class="fa fa-check"></i><b>6.1.1</b> Procesos de media móvil y autoregresivos</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="series-de-tiempo-univariadas.html"><a href="series-de-tiempo-univariadas.html#modelos-lineales"><i class="fa fa-check"></i><b>6.2</b> Modelos lineales</a></li>
+<li class="chapter" data-level="6.2" data-path="series-de-tiempo-univariadas.html"><a href="series-de-tiempo-univariadas.html#modelos-lineales"><i class="fa fa-check"></i><b>6.2</b> Modelos lineales</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="series-de-tiempo-univariadas.html"><a href="series-de-tiempo-univariadas.html#modelos-estáticos-de-rezagos-distribuidos-y-ardl"><i class="fa fa-check"></i><b>6.2.1</b> Modelos estáticos, de rezagos distribuidos, y ARDL</a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -285,14 +288,14 @@ Var(Y_t)&amp;=(1+\theta^2)\sigma^2\\
 Y_t=\mu+e_t+\theta_1e_{t-1}+\theta_2e_{t-2}+...+\theta_qe_{t-q}
 \]</span></p>
 <p>La gráfica siguiente ilustra los procesos MA(1) y MA(4)</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="series-de-tiempo-univariadas.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
-<span id="cb1-2"><a href="series-de-tiempo-univariadas.html#cb1-2" aria-hidden="true" tabindex="-1"></a>ma1<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="fl">0.8</span>)))</span>
-<span id="cb1-3"><a href="series-de-tiempo-univariadas.html#cb1-3" aria-hidden="true" tabindex="-1"></a>ma4<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.6</span>,<span class="fl">0.3</span>,<span class="sc">-</span><span class="fl">0.5</span>,<span class="fl">0.5</span>)))</span>
-<span id="cb1-4"><a href="series-de-tiempo-univariadas.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb1-5"><a href="series-de-tiempo-univariadas.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ma1,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;MA(1)&quot;</span>)</span>
-<span id="cb1-6"><a href="series-de-tiempo-univariadas.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ma1)</span>
-<span id="cb1-7"><a href="series-de-tiempo-univariadas.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ma4,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;MA(4)&quot;</span>)</span>
-<span id="cb1-8"><a href="series-de-tiempo-univariadas.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ma4)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="series-de-tiempo-univariadas.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
+<span id="cb43-2"><a href="series-de-tiempo-univariadas.html#cb43-2" aria-hidden="true" tabindex="-1"></a>ma1<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="fl">0.8</span>)))</span>
+<span id="cb43-3"><a href="series-de-tiempo-univariadas.html#cb43-3" aria-hidden="true" tabindex="-1"></a>ma4<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.6</span>,<span class="fl">0.3</span>,<span class="sc">-</span><span class="fl">0.5</span>,<span class="fl">0.5</span>)))</span>
+<span id="cb43-4"><a href="series-de-tiempo-univariadas.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb43-5"><a href="series-de-tiempo-univariadas.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ma1,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;MA(1)&quot;</span>)</span>
+<span id="cb43-6"><a href="series-de-tiempo-univariadas.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ma1)</span>
+<span id="cb43-7"><a href="series-de-tiempo-univariadas.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ma4,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;MA(4)&quot;</span>)</span>
+<span id="cb43-8"><a href="series-de-tiempo-univariadas.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ma4)</span></code></pre></div>
 <p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 </div>
 <div id="procesos-autoregresivos-arp" class="section level4" number="6.1.1.2">
@@ -371,13 +374,13 @@ Y de manera general, para cualquier <span class="math inline">\(j\)</span></p>
 Y_t=c+\phi_1Y_{t-1}+\phi_2Y_{t-2}+...+\phi_pY_{t-p}+e_t
 \]</span></p>
 <p>La graífca siguiente ilustra los procesos AR(1) y AR(2)</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="series-de-tiempo-univariadas.html#cb2-1" aria-hidden="true" tabindex="-1"></a>ar1<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="fl">0.8</span>)))</span>
-<span id="cb2-2"><a href="series-de-tiempo-univariadas.html#cb2-2" aria-hidden="true" tabindex="-1"></a>ar2<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="fl">1.6</span>,<span class="sc">-</span><span class="fl">0.9</span>)))</span>
-<span id="cb2-3"><a href="series-de-tiempo-univariadas.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb2-4"><a href="series-de-tiempo-univariadas.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ar1,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;ar(1)&quot;</span>)</span>
-<span id="cb2-5"><a href="series-de-tiempo-univariadas.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ar1)</span>
-<span id="cb2-6"><a href="series-de-tiempo-univariadas.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ar2,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;ar(2)&quot;</span>)</span>
-<span id="cb2-7"><a href="series-de-tiempo-univariadas.html#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ar2)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="series-de-tiempo-univariadas.html#cb44-1" aria-hidden="true" tabindex="-1"></a>ar1<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="fl">0.8</span>)))</span>
+<span id="cb44-2"><a href="series-de-tiempo-univariadas.html#cb44-2" aria-hidden="true" tabindex="-1"></a>ar2<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="fu">list</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="fl">1.6</span>,<span class="sc">-</span><span class="fl">0.9</span>)))</span>
+<span id="cb44-3"><a href="series-de-tiempo-univariadas.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb44-4"><a href="series-de-tiempo-univariadas.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ar1,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;ar(1)&quot;</span>)</span>
+<span id="cb44-5"><a href="series-de-tiempo-univariadas.html#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ar1)</span>
+<span id="cb44-6"><a href="series-de-tiempo-univariadas.html#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ar2,<span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>,<span class="at">main=</span><span class="st">&quot;ar(2)&quot;</span>)</span>
+<span id="cb44-7"><a href="series-de-tiempo-univariadas.html#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ar2)</span></code></pre></div>
 <p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="procesos-no-estacionarios" class="section level4" number="6.1.1.3">
@@ -395,9 +398,9 @@ Y_t=c+\phi_1Y_{t-1}+\phi_2Y_{t-2}+...+\phi_pY_{t-p}+e_t
 <h2><span class="header-section-number">6.2</span> Modelos lineales</h2>
 <p>El modelo de regresión lineal toma la forma</p>
 <p><span class="math display">\[
-Y_t=\mathbf{X}_t\boldsymbol{\beta}+e_t
+Y_t=\mathbf{X&#39;}_t\boldsymbol{\beta}+e_t
 \]</span></p>
-<p>Donde <span class="math inline">\(\mathbf{X}_t\)</span> es el vector de regresores, que puede incluir rezagos de <span class="math inline">\(Y_t\)</span> <span class="math inline">\((Y_{t-1},...,Y_{t-p})\)</span>.</p>
+<p>Donde <span class="math inline">\(\mathbf{X}_t\)</span> es el vector de regresores, que puede incluir rezagos de <span class="math inline">\(Y_t\)</span> <span class="math inline">\((Y_{t-1},...,Y_{t-p})\)</span>, y <span class="math inline">\(\boldsymbol{\beta}=(E(\mathbf{X__t&#39;X_t}))^{-1}E(\mathbf{X_tY_t})\)</span> es el vector de coeficientes</p>
 <p>Decimos que si se cumplen los siguientes supuestos</p>
 <ul>
 <li><p><strong>TS1</strong>: <span class="math inline">\((Y_t,X_t)\)</span> es estacionario y débilmente dependiente</p></li>
@@ -405,9 +408,47 @@ Y_t=\mathbf{X}_t\boldsymbol{\beta}+e_t
 <li><p><strong>TS3</strong>: <span class="math inline">\(E(e_t|\mathbf{X}_t)=0\)</span>, es decir que las explicativas son contemporáneamente exógenas</p></li>
 </ul>
 <p>Entonces el estimador MCO es consistente, <span class="math inline">\(plim \hat{\beta}\to \beta\)</span></p>
+<div id="modelos-estáticos-de-rezagos-distribuidos-y-ardl" class="section level3" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Modelos estáticos, de rezagos distribuidos, y ARDL</h3>
+<p>Considere que <span class="math inline">\(\mathbf{X_t}\)</span> contiene únicamente las variables <span class="math inline">\(Z_{1t}, Z_{2t}\)</span>, nuestro modelo es entonces</p>
+<p><span class="math display">\[
+Y_t=\beta_0+\beta_1Z_{1t}+\beta_2Z_{2t}+e_t
+\]</span></p>
+<p>Bajo el supuesto que las series son estacionarias y débilmente dependientes, podemos estimar consistentemente los parámetros siempre y cuando el error no esté correlacionado contemporáneamente con las variables independientes.</p>
+<p>Si permitimos que los valores pasados de los regresores tengan impacto en <span class="math inline">\(Y_t\)</span>, entonces tenemos un modelo de rezagos distribuidos</p>
+<p><span class="math display">\[
+Y_t=\beta_0+\beta_1Z_{t}+\beta_2Z_{t-1}+e_t
+\]</span></p>
+<p>En este modelo los parámetros <span class="math inline">\(\beta_i\)</span> capturan cada uno el impacto sobre <span class="math inline">\(Y_t\)</span>, mientras que la suma <span class="math inline">\(\beta_1+\beta_2\)</span> es el impacto acumulado. Los modelos anteriores pueden no capturar adecuadamente la dinámica de <span class="math inline">\(Y_t\)</span> pues ignoran los valores rezagados de <span class="math inline">\(Y\)</span>. Si los incluimos, tenemos un modelo ARDL</p>
+<p><span class="math display">\[
+Y_t=\alpha_0+\alpha_1Y_{t-1}+\alpha_2Y_{t-2}+...+\alpha_pY_{t-p}+\beta_1Z_{t}+\beta_2Z_{t-1}+...+\beta_qZ_{t-q}+e_t
+\]</span></p>
+<p>Si tenemos un modelo ARDL(1,1) como sigue</p>
+<p><span class="math display">\[
+Y_t=\alpha_0+\alpha_1Y_{t-1}+\beta_1Z_t+\beta_2Z_{t-1}+e_t
+\]</span></p>
+<p>Podemos mostrar que el impacto acumulado o multiplicador de largo plazo en este caso es</p>
+<p><span class="math display">\[
+\dfrac{\alpha\beta_1+\beta_2}{1-\alpha_1}
+\]</span>
+el cual es una función no lineal de los coeficientes.</p>
+<div id="correlación-serial" class="section level4" number="6.2.1.1">
+<h4><span class="header-section-number">6.2.1.1</span> Correlación serial</h4>
 
 </div>
 </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
             </section>
 
           </div>

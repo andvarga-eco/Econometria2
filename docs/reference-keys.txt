@@ -47,10 +47,12 @@ introducción-2
 ejemplos
 autocorrelaciones
 estacionariedad
-series-de-tiempo-univariadas
+modelos-con-series-estacionarias
 estacionariedad-y-dependencia-débil
 procesos-de-media-móvil-y-autoregresivos
 media-móvil
 procesos-autoregresivos-arp
-modelos-lineales
 procesos-no-estacionarios
+modelos-lineales
+modelos-estáticos-de-rezagos-distribuidos-y-ardl
+correlación-serial

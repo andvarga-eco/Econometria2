@@ -1,4 +1,4 @@
-# Series de tiempo univariadas
+# Modelos con series estacionarias
 
 ```{r setup_prog, include = FALSE, cache = FALSE}
 knitr::opts_chunk$set(
@@ -226,10 +226,13 @@ Vimos que el comportamiento del proceso AR(1) depende del valor de $\phi$. A par
 El modelo de regresión lineal toma la forma
 
 $$
-Y_t=\mathbf{X}_t\boldsymbol{\beta}+e_t
+Y_t=\mathbf{X'}_t\boldsymbol{\beta}+e_t
 $$
  
- Donde $\mathbf{X}_t$ es el vector de regresores, que puede incluir rezagos de $Y_t$ $(Y_{t-1},...,Y_{t-p})$. 
+ Donde $\mathbf{X}_t$ es el vector de regresores, que puede incluir rezagos de $Y_t$ $(Y_{t-1},...,Y_{t-p})$, y
+ $$
+ \boldsymbol{\beta}=(E(\mathbf{X'_tX_t}))^{-1}E(\mathbf{X_tY_t})
+ $$ es el vector de coeficientes
  
 Decimos que si se cumplen los siguientes supuestos 
 
@@ -241,3 +244,40 @@ Decimos que si se cumplen los siguientes supuestos
 
 Entonces el estimador MCO es consistente, $plim \hat{\beta}\to \beta$
 
+### Modelos estáticos, de rezagos distribuidos, y ARDL 
+
+Considere que $\mathbf{X_t}$ contiene únicamente las variables $Z_{1t}, Z_{2t}$, nuestro modelo es entonces
+
+$$
+Y_t=\beta_0+\beta_1Z_{1t}+\beta_2Z_{2t}+e_t
+$$
+
+Bajo el supuesto que las series son estacionarias y débilmente dependientes, podemos estimar consistentemente los parámetros siempre y cuando el error no esté correlacionado contemporáneamente con las variables independientes. 
+
+Si permitimos que los valores pasados de los regresores tengan impacto en $Y_t$, entonces tenemos un modelo de rezagos distribuidos
+
+$$
+Y_t=\beta_0+\beta_1Z_{t}+\beta_2Z_{t-1}+e_t
+$$
+
+En este modelo los parámetros $\beta_i$ capturan cada uno el impacto sobre $Y_t$, mientras que la suma $\beta_1+\beta_2$ es el impacto acumulado. Los modelos anteriores pueden no capturar adecuadamente la dinámica de $Y_t$ pues ignoran los valores rezagados de $Y$. Si los incluimos, tenemos un modelo ARDL
+
+$$
+Y_t=\alpha_0+\alpha_1Y_{t-1}+\alpha_2Y_{t-2}+...+\alpha_pY_{t-p}+\beta_1Z_{t}+\beta_2Z_{t-1}+...+\beta_qZ_{t-q}+e_t
+$$
+
+
+Si tenemos un modelo ARDL(1,1) como sigue
+
+$$
+Y_t=\alpha_0+\alpha_1Y_{t-1}+\beta_1Z_t+\beta_2Z_{t-1}+e_t
+$$
+
+Podemos mostrar que el impacto acumulado o multiplicador de largo plazo en este caso es
+
+$$
+\dfrac{\alpha\beta_1+\beta_2}{1-\alpha_1}
+$$
+el cual es una función no lineal de los coeficientes.
+
+#### Correlación serial
