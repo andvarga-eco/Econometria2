@@ -56,3 +56,4 @@ procesos-no-estacionarios
 modelos-lineales
 modelos-estáticos-de-rezagos-distribuidos-y-ardl
 correlación-serial
+ejemplos-1

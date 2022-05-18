@@ -24,7 +24,7 @@
 <meta name="author" content="Andrés Vargas" />
 
 
-<meta name="date" content="2022-05-15" />
+<meta name="date" content="2022-05-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -437,6 +437,160 @@ Y_t=\alpha_0+\alpha_1Y_{t-1}+\beta_1Z_t+\beta_2Z_{t-1}+e_t
 el cual es una función no lineal de los coeficientes.</p>
 <div id="correlación-serial" class="section level4" number="6.2.1.1">
 <h4><span class="header-section-number">6.2.1.1</span> Correlación serial</h4>
+<p>En un modelo con series temporales es importante incorporar los rezagos necesarios para capturar la dinámica del proceso. Decimos que un modelo es dinámicamente completo si hemos incluido sufientes rezagos tal que rezagos adicionales no tienen poder predictivo sobre <span class="math inline">\(Y_t\)</span>. Cuando esto es así, entonces no hay correlación serial</p>
+<p><span class="math display">\[
+E(e_te_s|\mathbf{X}_t,\mathbf{X}_s)=0 \quad \text{Para todo}\quad t\neq s
+\]</span>
+Por ejempplo, suponga que el modelo correcto es <span class="math inline">\(Y_t=\alpha_0+\alpha_1Y_{t-1}+\beta_1Z_t+\beta_2Z_{t-1}+e_t\)</span>, pero estima <span class="math inline">\(Y_t=\alpha_0+\beta_1Z_t+\beta_2Z_{t-1}+u_t\)</span>. Como <span class="math inline">\(u_t=\alpha_1Y_{t-1}+e_t\)</span> y <span class="math inline">\(u_{t-1}=\alpha_1Y_{t-2}+e_{t-1}\)</span>, entonces es claro que debido a la correlación de <span class="math inline">\(Y_{t-1}\)</span> con <span class="math inline">\(Y_{t-2}\)</span> entonces <span class="math inline">\(u_t\)</span> y <span class="math inline">\(u_{t-1}\)</span> están correlacionados.</p>
+<p>Así, en la mayoría de los casos, debemos revisar que los residuales del modelo no tengan evidencia de autocorrelación.</p>
+</div>
+<div id="ejemplos-1" class="section level4" number="6.2.1.2">
+<h4><span class="header-section-number">6.2.1.2</span> Ejemplos</h4>
+<p><strong>1.Curva de Phillips Estática</strong></p>
+<p>Si tenemos que las expectativas son constantes y la tasa natural de desempleo es constante, entonces podemos escribir</p>
+<p><span class="math display">\[
+\pi_t=\alpha+\beta td_t+e_t
+\]</span></p>
+<p>Usamos datos mensuales de la inflación anual y la tasa de desempleo. Primero hacemos un análisis gráfico de nuestras series</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="modelos-con-series-estacionarias.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fpp3)</span>
+<span id="cb45-2"><a href="modelos-con-series-estacionarias.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb45-3"><a href="modelos-con-series-estacionarias.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb45-4"><a href="modelos-con-series-estacionarias.html#cb45-4" aria-hidden="true" tabindex="-1"></a>mes<span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">here</span>(<span class="st">&quot;Econometria2&quot;</span>,<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;tsmonth.xlsx&quot;</span>))</span>
+<span id="cb45-5"><a href="modelos-con-series-estacionarias.html#cb45-5" aria-hidden="true" tabindex="-1"></a>mes<span class="ot">&lt;-</span>mes<span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">date=</span><span class="fu">yearmonth</span>(date))<span class="sc">%&gt;%</span><span class="fu">as_tsibble</span>(<span class="at">index=</span>date)</span>
+<span id="cb45-6"><a href="modelos-con-series-estacionarias.html#cb45-6" aria-hidden="true" tabindex="-1"></a>mes<span class="ot">&lt;-</span>mes<span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">inf=</span><span class="fu">difference</span>(<span class="fu">log</span>(ipc),<span class="at">lag=</span><span class="dv">12</span>),<span class="at">td13=</span>td13<span class="sc">/</span><span class="dv">100</span>)<span class="sc">%&gt;%</span><span class="fu">na.omit</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="modelos-con-series-estacionarias.html#cb46-1" aria-hidden="true" tabindex="-1"></a>inf.plot<span class="ot">&lt;-</span>mes<span class="sc">%&gt;%</span><span class="fu">autoplot</span>(inf)</span>
+<span id="cb46-2"><a href="modelos-con-series-estacionarias.html#cb46-2" aria-hidden="true" tabindex="-1"></a>td.plot<span class="ot">&lt;-</span>mes<span class="sc">%&gt;%</span><span class="fu">autoplot</span>(td13)</span>
+<span id="cb46-3"><a href="modelos-con-series-estacionarias.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(inf.plot,td.plot,<span class="at">ncol=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>La serie de desempleo tiene una estacionalidad marcada. Trabajaremos con la serie estacionalmente ajustada, como se muestra a continuación</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="modelos-con-series-estacionarias.html#cb47-1" aria-hidden="true" tabindex="-1"></a>tdsad<span class="ot">&lt;-</span>mes<span class="sc">%&gt;%</span><span class="fu">model</span>(<span class="at">stl=</span><span class="fu">STL</span>(td13))</span>
+<span id="cb47-2"><a href="modelos-con-series-estacionarias.html#cb47-2" aria-hidden="true" tabindex="-1"></a>tds<span class="ot">&lt;-</span><span class="fu">components</span>(tdsad)<span class="sc">%&gt;%</span><span class="fu">as_tsibble</span>()<span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">tdsa=</span>season_adjust)<span class="sc">%&gt;%</span><span class="fu">select</span>(tdsa)</span>
+<span id="cb47-3"><a href="modelos-con-series-estacionarias.html#cb47-3" aria-hidden="true" tabindex="-1"></a>mes<span class="ot">&lt;-</span>mes<span class="sc">%&gt;%</span><span class="fu">left_join</span>(tds)</span>
+<span id="cb47-4"><a href="modelos-con-series-estacionarias.html#cb47-4" aria-hidden="true" tabindex="-1"></a>mes<span class="sc">%&gt;%</span><span class="fu">autoplot</span>(td13,<span class="at">color=</span><span class="st">&quot;gray&quot;</span>)<span class="sc">+</span><span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tdsa),<span class="at">colour=</span><span class="st">&quot;#0072B2&quot;</span>)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Examinamos los correlogramas</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="modelos-con-series-estacionarias.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb48-2"><a href="modelos-con-series-estacionarias.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(mes<span class="sc">$</span>inf)</span>
+<span id="cb48-3"><a href="modelos-con-series-estacionarias.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(mes<span class="sc">$</span>td13)</span>
+<span id="cb48-4"><a href="modelos-con-series-estacionarias.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(mes<span class="sc">$</span>tdsa)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Si hacemos el gráfico estándar de la curva de Phillips encontramos una pendiente levemente positiva</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="modelos-con-series-estacionarias.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mes,<span class="fu">aes</span>(<span class="at">x=</span>tdsa,<span class="at">y=</span>inf))<span class="sc">+</span><span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> <span class="fu">factor</span>(<span class="fu">year</span>(date))))<span class="sc">+</span></span>
+<span id="cb49-2"><a href="modelos-con-series-estacionarias.html#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;Inflación&quot;</span>,<span class="at">x=</span><span class="st">&quot;TD&quot;</span>)<span class="sc">+</span><span class="fu">stat_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Procedemos a estimar el modelo</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="modelos-con-series-estacionarias.html#cb50-1" aria-hidden="true" tabindex="-1"></a>pstatic<span class="ot">&lt;-</span>mes<span class="sc">%&gt;%</span><span class="fu">model</span>(<span class="fu">TSLM</span>(inf<span class="sc">~</span>tdsa))</span>
+<span id="cb50-2"><a href="modelos-con-series-estacionarias.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(pstatic)</span></code></pre></div>
+<pre><code>Series: inf 
+Model: TSLM 
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.031583 -0.011970 -0.002587  0.012863  0.043743 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 0.035297   0.005105   6.915 4.22e-11 ***
+tdsa        0.065009   0.039114   1.662   0.0978 .  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.0171 on 240 degrees of freedom
+Multiple R-squared: 0.01138,    Adjusted R-squared: 0.00726
+F-statistic: 2.762 on 1 and 240 DF, p-value: 0.097806</code></pre>
+<p>La estimación no sugiere un trade-off entre empleo e inflación para el periodo analizado</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="modelos-con-series-estacionarias.html#cb52-1" aria-hidden="true" tabindex="-1"></a>res<span class="ot">&lt;-</span><span class="fu">residuals</span>(pstatic)</span>
+<span id="cb52-2"><a href="modelos-con-series-estacionarias.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(res<span class="sc">$</span>.resid)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Los residuales no se comportan como ruido blanco. La autocorrelación sugiere que hay información que no hemos aprovechado. El modelo no es dinámicamente completo</p>
+<p><strong>2. Phillips con expectativas adaptativas</strong></p>
+<p>Si ahora fomulamos nuestro modelo como unja curva de Phillips con expectativas, suponiendo expectativas adaptativas</p>
+<p><span class="math display">\[\begin{align}
+&amp;\pi_t=\pi_{t-1}+\beta(td_t-td^n)+e_t\\
+&amp;\pi_t-\pi_{t-1}=\beta(td_t-td^n)+e_t
+\end{align}\]</span></p>
+<p>Si <span class="math inline">\(\alpha=-\beta td^n\)</span>, entonces estimamos el modelo</p>
+<p><span class="math display">\[
+\Delta \pi_t=\alpha+\beta td_t+e
+\]</span></p>
+<p>Donde <span class="math inline">\(\Delta \pi_t=\pi_t-\pi_{t-1}\)</span></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="modelos-con-series-estacionarias.html#cb53-1" aria-hidden="true" tabindex="-1"></a>mes<span class="ot">&lt;-</span>mes<span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">dinf=</span><span class="fu">difference</span>(inf))</span>
+<span id="cb53-2"><a href="modelos-con-series-estacionarias.html#cb53-2" aria-hidden="true" tabindex="-1"></a>pex<span class="ot">&lt;-</span>mes<span class="sc">%&gt;%</span><span class="fu">model</span>(<span class="fu">TSLM</span>(dinf<span class="sc">~</span>tdsa))</span>
+<span id="cb53-3"><a href="modelos-con-series-estacionarias.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(pex)</span></code></pre></div>
+<pre><code>Series: dinf 
+Model: TSLM 
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0091936 -0.0020116 -0.0001539  0.0016344  0.0136299 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)  0.0020880  0.0009977   2.093   0.0374 *
+tdsa        -0.0162264  0.0076602  -2.118   0.0352 *
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.003322 on 239 degrees of freedom
+Multiple R-squared: 0.01843,    Adjusted R-squared: 0.01432
+F-statistic: 4.487 on 1 and 239 DF, p-value: 0.035184</code></pre>
+<p>De acuerdo a la estimación puntual, un aumento de un punto en la tasa de desempleo disminuye la inflación no anticipada en 0.016 puntos. Podemos calcular <span class="math inline">\(td^n=-\alpha/\beta\)</span>, lo que nos da 0.1286792. En línea con ejercicios que estiman la NAIRU para Colombia.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="modelos-con-series-estacionarias.html#cb55-1" aria-hidden="true" tabindex="-1"></a>res2<span class="ot">&lt;-</span><span class="fu">residuals</span>(pex)</span>
+<span id="cb55-2"><a href="modelos-con-series-estacionarias.html#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(res2<span class="sc">$</span>.resid,<span class="at">na.action=</span>na.omit)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><strong>3. Hipótesis de mercados eficientes</strong></p>
+<p>La eficiencia de los mercados se fundamenta en la idea que el precio de los activos refleja toda la información disponible. Una de las implicaciones es que los retornos pasados no ayudan a pronosticar los retornos futuros de los activos. Esto ha dado lugar a la proposición que los precios siguen una caminata aleatoria</p>
+<p>Si decimos que <span class="math inline">\(r_t=lnP_t-lnP_{t-1}\)</span> es el retorno en <span class="math inline">\(k\)</span> periodos, decimos que sigue caminata aleatoria si</p>
+<p><span class="math display">\[
+lnP_t=lnP_{t-1}+e_t
+\]</span></p>
+<p>Y por lo tanto</p>
+<p><span class="math display">\[
+r_t=\Delta lnP_t=e_t
+\]</span></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="modelos-con-series-estacionarias.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quantmod)</span>
+<span id="cb56-2"><a href="modelos-con-series-estacionarias.html#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getSymbols</span>(<span class="st">&#39;EC&#39;</span>,<span class="at">src=</span><span class="st">&quot;yahoo&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;EC&quot;</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="modelos-con-series-estacionarias.html#cb58-1" aria-hidden="true" tabindex="-1"></a>ECW<span class="ot">&lt;-</span>EC[<span class="fu">.indexwday</span>(EC)<span class="sc">==</span><span class="dv">3</span>]</span>
+<span id="cb58-2"><a href="modelos-con-series-estacionarias.html#cb58-2" aria-hidden="true" tabindex="-1"></a>ECW<span class="ot">&lt;-</span>ECW[,<span class="st">&quot;EC.Close&quot;</span>]</span>
+<span id="cb58-3"><a href="modelos-con-series-estacionarias.html#cb58-3" aria-hidden="true" tabindex="-1"></a>ECW<span class="sc">$</span>lp<span class="ot">&lt;-</span><span class="fu">log</span>((ECW<span class="sc">$</span>EC.Close))</span>
+<span id="cb58-4"><a href="modelos-con-series-estacionarias.html#cb58-4" aria-hidden="true" tabindex="-1"></a>ECW<span class="sc">$</span>r<span class="ot">&lt;-</span><span class="fu">diff</span>(ECW<span class="sc">$</span>lp)</span>
+<span id="cb58-5"><a href="modelos-con-series-estacionarias.html#cb58-5" aria-hidden="true" tabindex="-1"></a>ECW<span class="ot">&lt;-</span><span class="fu">na.omit</span>(ECW)</span>
+<span id="cb58-6"><a href="modelos-con-series-estacionarias.html#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb58-7"><a href="modelos-con-series-estacionarias.html#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ECW<span class="sc">$</span>lp)</span>
+<span id="cb58-8"><a href="modelos-con-series-estacionarias.html#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ECW<span class="sc">$</span>r)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="modelos-con-series-estacionarias.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb59-2"><a href="modelos-con-series-estacionarias.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ECW<span class="sc">$</span>lp)</span>
+<span id="cb59-3"><a href="modelos-con-series-estacionarias.html#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ECW<span class="sc">$</span>r)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Note que en el caso de los retornos indican dependencia débil. Apliquemos ahora un modelo de regresión.</p>
+<p><span class="math display">\[
+r_t=\alpha+\beta r_{t-1}+e_t
+\]</span></p>
+<p><br/></p>
+<p>Bajo la hipótesis de caminata aleatoria <span class="math inline">\(\beta=0\)</span>. Bajo la nula se cumple exogeneidad y por lo tanto podemos estimar consistentemente <span class="math inline">\(\beta\)</span> usando MCO</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="modelos-con-series-estacionarias.html#cb60-1" aria-hidden="true" tabindex="-1"></a>emh<span class="ot">&lt;-</span><span class="fu">lm</span>(r<span class="sc">~</span><span class="fu">lag</span>(r,<span class="at">n=</span><span class="dv">1</span>),<span class="at">data=</span>ECW)</span>
+<span id="cb60-2"><a href="modelos-con-series-estacionarias.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(emh)</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = r ~ lag(r, n = 1), data = ECW)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.50226 -0.02672  0.00193  0.03015  0.30591 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)   -0.0006283  0.0021953  -0.286    0.775
+lag(r, n = 1)  0.0621623  0.0378083   1.644    0.101
+
+Residual standard error: 0.0582 on 701 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.003841,  Adjusted R-squared:  0.00242 
+F-statistic: 2.703 on 1 and 701 DF,  p-value: 0.1006</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="modelos-con-series-estacionarias.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(emh<span class="sc">$</span>residuals)</span></code></pre></div>
+<p><img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 
 </div>
 </div>

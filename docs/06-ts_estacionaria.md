@@ -275,3 +275,275 @@ $$
 el cual es una función no lineal de los coeficientes.
 
 #### Correlación serial
+
+En un modelo con series temporales es importante incorporar los rezagos necesarios para capturar la dinámica del proceso. Decimos que un modelo es dinámicamente completo si hemos incluido sufientes rezagos tal que rezagos adicionales no tienen poder predictivo sobre $Y_t$. Cuando esto es así, entonces no hay correlación serial
+
+$$
+E(e_te_s|\mathbf{X}_t,\mathbf{X}_s)=0 \quad \text{Para todo}\quad t\neq s
+$$
+Por ejempplo, suponga que el modelo correcto es $Y_t=\alpha_0+\alpha_1Y_{t-1}+\beta_1Z_t+\beta_2Z_{t-1}+e_t$, pero estima $Y_t=\alpha_0+\beta_1Z_t+\beta_2Z_{t-1}+u_t$. Como $u_t=\alpha_1Y_{t-1}+e_t$ y $u_{t-1}=\alpha_1Y_{t-2}+e_{t-1}$, entonces es claro que debido a la correlación de $Y_{t-1}$ con $Y_{t-2}$ entonces $u_t$ y $u_{t-1}$ están correlacionados. 
+
+Así, en la mayoría de los casos, debemos revisar que los residuales del modelo no tengan evidencia de autocorrelación.
+
+#### Ejemplos
+
+**1.Curva de Phillips Estática**
+
+Si tenemos que las expectativas son constantes y la tasa natural de desempleo es constante, entonces podemos escribir
+
+$$
+\pi_t=\alpha+\beta td_t+e_t
+$$
+
+
+Usamos datos mensuales de la inflación anual y la tasa de desempleo. Primero hacemos un análisis gráfico de nuestras series
+
+
+```r
+library(fpp3)
+library(readxl)
+library(ggpubr)
+mes<- read_excel(here("Econometria2","Data","tsmonth.xlsx"))
+mes<-mes%>%mutate(date=yearmonth(date))%>%as_tsibble(index=date)
+mes<-mes%>%mutate(inf=difference(log(ipc),lag=12),td13=td13/100)%>%na.omit()
+```
+
+
+```r
+inf.plot<-mes%>%autoplot(inf)
+td.plot<-mes%>%autoplot(td13)
+ggarrange(inf.plot,td.plot,ncol=1)
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+
+
+La serie de desempleo tiene una estacionalidad marcada. Trabajaremos con la serie estacionalmente ajustada, como se muestra a continuación
+
+
+
+```r
+tdsad<-mes%>%model(stl=STL(td13))
+tds<-components(tdsad)%>%as_tsibble()%>%mutate(tdsa=season_adjust)%>%select(tdsa)
+mes<-mes%>%left_join(tds)
+mes%>%autoplot(td13,color="gray")+geom_line(aes(y=tdsa),colour="#0072B2")
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
+Examinamos los correlogramas
+
+
+```r
+par(mfrow=c(1,3))
+acf(mes$inf)
+acf(mes$td13)
+acf(mes$tdsa)
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+
+
+Si hacemos el gráfico estándar de la curva de Phillips encontramos una pendiente levemente positiva
+
+
+```r
+ggplot(mes,aes(x=tdsa,y=inf))+geom_point(aes(colour = factor(year(date))))+
+  theme(legend.position = "none")+labs(y="Inflación",x="TD")+stat_smooth(method="lm")
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+
+
+Procedemos a estimar el modelo
+
+
+```r
+pstatic<-mes%>%model(TSLM(inf~tdsa))
+report(pstatic)
+```
+
+```
+Series: inf 
+Model: TSLM 
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.031583 -0.011970 -0.002587  0.012863  0.043743 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.035297   0.005105   6.915 4.22e-11 ***
+tdsa        0.065009   0.039114   1.662   0.0978 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.0171 on 240 degrees of freedom
+Multiple R-squared: 0.01138,	Adjusted R-squared: 0.00726
+F-statistic: 2.762 on 1 and 240 DF, p-value: 0.097806
+```
+
+La estimación no sugiere un trade-off entre empleo e inflación para el periodo analizado
+
+
+```r
+res<-residuals(pstatic)
+acf(res$.resid)
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+
+Los residuales no se comportan como ruido blanco. La autocorrelación sugiere que hay información que no hemos aprovechado. El modelo no es dinámicamente completo
+
+**2. Phillips con expectativas adaptativas**
+
+Si ahora fomulamos nuestro modelo como unja curva de Phillips con expectativas, suponiendo expectativas adaptativas
+
+\begin{align}
+&\pi_t=\pi_{t-1}+\beta(td_t-td^n)+e_t\\
+&\pi_t-\pi_{t-1}=\beta(td_t-td^n)+e_t
+\end{align}
+
+
+Si $\alpha=-\beta td^n$, entonces estimamos el modelo
+
+
+$$
+\Delta \pi_t=\alpha+\beta td_t+e
+$$
+
+
+Donde $\Delta \pi_t=\pi_t-\pi_{t-1}$
+
+
+```r
+mes<-mes%>%mutate(dinf=difference(inf))
+pex<-mes%>%model(TSLM(dinf~tdsa))
+report(pex)
+```
+
+```
+Series: dinf 
+Model: TSLM 
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0091936 -0.0020116 -0.0001539  0.0016344  0.0136299 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)  
+(Intercept)  0.0020880  0.0009977   2.093   0.0374 *
+tdsa        -0.0162264  0.0076602  -2.118   0.0352 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.003322 on 239 degrees of freedom
+Multiple R-squared: 0.01843,	Adjusted R-squared: 0.01432
+F-statistic: 4.487 on 1 and 239 DF, p-value: 0.035184
+```
+
+De acuerdo a la estimación puntual, un aumento de un punto en la tasa de desempleo disminuye la inflación no anticipada en 0.016 puntos. Podemos calcular $td^n=-\alpha/\beta$, lo que nos da 0.1286792. En línea con ejercicios que estiman la NAIRU para Colombia.
+
+
+```r
+res2<-residuals(pex)
+acf(res2$.resid,na.action=na.omit)
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+
+**3. Hipótesis de mercados eficientes**
+
+La eficiencia de los mercados se fundamenta en la idea que el precio de los activos refleja toda la información disponible. Una de las implicaciones es que los retornos pasados no ayudan a pronosticar los retornos futuros de los activos. Esto ha dado lugar a la proposición que los precios siguen una caminata aleatoria
+
+
+Si decimos que $r_t=lnP_t-lnP_{t-1}$ es el retorno en $k$ periodos, decimos que sigue caminata aleatoria si
+
+
+$$
+lnP_t=lnP_{t-1}+e_t
+$$
+
+Y por lo tanto
+
+$$
+r_t=\Delta lnP_t=e_t
+$$
+
+
+
+```r
+library(quantmod)
+getSymbols('EC',src="yahoo")
+```
+
+```
+[1] "EC"
+```
+
+```r
+ECW<-EC[.indexwday(EC)==3]
+ECW<-ECW[,"EC.Close"]
+ECW$lp<-log((ECW$EC.Close))
+ECW$r<-diff(ECW$lp)
+ECW<-na.omit(ECW)
+par(mfrow=c(2,1))
+plot(ECW$lp)
+plot(ECW$r)
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+
+
+```r
+par(mfrow=c(2,1))
+acf(ECW$lp)
+acf(ECW$r)
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+
+Note que en el caso de los retornos indican dependencia débil. Apliquemos ahora un modelo de regresión. 
+
+$$
+r_t=\alpha+\beta r_{t-1}+e_t
+$$
+
+<br/>
+
+Bajo la hipótesis de caminata aleatoria $\beta=0$. Bajo la nula se cumple exogeneidad y por lo tanto podemos estimar consistentemente $\beta$ usando MCO
+
+
+```r
+emh<-lm(r~lag(r,n=1),data=ECW)
+summary(emh)
+```
+
+```
+
+Call:
+lm(formula = r ~ lag(r, n = 1), data = ECW)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.50226 -0.02672  0.00193  0.03015  0.30591 
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)
+(Intercept)   -0.0006283  0.0021953  -0.286    0.775
+lag(r, n = 1)  0.0621623  0.0378083   1.644    0.101
+
+Residual standard error: 0.0582 on 701 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.003841,	Adjusted R-squared:  0.00242 
+F-statistic: 2.703 on 1 and 701 DF,  p-value: 0.1006
+```
+
+
+```r
+acf(emh$residuals)
+```
+
+<img src="06-ts_estacionaria_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+
+
